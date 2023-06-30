@@ -9,12 +9,20 @@ function CheckOutForm() {
         <form>
           <div>
             <div className="my-10">
-              <input
-                type="text"
-                placeholder="Plate Number"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl"
-              />
+              <div className="flex flex-row gap-5">
+                <input
+                  type="text"
+                  placeholder="Plate Number"
+                  style={styles.backgroundInputField}
+                  className="p-4 rounded-xl"
+                />
+                <input
+                  type="text"
+                  placeholder="Parking Key"
+                  style={styles.backgroundInputField}
+                  className="p-4 rounded-xl"
+                />
+              </div>
               <div className="mt-10">
                 <button
                   type="button"

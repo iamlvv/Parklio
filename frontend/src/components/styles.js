@@ -1,7 +1,7 @@
 export const styles = {
   backgroundInputField: {
     backgroundColor: "#F2DCA1",
-    width: "528px",
+    //width: "528px",
   },
   backgroundButton: {
     backgroundColor: "#E9C462",
@@ -12,5 +12,8 @@ export const styles = {
   },
   backgroundInputCost: {
     backgroundColor: "#F2DCA1",
+  },
+  textColor: {
+    color: "#E9C462",
   },
 };

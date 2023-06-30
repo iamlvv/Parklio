@@ -1,30 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import loginImage from "../../assets/img/login-img.png";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { styles } from "../../components/styles";
 
-const styles = {
-  backgroundInputField: {
-    backgroundColor: "#F2DCA1",
-  },
-  backgroundButton: {
-    backgroundColor: "#E9C462",
-    opacity: "0.8",
-  },
-  textColor: {
-    color: "#E9C462",
-  },
-};
 function LoginPage() {
   const navigate = useNavigate();
-  const handleSubmit = () => {
-    navigate("/homepage");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      console.log(response.data);
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      navigate("/homepage");
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
   };
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2 text-center mt-10">
         <div>
           <h1 className="uppercase font-bold text-5xl">welcome to parklio</h1>
-          <form className="mt-10" onSubmit={handleSubmit}>
+          <form className="mt-10" onSubmit={handleLogin}>
             <div>
               <input
                 type="text"
@@ -32,6 +44,8 @@ function LoginPage() {
                 required
                 style={styles.backgroundInputField}
                 className="font-bold p-2 text-black rounded-xl"
+                value={email || ""}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mt-10">
@@ -41,6 +55,8 @@ function LoginPage() {
                 required
                 style={styles.backgroundInputField}
                 className="font-bold p-2 text-black rounded-xl"
+                value={password || ""}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="mt-10">

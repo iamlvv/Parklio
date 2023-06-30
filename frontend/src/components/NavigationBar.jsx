@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import homeLogo from "../assets/img/home-logo.png";
 import userLogo from "../assets/img/userProfile-logo.png";
 import statisticsLogo from "../assets/img/statistics-logo.png";
 import logoutLogo from "../assets/img/logout-logo.png";
-import { Link } from "react-router-dom";
+import managementLogo from "../assets/img/management-logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const styles = {
   navigationWidth: {
@@ -13,6 +14,31 @@ const styles = {
   },
 };
 function NavigationBar() {
+  const navigate = useNavigate();
+  const [authority, setAuthority] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    if (userInfo.authority === "officer") {
+      setAuthority(false);
+    } else {
+      setAuthority(true);
+    }
+  }, []);
+  const notAuthorizedManagement = <div></div>;
+
+  const authorizedManagement = (
+    <Link to={authority ? "/management" : ""}>
+      <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
+        <img src={managementLogo} alt="Management" />
+        <h1>Management</h1>
+      </div>
+    </Link>
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/");
+  };
   return (
     <div
       className="flex flex-col gap-9 font-bold px-3 float-left z-40 fixed"
@@ -36,12 +62,14 @@ function NavigationBar() {
           <h1>User Profile</h1>
         </div>
       </Link>
-      <Link to="/">
-        <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out mt-20">
-          <img src={logoutLogo} alt="Logout" />
-          <h1>Log out</h1>
-        </div>
-      </Link>
+      {authority ? authorizedManagement : notAuthorizedManagement}
+      <div
+        className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out cursor-pointer"
+        onClick={handleLogout}
+      >
+        <img src={logoutLogo} alt="Logout" />
+        <h1>Log out</h1>
+      </div>
     </div>
   );
 }
