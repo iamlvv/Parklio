@@ -11,9 +11,7 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
     res.json({
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
+      id: user._id,
       authority: user.authority,
       token: generateToken(user._id),
     });
@@ -44,9 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
     if (user) {
       res.status(201).json({
-        _id: user._id,
-        fullname: user.fullname,
-        email: user.email,
+        id: user._id,
         authority: user.authority,
         token: generateToken(user._id),
       });
@@ -62,7 +58,8 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const { id } = req.body;
+  const user = await User.findOne(id);
   if (user) {
     res.json({
       _id: user._id,
@@ -92,9 +89,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
     const updatedUser = await user.save();
     res.json({
-      _id: updatedUser._id,
-      fullname: updatedUser.fullname,
-      email: updatedUser.email,
+      id: updatedUser._id,
       authority: updatedUser.authority,
       token: generateToken(updatedUser._id),
     });

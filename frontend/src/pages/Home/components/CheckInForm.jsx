@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "../../../components/styles";
 import axios from "axios";
-import { get, set } from "mongoose";
 
 const getAllFees = async ({ setCarWashCost, setOilChangingCost }) => {
   try {
@@ -13,29 +12,48 @@ const getAllFees = async ({ setCarWashCost, setOilChangingCost }) => {
   }
 };
 
-function CheckInForm() {
+const registerVehicle = async ({ userInfo, plateNumber, vehicleOwner, vehicleType, inputTime, parkingType
+  , serviceCost, oilChanging, oilType, carWashCost, oilChangingCost }) => {
+  try {
+    console.log(userInfo)
+    const response = await axios.post("http://localhost:5000/api/vehicles/checkin", {
+      plateNumber: plateNumber,
+      vehicleOwner: vehicleOwner,
+      vehicleType: vehicleType,
+      inputTime: inputTime,
+      parkingType: parkingType,
+      serviceCost: serviceCost,
+      oilChanging: oilChanging,
+      carWashCost: carWashCost,
+      oilChangingCost: oilChangingCost,
+      oilType: oilType,
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+    console.log(response.data);
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+function CheckInForm({ userInfo }) {
   const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
   const [errorPlate, setErrorPlate] = useState("");
   const [plate, setPlate] = useState("");
   const [owner, setOwner] = useState("");
-  const [inputTime, setInputTime] = useState({});
+  const [inputTime, setInputTime] = useState("");
   const [parkingType, setParkingType] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [serviceCost, setServiceCost] = useState(0);
   const [carWash, setCarWash] = useState(false);
   const [oilChanging, setOilChanging] = useState(false);
-  const [oilType, setOilType] = useState("castrol");
-  const [fuelFilling, setFuelFilling] = useState(false);
-  const [fuelType, setFuelType] = useState("ron95");
+  const [oilType, setOilType] = useState("pennzoil");
   const [carWashCost, setCarWashCost] = useState(0);
   const [oilChangingCost, setOilChangingCost] = useState(0);
-  const [fuelFillingCost, setFuelFillingCost] = useState(0);
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    setInputTime(new Date());
-    console.log(plate, owner, inputTime, parkingType, vehicleType);
-  };
   const isValidPlate = (plate) => {
     return patternPlate.test(plate);
   };
@@ -47,8 +65,29 @@ function CheckInForm() {
   };
 
   useEffect(() => {
-    getAllFees({ setCarWashCost, setOilChangingCost, setFuelFillingCost });
+    getAllFees({ setCarWashCost, setOilChangingCost });
   }, []);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setInputTime(new Date().toLocaleString());
+    const inputData = {
+      userInfo: userInfo,
+      plateNumber: plate,
+      vehicleOwner: owner,
+      inputTime: inputTime,
+      parkingType: parkingType,
+      vehicleType: vehicleType,
+      serviceCost: serviceCost,
+      oilChanging: oilChanging,
+      oilType: oilType,
+      carWashCost: carWash ? carWashCost : 0,
+      oilChangingCost: oilChanging ? oilChangingCost : 0,
+    };
+    console.log(inputData)
+    registerVehicle(inputData);
+  };
+
   return (
     <div className="mt-10">
       <form onSubmit={handleRegister} className="grid grid-cols-2 gap-9">
@@ -63,7 +102,7 @@ function CheckInForm() {
                   value={plate || ""}
                   onChange={handleChangePlate}
                   style={styles.backgroundInputField}
-                  className="p-4 rounded-xl"
+                  className="p-4 rounded-xl drop-shadow-md"
                   maxLength={8}
                   required
                 />
@@ -76,14 +115,14 @@ function CheckInForm() {
                   value={owner || ""}
                   onChange={(e) => setOwner(e.target.value)}
                   style={styles.backgroundInputField}
-                  className="p-4 rounded-xl"
+                  className="p-4 rounded-xl drop-shadow-md"
                   required
                 />
               </div>
             </div>
             <div className="flex flex-col gap-y-10">
               <div
-                className="flex flex-row gap-9 mb-5 p-4 rounded-xl"
+                className="flex flex-row gap-x-9 mb-5 p-4 rounded-xl drop-shadow-md"
                 style={styles.backgroundInputField}
               >
                 <h2>Type of parking:</h2>
@@ -98,7 +137,7 @@ function CheckInForm() {
                 </div>
               </div>
               <div
-                className="flex flex-row gap-9 p-4 rounded-xl"
+                className="flex flex-row gap-x-9 p-4 rounded-xl drop-shadow-md"
                 style={styles.backgroundInputField}
               >
                 <h2>Type of vehicle:</h2>
@@ -180,13 +219,14 @@ function CheckInForm() {
           </div>
           <h1 className="my-10 font-bold">Service cost: {serviceCost || 0}</h1>
         </div>
-
-        <button
-          type="submit"
-          className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out"
-        >
-          REGISTER
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
+          >
+            REGISTER
+          </button>
+        </div>
       </form>
     </div>
   );

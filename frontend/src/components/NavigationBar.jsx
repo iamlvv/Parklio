@@ -5,29 +5,40 @@ import statisticsLogo from "../assets/img/statistics-logo.png";
 import logoutLogo from "../assets/img/logout-logo.png";
 import managementLogo from "../assets/img/management-logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { styles } from "./styles";
+import axios from "axios";
 
-const styles = {
-  navigationWidth: {
-    width: "175px",
-    top: "20%",
-    position: "absolute",
-  },
-};
+const getUserDetails = async ({ userToken, setAuthority }) => {
+  try {
+    const response = await axios.get("http://localhost:5000/api/users/profile"
+      , {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+
+      });
+    setAuthority(response.data.authority);
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
 function NavigationBar() {
   const navigate = useNavigate();
-  const [authority, setAuthority] = useState(false);
+  const [authority, setAuthority] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
-    if (userInfo.authority === "officer") {
-      setAuthority(false);
+    if (!userInfo) {
+      navigate("/");
     } else {
-      setAuthority(true);
+      setAuthority(userInfo.authority);
     }
   }, []);
-  const notAuthorizedManagement = <div></div>;
 
+  const notAuthorizedManagement = <div></div>;
   const authorizedManagement = (
-    <Link to={authority ? "/management" : ""}>
+    <Link to={authority === "admin" ? "/management" : ""}>
       <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
         <img src={managementLogo} alt="Management" />
         <h1>Management</h1>
@@ -41,7 +52,7 @@ function NavigationBar() {
   };
   return (
     <div
-      className="flex flex-col gap-9 font-bold px-3 float-left z-40 fixed"
+      className="flex flex-col gap-9 font-bold px-3 float-left z-40 fixed drop-shadow-lg"
       style={styles.navigationWidth}
     >
       <Link to="/homepage">

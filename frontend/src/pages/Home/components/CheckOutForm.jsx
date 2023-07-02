@@ -14,19 +14,19 @@ function CheckOutForm() {
                   type="text"
                   placeholder="Plate Number"
                   style={styles.backgroundInputField}
-                  className="p-4 rounded-xl"
+                  className="p-4 rounded-xl drop-shadow-lg"
                 />
                 <input
                   type="text"
                   placeholder="Parking Key"
                   style={styles.backgroundInputField}
-                  className="p-4 rounded-xl"
+                  className="p-4 rounded-xl drop-shadow-lg"
                 />
               </div>
               <div className="mt-10">
                 <button
                   type="button"
-                  className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out"
+                  className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
                 >
                   Verify Vehicle
                 </button>
@@ -37,7 +37,7 @@ function CheckOutForm() {
           <div>
             <button
               type="submit"
-              className="mb-10 rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out"
+              className="mb-10 rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
             >
               Check out
             </button>

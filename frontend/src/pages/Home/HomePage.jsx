@@ -4,6 +4,26 @@ import CheckInForm from "./components/CheckInForm";
 import { styles } from "../../components/styles";
 import CheckOutForm from "./components/CheckOutForm";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const getUserDetails = async ({ userInfo, setName }) => {
+  try {
+    const response = await axios.get("http://localhost:5000/api/users/profile",
+      {
+        id: userInfo.id
+      }
+      , {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+
+      });
+    setName(response.data.fullname);
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
 
 function HomePage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -13,7 +33,7 @@ function HomePage() {
     if (!userInfo) {
       navigate("/");
     } else {
-      setName(userInfo.fullname);
+      getUserDetails({ userInfo: userInfo, setName })
     }
   }, []);
   return (
@@ -23,8 +43,8 @@ function HomePage() {
       </div>
       <div style={styles.content}>
         <h1 className="font-bold text-3xl mt-5">Hello, {name || ""}</h1>
-        <CheckInForm />
-        <CheckOutForm />
+        <CheckInForm userInfo={userInfo} />
+        <CheckOutForm userInfo={userInfo} />
       </div>
     </div>
   );

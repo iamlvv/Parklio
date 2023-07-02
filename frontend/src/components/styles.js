@@ -16,4 +16,9 @@ export const styles = {
   textColor: {
     color: "#E9C462",
   },
+  navigationWidth: {
+    width: "175px",
+    top: "20%",
+    position: "absolute",
+  },
 };

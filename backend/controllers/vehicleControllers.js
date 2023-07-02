@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Vehicle = require("../models/vehicleModel");
+const Fee = require('../models/feeModel');
 // @desc    Fetch all vehicles
 // @route   GET /api/vehicles
 // @access  Public
@@ -31,26 +32,48 @@ const addVehicle = asyncHandler(async (req, res) => {
     plateNumber,
     vehicleType,
     vehicleOwner,
-    parkingPrice,
     inputTime,
     outputTime,
     parkingType,
-    remainingTime,
-    additionalService,
-    totalCost,
-  } = req.body;
+    serviceCost,
+    carWashCost,
+    oilType,
+    oilChangingCost,
 
+  } = req.body;
+  console.log(req.body)
+  const fees = await Fee.find({});
   const vehicle = new Vehicle({
-    plateNumber,
-    vehicleType,
-    vehicleOwner,
-    parkingPrice,
-    inputTime,
+    plateNumber: plateNumber,
+    vehicleType: vehicleType,
+    vehicleOwner: vehicleOwner,
+    parkingPrice: vehicleType === '4seatcar' ? fees[0].fourSeatCar.price : vehicleType === '7seatcar' ? fees[0].sevenSeatCar.price : fees[0].truck.price,
+    inputTime: inputTime,
     outputTime,
-    parkingType,
-    remainingTime,
-    additionalService,
-    totalCost,
+    parkingType: parkingType,
+    remainingTime: 1,
+    additionalService: {
+      carWashing: carWashCost !== 0 ? {
+        registerDate: inputTime,
+        cost: carWashCost,
+      } : {
+        registerDate: null,
+        cost: 0,
+      },
+      oilChanging: oilChangingCost !== 0 ? {
+        registerDate: inputTime,
+        oilType: oilType,
+        oilPrice: oilChangingCost,
+        cost: oilChangingCost,
+      } : {
+        registerDate: null,
+        oilType: null,
+        oilPrice: 0,
+        cost: 0,
+      },
+      latestCost: carWashCost + oilChangingCost,
+    },
+    totalCost: serviceCost,
     parkingKey: Math.floor(Math.random() * 1000000),
   });
   const createdVehicle = await vehicle.save();

@@ -23,11 +23,11 @@ const vehicleSchema = new mongoose.Schema(
       required: true,
     },
     inputTime: {
-      type: Object,
+      type: String,
       required: true,
     },
     outputTime: {
-      type: Object,
+      type: String,
     },
     parkingType: {
       type: String,
@@ -35,36 +35,29 @@ const vehicleSchema = new mongoose.Schema(
     },
     remainingTime: {
       type: Number,
+      default: 1,
     },
     additionalService: {
       carWashing: {
-        history: [
-          {
-            registerDate: {
-              type: Object,
-            },
-          },
-        ],
-        upToNowCost: {
+        registerDate: {
+          type: String,
+        },
+        cost: {
           type: Number,
           default: 0,
         },
       },
       oilChanging: {
-        history: [
-          {
-            registerDate: {
-              type: Object,
-            },
-            oilType: {
-              type: String,
-            },
-            oilPrice: {
-              type: Number,
-            },
-          },
-        ],
-        upToNowCost: {
+        registerDate: {
+          type: String,
+        },
+        oilType: {
+          type: String,
+        },
+        oilPrice: {
+          type: Number,
+        },
+        cost: {
           type: Number,
           default: 0,
         },
