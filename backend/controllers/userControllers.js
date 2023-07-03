@@ -79,19 +79,23 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 
 const updateUserProfile = asyncHandler(async (req, res) => {
+  const { fullname, email, newPassword, oldPassword } = req.body;
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.fullname = req.body.fullname || user.fullname;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password;
+    user.fullname = fullname || user.fullname;
+    user.email = email || user.email;
+    if (newPassword) {
+      if (await user.matchPassword(oldPassword)) {
+        user.password = newPassword;
+      } else {
+        res.status(401);
+        throw new Error("Invalid password");
+      }
     }
     const updatedUser = await user.save();
     res.json({
-      id: updatedUser._id,
-      authority: updatedUser.authority,
-      token: generateToken(updatedUser._id),
+      message: "success",
     });
   } else {
     res.status(404);

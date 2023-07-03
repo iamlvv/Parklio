@@ -10,9 +10,6 @@ export const styles = {
   content: {
     marginLeft: "175px",
   },
-  backgroundInputCost: {
-    backgroundColor: "#F2DCA1",
-  },
   textColor: {
     color: "#E9C462",
   },

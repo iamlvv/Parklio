@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Vehicle = require("../models/vehicleModel");
-const Fee = require('../models/feeModel');
+const Fee = require("../models/feeModel");
+const Service = require("../models/serviceModel");
 // @desc    Fetch all vehicles
 // @route   GET /api/vehicles
 // @access  Public
@@ -39,38 +40,48 @@ const addVehicle = asyncHandler(async (req, res) => {
     carWashCost,
     oilType,
     oilChangingCost,
-
   } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   const fees = await Fee.find({});
   const vehicle = new Vehicle({
     plateNumber: plateNumber,
     vehicleType: vehicleType,
     vehicleOwner: vehicleOwner,
-    parkingPrice: vehicleType === '4seatcar' ? fees[0].fourSeatCar.price : vehicleType === '7seatcar' ? fees[0].sevenSeatCar.price : fees[0].truck.price,
+    parkingPrice:
+      vehicleType === "4seatcar"
+        ? fees[0].fourSeatCar.price
+        : vehicleType === "7seatcar"
+        ? fees[0].sevenSeatCar.price
+        : fees[0].truck.price,
     inputTime: inputTime,
     outputTime,
     parkingType: parkingType,
     remainingTime: 1,
     additionalService: {
-      carWashing: carWashCost !== 0 ? {
-        registerDate: inputTime,
-        cost: carWashCost,
-      } : {
-        registerDate: null,
-        cost: 0,
-      },
-      oilChanging: oilChangingCost !== 0 ? {
-        registerDate: inputTime,
-        oilType: oilType,
-        oilPrice: oilChangingCost,
-        cost: oilChangingCost,
-      } : {
-        registerDate: null,
-        oilType: null,
-        oilPrice: 0,
-        cost: 0,
-      },
+      carWashing:
+        carWashCost !== 0
+          ? {
+              registerDate: inputTime,
+              cost: carWashCost,
+            }
+          : {
+              registerDate: null,
+              cost: 0,
+            },
+      oilChanging:
+        oilChangingCost !== 0
+          ? {
+              registerDate: inputTime,
+              oilType: oilType,
+              oilPrice: oilChangingCost,
+              cost: oilChangingCost,
+            }
+          : {
+              registerDate: null,
+              oilType: null,
+              oilPrice: 0,
+              cost: 0,
+            },
       latestCost: carWashCost + oilChangingCost,
     },
     totalCost: serviceCost,
@@ -83,21 +94,39 @@ const addVehicle = asyncHandler(async (req, res) => {
 });
 
 // @desc    Verify a vehicle
-// @route   GET /api/vehicles
+// @route   POST /api/vehicles/verifyvehicle
 // @access  Private
 
 const verifyVehicle = asyncHandler(async (req, res) => {
   const { plateNumber, parkingKey } = req.body;
-  const VehicleExists = await Vehicle.findOne({ parkingKey });
+  const VehicleExists = await Vehicle.findOne({ plateNumber, parkingKey });
+  console.log(plateNumber);
+  if (VehicleExists) {
+    res.json({
+      plateNumber: VehicleExists.plateNumber,
+      vehicleType: VehicleExists.vehicleType,
+      vehicleOwner: VehicleExists.vehicleOwner,
+      parkingPrice: VehicleExists.parkingPrice,
+      inputTime: VehicleExists.inputTime,
+      parkingType: VehicleExists.parkingType,
+      remainingTime: VehicleExists.remainingTime,
+      additionalService: VehicleExists.additionalService,
+      totalCost: VehicleExists.totalCost,
+    });
+  } else {
+    res.status(404);
+    throw new Error("Invalid parking key");
+  }
 });
 
 // @desc    Checkout a vehicle
-// @route   PUT /api/vehicles/:id
+// @route   PUT /api/vehicles/checkout
 // @access  Private
 
 const checkoutVehicle = asyncHandler(async (req, res) => {
   const { plateNumber, parkingKey } = req.body;
-  const vehicle = await Vehicle.findOne({ parkingKey });
+  console.log(plateNumber, parkingKey);
+  const vehicle = await Vehicle.findOne({ plateNumber, parkingKey });
   if (vehicle) {
     vehicle.outputTime = new Date();
     vehicle.remainingTime =
@@ -108,10 +137,20 @@ const checkoutVehicle = asyncHandler(async (req, res) => {
     vehicle.totalCost =
       vehicle.remainingTime * vehicle.parkingPrice +
       vehicle.additionalService.latestCost;
-    vehicle.parkingKey = null;
+    vehicle.parkingKey = "checked out";
+    vehicle.outputTime = new Date(vehicle.outputTime).toLocaleString();
     const updatedVehicle = await vehicle.save();
     res.json({
-      message: "success",
+      plateNumber: updatedVehicle.plateNumber,
+      vehicleType: updatedVehicle.vehicleType,
+      vehicleOwner: updatedVehicle.vehicleOwner,
+      parkingPrice: updatedVehicle.parkingPrice,
+      inputTime: updatedVehicle.inputTime,
+      outputTime: updatedVehicle.outputTime,
+      parkingType: updatedVehicle.parkingType,
+      remainingTime: updatedVehicle.remainingTime,
+      additionalService: updatedVehicle.additionalService,
+      totalCost: updatedVehicle.totalCost,
     });
   } else {
     res.status(404);
@@ -140,4 +179,5 @@ module.exports = {
   addVehicle,
   checkoutVehicle,
   deleteVehicle,
+  verifyVehicle,
 };

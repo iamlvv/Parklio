@@ -10,24 +10,26 @@ import axios from "axios";
 
 const getUserDetails = async ({ userToken, setAuthority }) => {
   try {
-    const response = await axios.get("http://localhost:5000/api/users/profile"
-      , {
+    const response = await axios.get(
+      "http://localhost:5000/api/users/profile",
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-
-      });
+      }
+    );
     setAuthority(response.data.authority);
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
   }
-}
+};
 
 function NavigationBar() {
   const navigate = useNavigate();
   const [authority, setAuthority] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const activeLink = "bg-yellow-400";
+  const inactiveLink = "bg-white";
   useEffect(() => {
     if (!userInfo) {
       navigate("/");

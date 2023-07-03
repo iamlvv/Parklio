@@ -12,34 +12,86 @@ const getAllFees = async ({ setCarWashCost, setOilChangingCost }) => {
   }
 };
 
-const registerVehicle = async ({ userInfo, plateNumber, vehicleOwner, vehicleType, inputTime, parkingType
-  , serviceCost, oilChanging, oilType, carWashCost, oilChangingCost }) => {
+const registerVehicle = async ({
+  userInfo,
+  plateNumber,
+  vehicleOwner,
+  vehicleType,
+  inputTime,
+  parkingType,
+  serviceCost,
+  oilChanging,
+  oilType,
+  carWashCost,
+  oilChangingCost,
+}) => {
   try {
-    console.log(userInfo)
-    const response = await axios.post("http://localhost:5000/api/vehicles/checkin", {
-      plateNumber: plateNumber,
-      vehicleOwner: vehicleOwner,
-      vehicleType: vehicleType,
-      inputTime: inputTime,
-      parkingType: parkingType,
-      serviceCost: serviceCost,
-      oilChanging: oilChanging,
-      carWashCost: carWashCost,
-      oilChangingCost: oilChangingCost,
-      oilType: oilType,
-    },
+    console.log(userInfo);
+    const response = await axios.post(
+      "http://localhost:5000/api/vehicles/checkin",
+      {
+        plateNumber: plateNumber,
+        vehicleOwner: vehicleOwner,
+        vehicleType: vehicleType,
+        inputTime: inputTime,
+        parkingType: parkingType,
+        serviceCost: serviceCost,
+        oilChanging: oilChanging,
+        carWashCost: carWashCost,
+        oilChangingCost: oilChangingCost,
+        oilType: oilType,
+      },
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
-      });
+      }
+    );
     console.log(response.data);
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
   }
-}
+};
 
+const registerService = async ({
+  userInfo,
+  plateNumber,
+  vehicleOwner,
+  vehicleType,
+  inputTime,
+  parkingType,
+  serviceCost,
+  oilChanging,
+  oilType,
+  carWashCost,
+  oilChangingCost,
+}) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/vehicles/addService",
+      {
+        plateNumber: plateNumber,
+        vehicleOwner: vehicleOwner,
+        vehicleType: vehicleType,
+        inputTime: inputTime,
+        parkingType: parkingType,
+        serviceCost: serviceCost,
+        oilChanging: oilChanging,
+        carWashCost: carWashCost,
+        oilChangingCost: oilChangingCost,
+        oilType: oilType,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 function CheckInForm({ userInfo }) {
   const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
   const [errorPlate, setErrorPlate] = useState("");
@@ -71,6 +123,7 @@ function CheckInForm({ userInfo }) {
   const handleRegister = (e) => {
     e.preventDefault();
     setInputTime(new Date().toLocaleString());
+    console.log(inputTime);
     const inputData = {
       userInfo: userInfo,
       plateNumber: plate,
@@ -84,8 +137,11 @@ function CheckInForm({ userInfo }) {
       carWashCost: carWash ? carWashCost : 0,
       oilChangingCost: oilChanging ? oilChangingCost : 0,
     };
-    console.log(inputData)
+    console.log(inputData);
     registerVehicle(inputData);
+    if (carWash || oilChanging) {
+      registerService(inputData);
+    }
   };
 
   return (

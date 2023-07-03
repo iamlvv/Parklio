@@ -22,6 +22,10 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    oilType: {
+      type: String,
+      default: "none",
+    },
     cost: {
       type: Number,
       required: true,
