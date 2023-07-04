@@ -1,103 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "../../../components/styles";
-import axios from "axios";
+import { getAllFees } from "../../../components/actions/feeActions";
+import { registerService } from "../../../components/actions/serviceActions";
+import { registerVehicle } from "../../../components/actions/vehicleActions";
 
-const getAllFees = async ({ setCarWashCost, setOilChangingCost }) => {
-  try {
-    const response = await axios.get("http://localhost:5000/api/fees");
-    setCarWashCost(response.data[0].carWash.price);
-    setOilChangingCost(response.data[0].oilChange.price);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const registerVehicle = async ({
-  userInfo,
-  plateNumber,
-  vehicleOwner,
-  vehicleType,
-  inputTime,
-  parkingType,
-  serviceCost,
-  oilChanging,
-  oilType,
-  carWashCost,
-  oilChangingCost,
-}) => {
-  try {
-    console.log(userInfo);
-    const response = await axios.post(
-      "http://localhost:5000/api/vehicles/checkin",
-      {
-        plateNumber: plateNumber,
-        vehicleOwner: vehicleOwner,
-        vehicleType: vehicleType,
-        inputTime: inputTime,
-        parkingType: parkingType,
-        serviceCost: serviceCost,
-        oilChanging: oilChanging,
-        carWashCost: carWashCost,
-        oilChangingCost: oilChangingCost,
-        oilType: oilType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const registerService = async ({
-  userInfo,
-  plateNumber,
-  vehicleOwner,
-  vehicleType,
-  inputTime,
-  parkingType,
-  serviceCost,
-  oilChanging,
-  oilType,
-  carWashCost,
-  oilChangingCost,
-}) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/vehicles/addService",
-      {
-        plateNumber: plateNumber,
-        vehicleOwner: vehicleOwner,
-        vehicleType: vehicleType,
-        inputTime: inputTime,
-        parkingType: parkingType,
-        serviceCost: serviceCost,
-        oilChanging: oilChanging,
-        carWashCost: carWashCost,
-        oilChangingCost: oilChangingCost,
-        oilType: oilType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
 function CheckInForm({ userInfo }) {
   const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
   const [errorPlate, setErrorPlate] = useState("");
   const [plate, setPlate] = useState("");
   const [owner, setOwner] = useState("");
-  const [inputTime, setInputTime] = useState("");
   const [parkingType, setParkingType] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [serviceCost, setServiceCost] = useState(0);
@@ -106,6 +17,7 @@ function CheckInForm({ userInfo }) {
   const [oilType, setOilType] = useState("pennzoil");
   const [carWashCost, setCarWashCost] = useState(0);
   const [oilChangingCost, setOilChangingCost] = useState(0);
+
   const isValidPlate = (plate) => {
     return patternPlate.test(plate);
   };
@@ -122,13 +34,11 @@ function CheckInForm({ userInfo }) {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    setInputTime(new Date().toLocaleString());
-    console.log(inputTime);
     const inputData = {
       userInfo: userInfo,
       plateNumber: plate,
       vehicleOwner: owner,
-      inputTime: inputTime,
+      inputTime: new Date().toLocaleString(),
       parkingType: parkingType,
       vehicleType: vehicleType,
       serviceCost: serviceCost,
@@ -137,15 +47,29 @@ function CheckInForm({ userInfo }) {
       carWashCost: carWash ? carWashCost : 0,
       oilChangingCost: oilChanging ? oilChangingCost : 0,
     };
-    console.log(inputData);
     registerVehicle(inputData);
-    if (carWash || oilChanging) {
-      registerService(inputData);
+    if (carWash) {
+      registerService({
+        ...inputData,
+        oilType: null,
+        oilChangingCost: 0,
+        serviceCost: carWashCost,
+      });
+    }
+    if (oilChanging) {
+      registerService({
+        ...inputData,
+        carWashCost: 0,
+        serviceCost: oilChangingCost,
+      });
     }
   };
 
   return (
     <div className="mt-10">
+      <h1 className="font-bold text-3xl mt-5 mb-5 text-yellow-700">
+        Check in Vehicle
+      </h1>
       <form onSubmit={handleRegister} className="grid grid-cols-2 gap-9">
         <div>
           <h2 className="font-bold text-2xl">Parking Registration</h2>

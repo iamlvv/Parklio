@@ -8,22 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { styles } from "./styles";
 import axios from "axios";
 
-const getUserDetails = async ({ userToken, setAuthority }) => {
-  try {
-    const response = await axios.get(
-      "http://localhost:5000/api/users/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      }
-    );
-    setAuthority(response.data.authority);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 function NavigationBar() {
   const navigate = useNavigate();
   const [authority, setAuthority] = useState("");

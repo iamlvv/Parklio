@@ -65,7 +65,7 @@ const addVehicle = asyncHandler(async (req, res) => {
               cost: carWashCost,
             }
           : {
-              registerDate: null,
+              registerDate: "",
               cost: 0,
             },
       oilChanging:
@@ -77,8 +77,8 @@ const addVehicle = asyncHandler(async (req, res) => {
               cost: oilChangingCost,
             }
           : {
-              registerDate: null,
-              oilType: null,
+              registerDate: "",
+              oilType: "",
               oilPrice: 0,
               cost: 0,
             },
@@ -173,6 +173,46 @@ const deleteVehicle = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Calculate Income of a day
+const getDaysInMonth = (month, year) =>
+  new Array(31)
+    .fill("")
+    .map((v, i) => new Date(year, month - 1, i + 1))
+    .filter((v) => v.getMonth() === month - 1);
+
+const calculateIncomeDaily = async (date) => {
+  const vehicle = await Vehicle.find({ outputTime: { $ne: true } });
+  const result = [{}];
+  let income = 0;
+  for (let i = 0; i < vehicle.length; i++) {
+    const date1 = new Date(vehicle[i].outputTime).toLocaleDateString();
+    if (date1 === date) {
+      result.push(vehicle[i]);
+    }
+  }
+  console.log(result);
+  for (let i = 0; i < result.length; i++) {
+    income += result[i].totalCost;
+  }
+  return income;
+};
+// @desc    Calculate Income of a month
+// @route   GET /api/vehicles/income
+// @access  Private/Admin
+
+const calculateIncomeMonthly = asyncHandler(async (req, res) => {
+  const { month, year } = req.body;
+  const daysInMonth = getDaysInMonth(month, year);
+  const income = [{}];
+  for (let i = 0; i < daysInMonth.length; i++) {
+    income.push({
+      date: daysInMonth[i].toLocaleDateString(),
+      income: await calculateIncomeDaily(daysInMonth[i].toLocaleDateString()),
+    });
+  }
+  res.json(income);
+});
+
 module.exports = {
   getAllVehicles,
   getVehicleById,
@@ -180,4 +220,5 @@ module.exports = {
   checkoutVehicle,
   deleteVehicle,
   verifyVehicle,
+  calculateIncomeMonthly,
 };

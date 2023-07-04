@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { styles } from "../../components/styles";
+import { Login } from "./components/authActions";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -11,25 +12,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
-      console.log(response.data);
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
-      navigate("/homepage");
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
+    Login({ email, password, navigate });
   };
   return (
     <div className="grid grid-cols-3">

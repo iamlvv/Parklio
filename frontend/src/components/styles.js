@@ -18,4 +18,15 @@ export const styles = {
     top: "20%",
     position: "absolute",
   },
+  th: {
+    textAlign: "center",
+    backgroundColor: "#E9C462",
+    color: "white",
+    padding: "10px",
+  },
+  td: {
+    textAlign: "center",
+    backgroundColor: "#F2DCA1",
+    padding: "10px",
+  },
 };

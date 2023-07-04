@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { styles } from "../../components/styles";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { SignUp } from "./components/authActions";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -14,25 +15,7 @@ function SignupPage() {
   const [authority, setAuthority] = useState("officer");
   const handleSignup = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/users/signup",
-        {
-          email,
-          password,
-          fullname: fullName,
-          authority,
-        }
-      );
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
-      navigate("/homepage");
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
+    SignUp({ fullName, email, password, authority, navigate });
   };
   return (
     <div className="grid grid-cols-3">

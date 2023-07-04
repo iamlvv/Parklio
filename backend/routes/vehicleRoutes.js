@@ -8,6 +8,7 @@ const {
   checkoutVehicle,
   deleteVehicle,
   verifyVehicle,
+  calculateIncomeMonthly,
 } = require("../controllers/vehicleControllers");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -20,5 +21,5 @@ router.route("/checkin").post(protect, addVehicle);
 //   .delete(protect, deleteVehicle);
 router.route("/checkout").post(protect, checkoutVehicle);
 router.route("/verifyvehicle").post(protect, verifyVehicle);
-
+router.route("/monthlyincome").post(calculateIncomeMonthly);
 module.exports = router;

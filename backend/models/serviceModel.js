@@ -15,7 +15,7 @@ const serviceSchema = new mongoose.Schema(
       required: true,
     },
     registerTime: {
-      type: Date,
+      type: String,
       required: true,
     },
     serviceType: {

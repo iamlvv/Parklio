@@ -1,73 +1,12 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../../components/NavigationBar";
 import { styles } from "../../components/styles";
+import {
+  GetUserDetails,
+  UpdateUserProfile,
+} from "../../components/actions/userActions";
 import Swal from "sweetalert2";
-import axios from "axios";
 
-const GetUserDetails = async ({
-  userInfo,
-  setFullName,
-  setEmail,
-  setAuthority,
-}) => {
-  try {
-    const response = await axios.get(
-      "http://localhost:5000/api/users/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    setFullName(response.data.fullname);
-    setEmail(response.data.email);
-    setAuthority(response.data.authority);
-  } catch (error) {
-    console.log(error);
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-    });
-  }
-};
-const UpdateUserProfile = async ({
-  userInfo,
-  fullName,
-  email,
-  currentPassword,
-  newPassword,
-}) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/users/profile",
-      {
-        fullname: fullName,
-        email: email,
-        oldPassword: currentPassword,
-        newPassword: newPassword,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    console.log(response.data);
-    Swal.fire({
-      icon: "success",
-      title: "Success!",
-      text: "Your profile has been updated.",
-    });
-  } catch (error) {
-    console.log(error);
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-    });
-  }
-};
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");

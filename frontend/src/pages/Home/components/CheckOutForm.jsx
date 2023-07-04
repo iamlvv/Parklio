@@ -1,54 +1,6 @@
 import React, { useState } from "react";
 import { styles } from "../../../components/styles";
-import axios from "axios";
-
-const CheckOutVehicle = async ({
-  userInfo,
-  parkingKey,
-  plateNumber,
-  setVehicleVerified,
-  setPlateNumber,
-  setParkingKey,
-  setInputTime,
-  setVehicleOwner,
-  setVehicleType,
-  setParkingType,
-  setServiceCost,
-  setCarWashCost,
-  setOilChangingCost,
-  setTotalCost,
-  setOilType,
-}) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/vehicles/checkout",
-      {
-        plateNumber: plateNumber,
-        parkingKey: parkingKey,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
-    console.log(response.data);
-    setVehicleVerified(true);
-    setPlateNumber(response.data.plateNumber);
-    setParkingKey(response.data.parkingKey);
-    setInputTime(response.data.inputTime);
-    setVehicleOwner(response.data.vehicleOwner);
-    setVehicleType(response.data.vehicleType);
-    setParkingType(response.data.parkingType);
-    setServiceCost(response.data.serviceCost);
-    setCarWashCost(response.data.additionalService.carWashing.cost);
-    setOilChangingCost(response.data.additionalService.oilChanging.cost);
-    setTotalCost(response.data.totalCost);
-    setOilType(response.data.additionalService.oilChanging.oilType);
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { CheckOutVehicle } from "../../../components/actions/vehicleActions";
 
 function CheckOutForm() {
   const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
@@ -100,7 +52,9 @@ function CheckOutForm() {
 
   return (
     <div>
-      <h2 className="font-bold text-2xl mt-10">Check out vehicle</h2>
+      <h1 className="font-bold text-3xl mt-5 text-yellow-700">
+        Check out Vehicle
+      </h1>
       <div>
         <form onSubmit={handleCheckOut}>
           <div>
@@ -165,6 +119,7 @@ function CheckOutForm() {
             <button
               type="submit"
               className="mb-10 rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
+              disabled={vehicleVerified ? true : false}
             >
               Check out
             </button>
