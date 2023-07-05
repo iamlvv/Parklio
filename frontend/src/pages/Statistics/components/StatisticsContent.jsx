@@ -5,6 +5,13 @@ import { styles } from "../../../components/styles";
 import { getAllServices } from "../../../components/actions/serviceActions";
 import ReactPaginate from "react-paginate";
 import { ServiceItems, VehicleItems } from "./ItemsPerPage";
+import {
+  IncomeMonthly,
+  IncomeYearly,
+  calculateIncomeDaily,
+} from "./IncomeCalculations";
+import axios from "axios";
+import Graph from "./Graph";
 
 const Paginate = ({ pageCount, handlePageClick }) => {
   return (
@@ -19,8 +26,8 @@ const Paginate = ({ pageCount, handlePageClick }) => {
       nextLinkClassName={"nextBtn"}
       disabledClassName={"paginationDisabled"}
       activeClassName="font-bold text-2xl"
-      pageClassName="py-2 px-3 hover:shadow-md hover:bg-amber-200 transition ease-in rounded-md"
-      className="flex justify-center items-center px-5 font-medium rounded-md mb-10 gap-x-5"
+      pageClassName="py-2 px-3 hover:shadow-md hover:bg-black hover:text-white bg-white text-black transition ease-in rounded-md"
+      className="flex justify-center items-center px-5 font-medium rounded-md mb-5 gap-x-5"
       style={styles.pagination}
     />
   );
@@ -139,7 +146,43 @@ function ServiceStatistics({
   );
 }
 function IncomeStatistics({ typeOfStatistics, typeOfTime, userInfo }) {
-  return <div>hello World</div>;
+  const [vehicleList, setVehicleList] = useState([]);
+  const [graphData, setGraphData] = useState([]);
+  console.log(typeOfTime);
+  const handleClick = async (typeOfTime) => {
+    const response = await axios.get(
+      "http://localhost:5000/api/vehicles/checkedout",
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    let incomeList = response.data;
+    if (typeOfTime === "month") {
+      let month = new Date().getMonth() + 1;
+      let year = new Date().getFullYear();
+      setGraphData(IncomeMonthly({ incomeList, month, year }));
+    } else if (typeOfTime === "year") {
+      let year = new Date().getFullYear();
+      setGraphData(IncomeYearly({ incomeList, year }));
+      console.log(graphData);
+    }
+  };
+  useEffect(() => {
+    handleClick(typeOfTime);
+  }, [typeOfTime]);
+  return (
+    <div>
+      {graphData.length !== 0 ? (
+        <div className="mx-auto">
+          <Graph data={graphData} />
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 }
 
 function StatisticsContent({ typeOfStatistics, typeOfTime }) {

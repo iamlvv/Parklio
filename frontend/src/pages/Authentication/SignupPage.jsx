@@ -5,6 +5,8 @@ import { styles } from "../../components/styles";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SignUp } from "./components/authActions";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -18,9 +20,10 @@ function SignupPage() {
     SignUp({ fullName, email, password, authority, navigate });
   };
   return (
-    <div className="grid grid-cols-3">
-      <div className="col-span-2 text-center mt-10">
-        <div>
+    <div className="">
+      <Header />
+      <div className="flex mt-20">
+        <div style={styles.body} className="m-auto text-center">
           <h1 className="uppercase font-bold text-5xl">welcome to parklio</h1>
           <form className="mt-10" onSubmit={handleSignup}>
             <div>
@@ -28,50 +31,45 @@ function SignupPage() {
                 type="text"
                 placeholder="Full Name"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={fullName || ""}
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
-            <div className="mt-10">
+            <div className="mt-5">
               <input
                 type="text"
                 placeholder="Email"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="mt-10">
+            <div className="mt-5">
               <input
                 type="password"
                 placeholder="Password"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={password || ""}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="mt-10">
+            <div className="mt-5">
               <input
                 type="password"
                 placeholder="Confirm Password"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={confirmPassword || ""}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div className="mt-10">
+            <div className="mt-5">
               <button
                 type="submit"
-                style={styles.backgroundButton}
-                className="font-bold text-2xl p-2 rounded-xl hover:bg-ye"
+                className="font-bold text-2xl p-2 rounded-xl border border-black hover:bg-black hover:text-white transition ease-in-out"
               >
                 SIGN UP
               </button>
@@ -79,17 +77,16 @@ function SignupPage() {
           </form>
           <div className="mt-5">
             <h2>Already had your account?</h2>
-            <Link to="/">
-              <h2 style={styles.textColor} className="font-bold">
-                Log in
-              </h2>
-            </Link>
+            <button
+              className="font-bold rounded-xl p-1 hover:text-white hover:bg-black transition ease-in-out text-gray-500"
+              onClick={() => navigate("/")}
+            >
+              Log in
+            </button>
           </div>
         </div>
       </div>
-      <div className="">
-        <img src={loginImage} alt="Login" className="" />
-      </div>
+      <Footer />
     </div>
   );
 }

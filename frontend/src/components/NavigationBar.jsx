@@ -25,8 +25,8 @@ function NavigationBar() {
   const notAuthorizedManagement = <div></div>;
   const authorizedManagement = (
     <Link to={authority === "admin" ? "/management" : ""}>
-      <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
-        <img src={managementLogo} alt="Management" />
+      <div className="flex flex-row text-center gap-x-3 items-center hover:bg-gray-50 rounded-md py-5 transition ease-in-out">
+        <img src={managementLogo} alt="Management" width={30} height={30} />
         <h1>Management</h1>
       </div>
     </Link>
@@ -37,35 +37,30 @@ function NavigationBar() {
     navigate("/");
   };
   return (
-    <div
-      className="flex flex-col gap-9 font-bold px-3 float-left z-40 fixed drop-shadow-lg"
-      style={styles.navigationWidth}
-    >
-      <Link to="/homepage">
-        <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
-          <img src={homeLogo} alt="Home" />
-          <h1>Home</h1>
-        </div>
-      </Link>
-      <Link to="/statistics">
-        <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
-          <img src={statisticsLogo} alt="Statistics" />
-          <h1>Statistics</h1>
-        </div>
-      </Link>
-      <Link to="/userprofile">
-        <div className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out">
-          <img src={userLogo} alt="User Profile" />
-          <h1>User Profile</h1>
-        </div>
-      </Link>
-      {authority ? authorizedManagement : notAuthorizedManagement}
+    <div>
       <div
-        className="flex flex-col items-center hover:bg-yellow-400 rounded-xl py-5 transition ease-in-out cursor-pointer"
-        onClick={handleLogout}
+        className="flex flex-col font-bold float-left z-40 fixed rounded-sm"
+        style={styles.navigationWidth}
       >
-        <img src={logoutLogo} alt="Logout" />
-        <h1>Log out</h1>
+        <Link to="/homepage" className="">
+          <div className="flex flex-row text-center gap-x-3 items-center hover:bg-gray-100 rounded-md py-5 transition ease-in-out">
+            <img src={homeLogo} alt="Home" width={30} height={30} />
+            <h1>Home</h1>
+          </div>
+        </Link>
+        <Link to="/statistics">
+          <div className="flex flex-row text-center gap-x-3 items-center hover:bg-gray-100 rounded-md py-5 transition ease-in-out">
+            <img src={statisticsLogo} alt="Statistics" width={30} height={30} />
+            <h1>Statistics</h1>
+          </div>
+        </Link>
+        <Link to="/userprofile">
+          <div className="flex flex-row text-center gap-x-3 items-center hover:bg-gray-100 rounded-md py-5 transition ease-in-out">
+            <img src={userLogo} alt="User Profile" width={30} height={30} />
+            <h1>User Profile</h1>
+          </div>
+        </Link>
+        {authority ? authorizedManagement : notAuthorizedManagement}
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import { styles } from "../../components/styles";
 import CheckOutForm from "./components/CheckOutForm";
 import { useNavigate } from "react-router-dom";
 import { getUserName } from "../../components/actions/userActions";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 function HomePage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -19,10 +21,11 @@ function HomePage() {
   }, []);
   return (
     <div>
+      <Header />
       <div>
         <NavigationBar />
       </div>
-      <div style={styles.content}>
+      <div style={styles.content} className="">
         <h1 className="font-bold text-3xl mt-5">Hello, {name || ""}</h1>
         <CheckInForm userInfo={userInfo} />
         <CheckOutForm userInfo={userInfo} />

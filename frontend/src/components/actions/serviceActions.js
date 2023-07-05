@@ -29,7 +29,6 @@ const registerService = async ({
         },
       }
     );
-    console.log(response.data);
   } catch (error) {
     console.log(error);
   }

@@ -14,7 +14,6 @@ const registerVehicle = async ({
   oilChangingCost,
 }) => {
   try {
-    console.log(userInfo);
     const response = await axios.post(
       "http://localhost:5000/api/vehicles/checkin",
       {
@@ -35,11 +34,12 @@ const registerVehicle = async ({
         },
       }
     );
-    console.log(response.data);
     Swal.fire({
       icon: "success",
       title: "Success!",
       text: `Vehicle has been registered. The parking key is ${response.data.parkingKey}`,
+      iconColor: "#a16207",
+      confirmButtonColor: "#a16207",
     });
   } catch (error) {
     console.log(error);
@@ -81,7 +81,6 @@ const CheckOutVehicle = async ({
         },
       }
     );
-    console.log(response.data);
     setVehicleVerified(true);
     setPlateNumber(response.data.plateNumber);
     setParkingKey(response.data.parkingKey);
@@ -98,6 +97,8 @@ const CheckOutVehicle = async ({
       icon: "success",
       title: "Success!",
       text: `Vehicle has been checked out.`,
+      iconColor: "#a16207",
+      confirmButtonColor: "#a16207",
     });
   } catch (error) {
     console.log(error);
@@ -111,7 +112,6 @@ const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    console.log(response.data);
     setVehicleList(response.data);
   } catch (error) {
     console.log(error);

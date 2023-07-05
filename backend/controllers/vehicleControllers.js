@@ -42,6 +42,14 @@ const addVehicle = asyncHandler(async (req, res) => {
     oilChangingCost,
   } = req.body;
   console.log(req.body);
+  const vehicleNotCheckedOut = await Vehicle.findOne({ plateNumber });
+  if (
+    vehicleNotCheckedOut &&
+    vehicleNotCheckedOut.parkingKey !== "checked out"
+  ) {
+    res.status(400);
+    throw new Error("Vehicle already checked in");
+  }
   const fees = await Fee.find({});
   const vehicle = new Vehicle({
     plateNumber: plateNumber,
@@ -173,44 +181,13 @@ const deleteVehicle = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Calculate Income of a day
-const getDaysInMonth = (month, year) =>
-  new Array(31)
-    .fill("")
-    .map((v, i) => new Date(year, month - 1, i + 1))
-    .filter((v) => v.getMonth() === month - 1);
-
-const calculateIncomeDaily = async (date) => {
-  const vehicle = await Vehicle.find({ outputTime: { $ne: true } });
-  const result = [{}];
-  let income = 0;
-  for (let i = 0; i < vehicle.length; i++) {
-    const date1 = new Date(vehicle[i].outputTime).toLocaleDateString();
-    if (date1 === date) {
-      result.push(vehicle[i]);
-    }
-  }
-  console.log(result);
-  for (let i = 0; i < result.length; i++) {
-    income += result[i].totalCost;
-  }
-  return income;
-};
-// @desc    Calculate Income of a month
-// @route   GET /api/vehicles/income
+// @desc    Return checked out vehicles
+// @route   GET /api/vehicles/checkedout
 // @access  Private/Admin
 
-const calculateIncomeMonthly = asyncHandler(async (req, res) => {
-  const { month, year } = req.body;
-  const daysInMonth = getDaysInMonth(month, year);
-  const income = [{}];
-  for (let i = 0; i < daysInMonth.length; i++) {
-    income.push({
-      date: daysInMonth[i].toLocaleDateString(),
-      income: await calculateIncomeDaily(daysInMonth[i].toLocaleDateString()),
-    });
-  }
-  res.json(income);
+const getCheckedOutVehicles = asyncHandler(async (req, res) => {
+  const vehicles = await Vehicle.find({ parkingKey: "checked out" });
+  res.json(vehicles);
 });
 
 module.exports = {
@@ -220,5 +197,5 @@ module.exports = {
   checkoutVehicle,
   deleteVehicle,
   verifyVehicle,
-  calculateIncomeMonthly,
+  getCheckedOutVehicles,
 };

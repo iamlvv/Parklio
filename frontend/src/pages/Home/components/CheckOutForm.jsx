@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "../../../components/styles";
 import { CheckOutVehicle } from "../../../components/actions/vehicleActions";
 
 function CheckOutForm() {
-  const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
   const [errorPlate, setErrorPlate] = useState("");
   const [parkingKey, setParkingKey] = useState("");
   const [plateNumber, setPlateNumber] = useState("");
@@ -17,8 +16,18 @@ function CheckOutForm() {
   const [oilChangingCost, setOilChangingCost] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
   const [oilType, setOilType] = useState("pennzoil");
+  const [checkoutButton, setCheckoutButton] = useState(
+    plateNumber === "" || parkingKey === "" ? false : true
+  );
+
+  const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
+  const activeRegister =
+    "rounded-2xl p-4 font-bold hover:bg-black hover:text-white transition bg-white text-black ease-in-out drop-shadow-lg";
+  const inactiveRegister =
+    "rounded-2xl p-4 font-bold bg-gray-300 text-gray-500 cursor-not-allowed";
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+  //Check if plate number is valid
   const isValidPlate = (plate) => {
     return patternPlate.test(plate);
   };
@@ -28,6 +37,11 @@ function CheckOutForm() {
     } else setErrorPlate(null);
     setPlateNumber(e.target.value);
   };
+
+  useEffect(() => {
+    if (plateNumber === "" || parkingKey === "") setCheckoutButton(false);
+    else setCheckoutButton(true);
+  }, [plateNumber, parkingKey]);
 
   const handleCheckOut = (e) => {
     e.preventDefault();
@@ -51,41 +65,54 @@ function CheckOutForm() {
   };
 
   return (
-    <div>
-      <h1 className="font-bold text-3xl mt-5 text-yellow-700">
-        Check out Vehicle
-      </h1>
+    <div className="">
       <div>
-        <form onSubmit={handleCheckOut}>
-          <div>
-            <div className="my-10">
-              <div className="flex flex-row gap-5">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Plate Number"
-                    style={styles.backgroundInputField}
-                    className="p-4 rounded-xl drop-shadow-lg"
-                    value={plateNumber || ""}
-                    onChange={handleChangePlate}
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Parking Key"
-                    style={styles.backgroundInputField}
-                    className="p-4 rounded-xl drop-shadow-lg"
-                    value={parkingKey || ""}
-                    onChange={(e) => setParkingKey(e.target.value)}
-                  />
+        <h1 className="font-bold text-3xl mt-5 text-yellow-700 text-center">
+          Check out Vehicle
+        </h1>
+        <div className="grid grid-cols-2">
+          <div className="">
+            <form onSubmit={handleCheckOut}>
+              <div>
+                <div className="my-10">
+                  <div className="flex flex-row gap-5">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Plate Number"
+                        className="p-4 rounded-xl drop-shadow-lg border"
+                        value={plateNumber || ""}
+                        onChange={handleChangePlate}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Parking Key"
+                        className="p-4 rounded-xl drop-shadow-lg border"
+                        value={parkingKey || ""}
+                        onChange={(e) => setParkingKey(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {errorPlate && <h2 style={{ color: "red" }}>{errorPlate}</h2>}
                 </div>
               </div>
-              {errorPlate && <h2 style={{ color: "red" }}>{errorPlate}</h2>}
-            </div>
-            {vehicleVerified && (
               <div>
-                <h2 className="font-bold">Vehicle Information</h2>
+                <button
+                  type="submit"
+                  className={checkoutButton ? activeRegister : inactiveRegister}
+                  disabled={plateNumber === "" || parkingKey === ""}
+                >
+                  Check out
+                </button>
+              </div>
+            </form>
+          </div>
+          <div>
+            {vehicleVerified && (
+              <div className="">
+                <h2 className="font-bold text-xl mb-5">Vehicle Information</h2>
                 <div className="flex flex-row gap-x-5">
                   <div>
                     <h3>Plate Number:</h3>
@@ -115,16 +142,7 @@ function CheckOutForm() {
               </div>
             )}
           </div>
-          <div>
-            <button
-              type="submit"
-              className="mb-10 rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
-              disabled={vehicleVerified ? true : false}
-            >
-              Check out
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

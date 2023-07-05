@@ -5,6 +5,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { styles } from "../../components/styles";
 import { Login } from "./components/authActions";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -15,9 +17,10 @@ function LoginPage() {
     Login({ email, password, navigate });
   };
   return (
-    <div className="grid grid-cols-3">
-      <div className="col-span-2 text-center mt-10">
-        <div>
+    <div className="">
+      <Header />
+      <div className="flex mt-20">
+        <div style={styles.body} className="m-auto text-center">
           <h1 className="uppercase font-bold text-5xl">welcome to parklio</h1>
           <form className="mt-10" onSubmit={handleLogin}>
             <div>
@@ -25,8 +28,7 @@ function LoginPage() {
                 type="text"
                 placeholder="Email"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -36,8 +38,7 @@ function LoginPage() {
                 type="password"
                 placeholder="Password"
                 required
-                style={styles.backgroundInputField}
-                className="font-bold p-2 text-black rounded-xl"
+                className="font-bold p-2 text-black rounded-xl border"
                 value={password || ""}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -45,8 +46,7 @@ function LoginPage() {
             <div className="mt-10">
               <button
                 type="submit"
-                style={styles.backgroundButton}
-                className="font-bold text-2xl p-2 rounded-xl hover:bg-ye"
+                className="font-bold text-2xl p-2 rounded-xl border border-black hover:bg-black hover:text-white transition ease-in-out"
               >
                 Login
               </button>
@@ -54,17 +54,16 @@ function LoginPage() {
           </form>
           <div className="mt-5">
             <h2>Newbie to our system?</h2>
-            <Link to="/signup">
-              <h2 style={styles.textColor} className="font-bold">
-                Sign up
-              </h2>
-            </Link>
+            <button
+              className="font-bold rounded-xl p-1 hover:text-white hover:bg-black transition ease-in-out text-gray-500"
+              onClick={() => navigate("/signup")}
+            >
+              Sign up
+            </button>
           </div>
         </div>
       </div>
-      <div className="">
-        <img src={loginImage} alt="Login" className="" />
-      </div>
+      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
   UpdateUserProfile,
 } from "../../components/actions/userActions";
 import Swal from "sweetalert2";
+import Header from "../../components/Header";
 
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
@@ -45,6 +46,7 @@ function UserProfilePage() {
   };
   return (
     <div>
+      <Header />
       <NavigationBar />
       <div style={styles.content}>
         <h1 className="font-bold text-3xl mt-5">Hello, {fullName}</h1>
@@ -58,8 +60,7 @@ function UserProfilePage() {
               <input
                 type="text"
                 placeholder="Name"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl drop-shadow-md"
+                className="p-4 rounded-xl drop-shadow-md border"
                 value={fullName || ""}
                 onChange={(e) => setFullName(e.target.value)}
               />
@@ -68,8 +69,7 @@ function UserProfilePage() {
               <input
                 type="text"
                 placeholder="Email"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl drop-shadow-md"
+                className="p-4 rounded-xl drop-shadow-md border"
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -78,8 +78,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="Current Password"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl drop-shadow-md"
+                className="p-4 rounded-xl drop-shadow-md border"
                 value={currentPassword || ""}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               />
@@ -88,8 +87,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="New Password"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl drop-shadow-md"
+                className="p-4 rounded-xl drop-shadow-md border"
                 value={newPassword || ""}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
@@ -98,8 +96,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="Confirm New Password"
-                style={styles.backgroundInputField}
-                className="p-4 rounded-xl drop-shadow-md"
+                className="p-4 rounded-xl drop-shadow-md border"
                 value={confirmNewPassword || ""}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
@@ -107,7 +104,7 @@ function UserProfilePage() {
             <div>
               <button
                 type="submit"
-                className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out"
+                className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black border transition ease-in-out"
               >
                 Save
               </button>

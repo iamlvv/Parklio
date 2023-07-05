@@ -17,6 +17,15 @@ function CheckInForm({ userInfo }) {
   const [oilType, setOilType] = useState("pennzoil");
   const [carWashCost, setCarWashCost] = useState(0);
   const [oilChangingCost, setOilChangingCost] = useState(0);
+  const activeRegister =
+    "rounded-2xl p-4 font-bold hover:bg-black hover:text-white transition bg-white text-black ease-in-out drop-shadow-lg";
+  const inactiveRegister =
+    "rounded-2xl p-4 font-bold bg-gray-300 text-gray-500 cursor-not-allowed";
+  const [registerButton, setRegisterButton] = useState(
+    plate === "" || owner === "" || parkingType === "" || vehicleType === ""
+      ? false
+      : true
+  );
 
   const isValidPlate = (plate) => {
     return patternPlate.test(plate);
@@ -31,7 +40,16 @@ function CheckInForm({ userInfo }) {
   useEffect(() => {
     getAllFees({ setCarWashCost, setOilChangingCost });
   }, []);
-
+  useEffect(() => {
+    if (
+      plate === "" ||
+      owner === "" ||
+      parkingType === "" ||
+      vehicleType === ""
+    )
+      setRegisterButton(false);
+    else setRegisterButton(true);
+  }, [plate, owner, parkingType, vehicleType]);
   const handleRegister = (e) => {
     e.preventDefault();
     const inputData = {
@@ -67,7 +85,7 @@ function CheckInForm({ userInfo }) {
 
   return (
     <div className="mt-10">
-      <h1 className="font-bold text-3xl mt-5 mb-5 text-yellow-700">
+      <h1 className="font-bold text-3xl mt-5 mb-5 text-yellow-700 text-center">
         Check in Vehicle
       </h1>
       <form onSubmit={handleRegister} className="grid grid-cols-2 gap-9">
@@ -81,8 +99,7 @@ function CheckInForm({ userInfo }) {
                   placeholder="Plate Number"
                   value={plate || ""}
                   onChange={handleChangePlate}
-                  style={styles.backgroundInputField}
-                  className="p-4 rounded-xl drop-shadow-md"
+                  className="p-4 rounded-xl drop-shadow-md border"
                   maxLength={8}
                   required
                 />
@@ -94,17 +111,13 @@ function CheckInForm({ userInfo }) {
                   placeholder="Vehice Owner"
                   value={owner || ""}
                   onChange={(e) => setOwner(e.target.value)}
-                  style={styles.backgroundInputField}
-                  className="p-4 rounded-xl drop-shadow-md"
+                  className="p-4 rounded-xl drop-shadow-md border"
                   required
                 />
               </div>
             </div>
             <div className="flex flex-col gap-y-10">
-              <div
-                className="flex flex-row gap-x-9 mb-5 p-4 rounded-xl drop-shadow-md"
-                style={styles.backgroundInputField}
-              >
+              <div className="flex flex-row gap-x-9 mb-5 p-4 rounded-xl shadow-md border">
                 <h2>Type of parking:</h2>
                 <div
                   className="flex flex-row items-center gap-5"
@@ -116,10 +129,7 @@ function CheckInForm({ userInfo }) {
                   <label>Monthly</label>
                 </div>
               </div>
-              <div
-                className="flex flex-row gap-x-9 p-4 rounded-xl drop-shadow-md"
-                style={styles.backgroundInputField}
-              >
+              <div className="flex flex-row gap-x-9 p-4 rounded-xl shadow-md border">
                 <h2>Type of vehicle:</h2>
                 <div
                   className="flex flex-row items-center gap-5"
@@ -142,7 +152,7 @@ function CheckInForm({ userInfo }) {
           </div>
         </div>
         <div className="">
-          <h2 className="font-bold text-2xl">Service Included</h2>
+          <h2 className="font-bold text-2xl ">Service Included</h2>
           <div className="grid grid-cols-3 mt-10">
             <div className="flex flex-row gap-5">
               <div>
@@ -202,7 +212,13 @@ function CheckInForm({ userInfo }) {
         <div className="text-center">
           <button
             type="submit"
-            className="rounded-2xl p-4 font-bold hover:bg-yellow-500 transition bg-yellow-300 ease-in-out drop-shadow-lg"
+            className={registerButton ? activeRegister : inactiveRegister}
+            disabled={
+              plate === "" ||
+              owner === "" ||
+              parkingType === "" ||
+              vehicleType === ""
+            }
           >
             REGISTER
           </button>
