@@ -46,4 +46,15 @@ export const styles = {
     width: "100%",
     height: "75px",
   },
+  headerOnly: {
+    zIndex: "40",
+  },
+  distinctVehicleList: {
+    width: "500px",
+    height: "300px",
+    overflowY: "scroll",
+    border: "1px solid #999",
+    padding: "10px",
+    borderRadius: "5px",
+  },
 };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { styles } from "../../../components/styles";
 function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
-  const [typeOfStatisctics, setTypeOfStatistics] = useState("vehicle");
-  const [typeOfTime, setTypeOfTime] = useState("month");
+  const [typeOfStatistics, setTypeOfStatistics] = useState("vehicle");
+  const [typeOfTime, setTypeOfTime] = useState("day");
   const activeStyle =
     "mb-10 rounded-2xl p-4 font-bold bg-black text-white transition border ease-in-out";
   const inactiveStyle =
@@ -12,7 +12,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
       <div className="grid grid-cols-3 gap-9 mx-20 my-10">
         <button
           className={
-            typeOfStatisctics === "vehicle" ? activeStyle : inactiveStyle
+            typeOfStatistics === "vehicle" ? activeStyle : inactiveStyle
           }
           onClick={() => {
             handleTypeOfStatistics("vehicle");
@@ -23,7 +23,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
         </button>
         <button
           className={
-            typeOfStatisctics === "service" ? activeStyle : inactiveStyle
+            typeOfStatistics === "service" ? activeStyle : inactiveStyle
           }
           onClick={() => {
             handleTypeOfStatistics("service");
@@ -34,7 +34,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
         </button>
         <button
           className={
-            typeOfStatisctics === "income" ? activeStyle : inactiveStyle
+            typeOfStatistics === "income" ? activeStyle : inactiveStyle
           }
           onClick={() => {
             handleTypeOfStatistics("income");
@@ -44,37 +44,52 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
           Income
         </button>
       </div>
-      <div className="grid grid-cols-3 mr-10">
-        <div></div>
-        <div></div>
-        <div className="grid grid-cols-3 gap-9">
-          {/* <button
-            className="mb-10 rounded-2xl p-4 font-bold hover:bg-yellow-400 transition bg-yellow-200 ease-in-out"
-            onClick={() => handleTypeOfTime("day")}
-          >
-            Day
-          </button> */}
+      {typeOfStatistics === "income" ? (
+        <div className="grid grid-cols-3 mr-20">
           <div></div>
-          <button
-            className={typeOfTime === "month" ? activeStyle : inactiveStyle}
-            onClick={() => {
-              handleTypeOfTime("month");
-              setTypeOfTime("month");
-            }}
-          >
-            Month
-          </button>
-          <button
-            className={typeOfTime === "year" ? activeStyle : inactiveStyle}
-            onClick={() => {
-              handleTypeOfTime("year");
-              setTypeOfTime("year");
-            }}
-          >
-            Year
-          </button>
+          <div></div>
+          <div className="grid grid-cols-4 gap-9">
+            <button
+              className={typeOfTime === "day" ? activeStyle : inactiveStyle}
+              onClick={() => {
+                handleTypeOfTime("day");
+                setTypeOfTime("day");
+              }}
+            >
+              Day
+            </button>
+            <button
+              className={typeOfTime === "month" ? activeStyle : inactiveStyle}
+              onClick={() => {
+                handleTypeOfTime("month");
+                setTypeOfTime("month");
+              }}
+            >
+              Month
+            </button>
+            <button
+              className={typeOfTime === "year" ? activeStyle : inactiveStyle}
+              onClick={() => {
+                handleTypeOfTime("year");
+                setTypeOfTime("year");
+              }}
+            >
+              Year
+            </button>
+            <button
+              className={typeOfTime === "today" ? activeStyle : inactiveStyle}
+              onClick={() => {
+                handleTypeOfTime("today");
+                setTypeOfTime("today");
+              }}
+            >
+              Today
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

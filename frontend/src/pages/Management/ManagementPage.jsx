@@ -15,8 +15,7 @@ function ManagementPage() {
         <NavigationBar />
       </div>
       <div style={styles.content}>
-        <h1 className="font-bold text-3xl my-10">Management</h1>
-        <form>
+        <form className="mt-10">
           <div className="grid grid-cols-2">
             <div>
               <h2 className="font-bold text-2xl mb-5">Parking Price</h2>
@@ -83,18 +82,20 @@ function ManagementPage() {
               </div>
             </div>
           </div>
-          <input
-            type="button"
-            className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out cursor-pointer"
-            value="Save changes"
-            disabled={
-              fourseatCarFee === 0 &&
-              seventseatCarFee === 0 &&
-              truckFee === 0 &&
-              carWashFee === 0 &&
-              oilChangingFee === 0
-            }
-          />
+          <div>
+            <input
+              type="button"
+              className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out cursor-pointer"
+              value="Save changes"
+              disabled={
+                fourseatCarFee === 0 &&
+                seventseatCarFee === 0 &&
+                truckFee === 0 &&
+                carWashFee === 0 &&
+                oilChangingFee === 0
+              }
+            />
+          </div>
         </form>
       </div>
     </div>

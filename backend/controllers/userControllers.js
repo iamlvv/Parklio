@@ -58,8 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const { id } = req.body;
-  const user = await User.findOne(id);
+  const user = await User.findOne({ _id: req.user._id });
   if (user) {
     res.json({
       _id: user._id,

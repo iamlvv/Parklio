@@ -9,7 +9,7 @@ const GetUserDetails = async ({
 }) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/users/profile",
+      `http://localhost:5000/api/users/profile/${userInfo.id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -32,10 +32,7 @@ const GetUserDetails = async ({
 const getUserName = async ({ userInfo, setName }) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/users/profile",
-      {
-        id: userInfo.id,
-      },
+      `http://localhost:5000/api/users/profile/${userInfo.id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -57,7 +54,7 @@ const UpdateUserProfile = async ({
 }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/users/profile",
+      `http://localhost:5000/api/users/profile/${userInfo.id}`,
       {
         fullname: fullName,
         email: email,

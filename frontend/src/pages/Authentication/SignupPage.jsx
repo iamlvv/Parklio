@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import loginImage from "../../assets/img/login-img.png";
 import { Link, useNavigate } from "react-router-dom";
 import { styles } from "../../components/styles";
@@ -15,6 +15,12 @@ function SignupPage() {
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [authority, setAuthority] = useState("officer");
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    if (userInfo) navigate("/homepage");
+  }, []);
+
   const handleSignup = async (e) => {
     e.preventDefault();
     SignUp({ fullName, email, password, authority, navigate });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import loginImage from "../../assets/img/login-img.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,6 +12,11 @@ function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    if (userInfo) navigate("/homepage");
+  }, []);
   const handleLogin = async (e) => {
     e.preventDefault();
     Login({ email, password, navigate });

@@ -9,6 +9,7 @@ const {
   deleteVehicle,
   verifyVehicle,
   getCheckedOutVehicles,
+  getAllDistinctVehicles,
 } = require("../controllers/vehicleControllers");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -22,4 +23,5 @@ router.route("/checkin").post(protect, addVehicle);
 router.route("/checkout").post(protect, checkoutVehicle);
 router.route("/verifyvehicle").post(protect, verifyVehicle);
 router.route("/checkedout").get(protect, getCheckedOutVehicles);
+router.route("/distinctvehicles").get(protect, getAllDistinctVehicles);
 module.exports = router;

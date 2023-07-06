@@ -6,10 +6,12 @@ import StatisticsContent from "./components/StatisticsContent";
 import Header from "../../components/Header";
 function StatisticsPage() {
   const [typeOfStatisctics, setTypeOfStatistics] = useState("vehicle");
-  const [typeOfTime, setTypeOfTime] = useState("month");
+  const [typeOfTime, setTypeOfTime] = useState("day");
   return (
     <div>
-      <Header />
+      <div>
+        <Header />
+      </div>
       <NavigationBar />
       <div style={styles.content}>
         <Navigation

@@ -147,6 +147,10 @@ const checkoutVehicle = asyncHandler(async (req, res) => {
       vehicle.additionalService.latestCost;
     vehicle.parkingKey = "checked out";
     vehicle.outputTime = new Date(vehicle.outputTime).toLocaleString();
+    vehicle.outputMonth = new Date(vehicle.outputTime).getUTCMonth() + 1;
+    vehicle.outputYear = new Date(vehicle.outputTime).getUTCFullYear();
+    vehicle.outputDate = new Date(vehicle.outputTime).getUTCDate();
+    vehicle.outputHour = new Date(vehicle.outputTime).getHours();
     const updatedVehicle = await vehicle.save();
     res.json({
       plateNumber: updatedVehicle.plateNumber,
@@ -181,6 +185,26 @@ const deleteVehicle = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Return all distinct vehicles
+// @route   GET /api/vehicles/distinctvehicles
+// @access  Private/Admin
+
+const getAllDistinctVehicles = asyncHandler(async (req, res) => {
+  const distinctVehicles = await Vehicle.aggregate([
+    {
+      $group: {
+        _id: "$plateNumber",
+        vehicleType: { $first: "$vehicleType" },
+        vehicleOwner: { $first: "$vehicleOwner" },
+        inputTime: { $sum: 1 },
+        outputTime: { $sum: 1 },
+        totalCost: { $sum: "$totalCost" },
+      },
+    },
+  ]);
+  res.json(distinctVehicles);
+});
+
 // @desc    Return checked out vehicles
 // @route   GET /api/vehicles/checkedout
 // @access  Private/Admin
@@ -198,4 +222,5 @@ module.exports = {
   deleteVehicle,
   verifyVehicle,
   getCheckedOutVehicles,
+  getAllDistinctVehicles,
 };

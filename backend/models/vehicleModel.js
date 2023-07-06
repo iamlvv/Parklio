@@ -29,6 +29,18 @@ const vehicleSchema = new mongoose.Schema(
     outputTime: {
       type: String,
     },
+    outputDate: {
+      type: Number,
+    },
+    outputMonth: {
+      type: Number,
+    },
+    outputYear: {
+      type: Number,
+    },
+    outputHour: {
+      type: Number,
+    },
     parkingType: {
       type: String,
       required: true,

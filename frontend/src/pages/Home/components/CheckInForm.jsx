@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../../../components/styles";
 import { getAllFees } from "../../../components/actions/feeActions";
 import { registerService } from "../../../components/actions/serviceActions";
-import { registerVehicle } from "../../../components/actions/vehicleActions";
+import { RegisterVehicle } from "../../../components/actions/vehicleActions";
 
 function CheckInForm({ userInfo }) {
   const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
@@ -65,7 +65,7 @@ function CheckInForm({ userInfo }) {
       carWashCost: carWash ? carWashCost : 0,
       oilChangingCost: oilChanging ? oilChangingCost : 0,
     };
-    registerVehicle(inputData);
+    RegisterVehicle(inputData);
     if (carWash) {
       registerService({
         ...inputData,

@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const registerVehicle = async ({
+const RegisterVehicle = async ({
   userInfo,
   plateNumber,
   vehicleOwner,
@@ -117,4 +117,25 @@ const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
     console.log(error);
   }
 };
-export { registerVehicle, CheckOutVehicle, GetAllVehicles };
+
+const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:5000/api/vehicles/distinctvehicles",
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    setVehicleList(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export {
+  RegisterVehicle,
+  CheckOutVehicle,
+  GetAllVehicles,
+  GetAllDistinctVehicles,
+};

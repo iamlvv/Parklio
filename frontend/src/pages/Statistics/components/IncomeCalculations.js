@@ -4,66 +4,79 @@ const getDaysInMonth = (month, year) =>
     .map((v, i) => new Date(year, month - 1, i + 1))
     .filter((v) => v.getMonth() === month - 1);
 
-const calculateIncomeDaily = ({ date, data }) => {
-  const vehicle = data;
+const IncomeDaily = ({ incomeList }) => {
   const result = [];
-  console.log("parameter date: ", date);
-  let income = 0;
-  for (let i = 0; i < vehicle.length; i++) {
-    const date1 = new Date(vehicle[i].outputTime).toLocaleDateString();
-    console.log(date1);
-    if (date1 === date) {
-      result.push(vehicle[i]);
-    }
-  }
-  console.log(result);
-  for (let i = 0; i < result.length; i++) {
-    income += result[i].totalCost;
-  }
-  console.log(income);
-  return income;
-};
-
-const calculateIncomeEachMonth = ({ month, data }) => {
-  let income = 0;
-  for (let i = 0; i < data.length; i++) {
-    income += data[i].income;
-  }
-  return income;
-};
-const IncomeMonthly = ({ incomeList, month, year }) => {
-  const result = [];
-  const daysInMonth = getDaysInMonth(month, year);
-  for (let i = 0; i < daysInMonth.length; i++) {
-    let income = calculateIncomeDaily({
-      date: daysInMonth[i].toLocaleDateString(),
-      data: incomeList,
-    });
+  for (let i = 0; i < 24; i++) {
     result.push({
-      name: daysInMonth[i].toLocaleDateString(),
-      income: income,
+      name: i.toString(),
+      income: 0,
     });
+  }
+  for (let i = 0; i < incomeList.length; i++) {
+    result[incomeList[i].outputHour].income += incomeList[i].totalCost;
   }
   return result;
 };
 
-const IncomeYearly = ({ incomeList, year }) => {
+const IncomeToday = ({ incomeList, today }) => {
+  const result = [];
+  for (let i = 0; i < 24; i++) {
+    result.push({
+      name: i.toString(),
+      income: 0,
+    });
+  }
+  for (let i = 0; i < incomeList.length; i++) {
+    if (
+      incomeList[i].outputDate === today.day &&
+      incomeList[i].outputMonth === today.month &&
+      incomeList[i].outputYear === today.year
+    ) {
+      result[incomeList[i].outputHour].income += incomeList[i].totalCost;
+    }
+  }
+  return result;
+};
+const IncomeMonthly = ({ incomeList, month, year }) => {
+  /* Initialize days in a month
+   * Each day has 2 properties: name and income
+   * For each day, calculate income by calling calculateIncomeDaily function
+   * Push each day to result array
+   * Return result array
+   * */
+  const result = [];
+  const daysInMonth = getDaysInMonth(month, year);
+  for (let i = 0; i < daysInMonth.length; i++) {
+    result.push({
+      name: daysInMonth[i].getDate().toString(),
+      income: 0,
+    });
+  }
+  for (let i = 0; i < incomeList.length; i++) {
+    result[incomeList[i].outputDate - 1].income += incomeList[i].totalCost;
+  }
+  return result;
+};
+
+const IncomeYearly = ({ incomeList }) => {
+  /* Initialize 12 months in a year
+   * Each month has 2 properties: name and income
+   * For each month, calculate income by calling IncomeMonthly function
+   * Push each month to monthsInYear array
+   * Return monthsInYear array
+   */
   const monthsInYear = [];
   for (let i = 0; i < 12; i++) {
     monthsInYear.push({
       name: (i + 1).toString(),
       income: 0,
     });
-    console.log(monthsInYear);
   }
-  for (let i = 0; i < monthsInYear.length; i++) {
-    const income = calculateIncomeEachMonth({
-      month: i + 1,
-      data: IncomeMonthly({ incomeList, month: (i + 1).toString(), year }),
-    });
-    monthsInYear[i].income = income;
+  for (let i = 0; i < incomeList.length; i++) {
+    monthsInYear[incomeList[i].outputMonth - 1].income +=
+      incomeList[i].totalCost;
   }
   return monthsInYear;
 };
 
-export { IncomeMonthly, IncomeYearly, calculateIncomeDaily };
+export { IncomeMonthly, IncomeYearly, IncomeDaily, IncomeToday };

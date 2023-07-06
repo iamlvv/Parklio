@@ -7,11 +7,10 @@ const Login = async ({ email, password, navigate }) => {
       email,
       password,
     });
-    console.log(response.data);
     localStorage.setItem("userInfo", JSON.stringify(response.data));
     navigate("/homepage");
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -31,6 +30,7 @@ const SignUp = async ({ fullName, email, password, authority, navigate }) => {
         authority,
       }
     );
+    console.log(response.data);
     localStorage.setItem("userInfo", JSON.stringify(response.data));
     navigate("/homepage");
   } catch (error) {
