@@ -3,10 +3,13 @@ import axios from "axios";
 
 const Login = async ({ email, password, navigate }) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/users/login", {
-      email,
-      password,
-    });
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/users/login`,
+      {
+        email,
+        password,
+      }
+    );
     localStorage.setItem("userInfo", JSON.stringify(response.data));
     navigate("/homepage");
   } catch (error) {
@@ -22,7 +25,7 @@ const Login = async ({ email, password, navigate }) => {
 const SignUp = async ({ fullName, email, password, authority, navigate }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/users/signup",
+      `${process.env.REACT_APP_API_URL}/users/signup`,
       {
         email,
         password,

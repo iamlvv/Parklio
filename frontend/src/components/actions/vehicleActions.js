@@ -15,7 +15,7 @@ const RegisterVehicle = async ({
 }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/vehicles/checkin",
+      `${process.env.REACT_APP_API_URL}/vehicles/checkin`,
       {
         plateNumber: plateNumber,
         vehicleOwner: vehicleOwner,
@@ -70,7 +70,7 @@ const CheckOutVehicle = async ({
 }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/vehicles/checkout",
+      `${process.env.REACT_APP_API_URL}/vehicles/checkout`,
       {
         plateNumber: plateNumber,
         parkingKey: parkingKey,
@@ -107,11 +107,14 @@ const CheckOutVehicle = async ({
 
 const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
   try {
-    const response = await axios.get("http://localhost:5000/api/vehicles", {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/vehicles`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
     setVehicleList(response.data);
   } catch (error) {
     console.log(error);
@@ -121,7 +124,7 @@ const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
 const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/vehicles/distinctvehicles",
+      `${process.env.REACT_APP_API_URL}/vehicles/distinctvehicles`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

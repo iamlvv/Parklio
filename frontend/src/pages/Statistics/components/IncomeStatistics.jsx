@@ -12,7 +12,7 @@ function IncomeStatistics({ typeOfStatistics, typeOfTime, userInfo }) {
   const [graphData, setGraphData] = useState([]);
   const handleClick = async (typeOfTime) => {
     const response = await axios.get(
-      "http://localhost:5000/api/vehicles/checkedout",
+      `${process.env.REACT_APP_API_URL}/vehicles/checkedout`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

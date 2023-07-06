@@ -12,7 +12,7 @@ const registerService = async ({
 }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/services/addService",
+      `${process.env.REACT_APP_API_URL}/services/addService`,
       {
         plateNumber: plateNumber,
         vehicleOwner: vehicleOwner,
@@ -36,11 +36,14 @@ const registerService = async ({
 
 const getAllServices = async ({ userInfo, setServiceList }) => {
   try {
-    const response = await axios.get("http://localhost:5000/api/services/", {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/services/`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
     setServiceList(response.data);
   } catch (error) {
     console.log(error);
