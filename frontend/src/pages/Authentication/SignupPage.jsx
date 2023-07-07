@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import loginImage from "../../assets/img/login-img.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styles } from "../../components/styles";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { SignUp } from "./components/authActions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";

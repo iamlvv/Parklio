@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { SwalObject } from "../styles";
 const RegisterVehicle = async ({
   userInfo,
   plateNumber,
@@ -35,18 +36,13 @@ const RegisterVehicle = async ({
       }
     );
     Swal.fire({
-      icon: "success",
-      title: "Success!",
-      text: `Vehicle has been registered. The parking key is ${response.data.parkingKey}`,
-      iconColor: "#a16207",
-      confirmButtonColor: "#a16207",
+      ...SwalObject.success,
+      text: `Vehicle has been registered. Parking key: ${response.data.parkingKey}`,
     });
   } catch (error) {
     console.log(error);
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
+      ...SwalObject.error,
     });
   }
 };
@@ -94,11 +90,8 @@ const CheckOutVehicle = async ({
     setTotalCost(response.data.totalCost);
     setOilType(response.data.additionalService.oilChanging.oilType);
     Swal.fire({
-      icon: "success",
-      title: "Success!",
+      ...SwalObject.success,
       text: `Vehicle has been checked out.`,
-      iconColor: "#a16207",
-      confirmButtonColor: "#a16207",
     });
   } catch (error) {
     console.log(error);
@@ -136,9 +129,25 @@ const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
     console.log(error);
   }
 };
+
+const CountOutputTime = ({ vehicleOriginalList, vehicleId }) => {
+  if (vehicleId) {
+    vehicleOriginalList = vehicleOriginalList.filter((vehicle) => {
+      return (
+        vehicle.plateNumber === vehicleId &&
+        vehicle.parkingKey === "checked out"
+      );
+    });
+    console.log(vehicleOriginalList.length);
+    return vehicleOriginalList.length;
+  }
+  return vehicleOriginalList.length;
+};
+
 export {
   RegisterVehicle,
   CheckOutVehicle,
   GetAllVehicles,
   GetAllDistinctVehicles,
+  CountOutputTime,
 };

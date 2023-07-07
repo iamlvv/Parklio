@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { styles } from "../../../components/styles";
 import { CheckOutVehicle } from "../../../components/actions/vehicleActions";
 
 function CheckOutForm() {
@@ -101,8 +100,14 @@ function CheckOutForm() {
               <div>
                 <button
                   type="submit"
-                  className={checkoutButton ? activeRegister : inactiveRegister}
-                  disabled={plateNumber === "" || parkingKey === ""}
+                  className={
+                    checkoutButton && !errorPlate
+                      ? activeRegister
+                      : inactiveRegister
+                  }
+                  disabled={
+                    plateNumber === "" || parkingKey === "" || errorPlate
+                  }
                 >
                   Check out
                 </button>

@@ -41,7 +41,7 @@ const ServiceItems = ({ currentItems }) => {
   return (
     currentItems &&
     currentItems.map((service) => (
-      <tr>
+      <tr key={service._id}>
         <td style={styles.td}>{service.plateNumber}</td>
         <td style={styles.td}>{service.vehicleOwner}</td>
         <td style={styles.td}>{service.vehicleType}</td>

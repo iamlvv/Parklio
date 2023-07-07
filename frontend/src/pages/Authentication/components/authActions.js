@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import axios from "axios";
+import { SwalObject } from "../../../components/styles";
 
 const Login = async ({ email, password, navigate }) => {
   try {
@@ -15,9 +16,7 @@ const Login = async ({ email, password, navigate }) => {
   } catch (error) {
     console.log(error.message);
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
+      ...SwalObject.error,
     });
   }
 };
@@ -38,9 +37,7 @@ const SignUp = async ({ fullName, email, password, authority, navigate }) => {
     navigate("/homepage");
   } catch (error) {
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
+      ...SwalObject.error,
     });
   }
 };

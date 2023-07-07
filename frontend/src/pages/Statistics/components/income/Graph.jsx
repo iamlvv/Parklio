@@ -16,12 +16,6 @@ function Graph({ data }) {
         width={1024}
         height={500}
         data={data}
-        // margin={{
-        //   top: 5,
-        //   right: 30,
-        //   left: 20,
-        //   bottom: 5,
-        // }}
         className="mx-auto"
         barSize={20}
       >

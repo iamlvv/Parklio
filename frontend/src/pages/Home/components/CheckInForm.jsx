@@ -82,7 +82,7 @@ function CheckInForm({ userInfo }) {
       });
     }
   };
-
+  console.log(plate);
   return (
     <div className="mt-10">
       <h1 className="font-bold text-3xl mt-5 mb-5 text-yellow-700 text-center">
@@ -212,12 +212,15 @@ function CheckInForm({ userInfo }) {
         <div className="text-center">
           <button
             type="submit"
-            className={registerButton ? activeRegister : inactiveRegister}
+            className={
+              registerButton && !errorPlate ? activeRegister : inactiveRegister
+            }
             disabled={
               plate === "" ||
               owner === "" ||
               parkingType === "" ||
-              vehicleType === ""
+              vehicleType === "" ||
+              errorPlate
             }
           >
             REGISTER

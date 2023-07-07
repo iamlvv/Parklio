@@ -8,11 +8,15 @@ function Header() {
   const navigate = useNavigate();
   const [logout, setLogout] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  // Check if the user is logged in, if yes, show the logout button
   useEffect(() => {
     if (userInfo) {
       setLogout(true);
     }
   }, []);
+
+  // Handle logout, remove the userInfo from localStorage and navigate to the login page
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
     navigate("/");

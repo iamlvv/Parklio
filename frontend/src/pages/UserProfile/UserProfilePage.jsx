@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../../components/NavigationBar";
-import { styles } from "../../components/styles";
+import { SwalObject, styles } from "../../components/styles";
 import {
   GetUserDetails,
   UpdateUserProfile,
@@ -24,23 +24,23 @@ function UserProfilePage() {
       GetUserDetails({ userInfo, setFullName, setEmail, setAuthority });
     }
   }, []);
+
   const handleChangeProfile = (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
+        ...SwalObject.error,
         text: "New password and confirm new password are not the same!",
       });
       return;
     }
     const inputData = {
-      userInfo: userInfo,
-      fullName: fullName,
-      email: email,
-      currentPassword: currentPassword,
-      newPassword: newPassword,
-      confirmNewPassword: confirmNewPassword,
+      userInfo,
+      fullName,
+      email,
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
     };
     UpdateUserProfile(inputData);
   };

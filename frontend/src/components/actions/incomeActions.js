@@ -1,3 +1,6 @@
+import axios from "axios";
+
+// Get days in a month
 const getDaysInMonth = (month, year) =>
   new Array(31)
     .fill("")
@@ -5,6 +8,12 @@ const getDaysInMonth = (month, year) =>
     .filter((v) => v.getMonth() === month - 1);
 
 const IncomeDaily = ({ incomeList }) => {
+  /* Initialize hours in a day
+   * Each hour has 2 properties: name and income
+   * For each hour, calculate income by calling calculateIncomeDaily function
+   * Push each hour to result array
+   * Return result array
+   * */
   const result = [];
   for (let i = 0; i < 24; i++) {
     result.push({
@@ -19,6 +28,12 @@ const IncomeDaily = ({ incomeList }) => {
 };
 
 const IncomeToday = ({ incomeList, today }) => {
+  /* Initialize 24 hours in a day
+   * Each hour has 2 properties: name and income
+   * For each hour, calculate income by calling IncomeDaily function
+   * Push each hour to result array
+   * Return result array
+   * */
   const result = [];
   for (let i = 0; i < 24; i++) {
     result.push({
@@ -79,4 +94,51 @@ const IncomeYearly = ({ incomeList }) => {
   return monthsInYear;
 };
 
-export { IncomeMonthly, IncomeYearly, IncomeDaily, IncomeToday };
+const getGraphData = async ({ typeOfTime, setGraphData, userInfo }) => {
+  /*
+   * Get income list from backend
+   * Call IncomeMonthly function if typeOfTime is month
+   * Call IncomeYearly function if typeOfTime is year
+   * Call IncomeDaily function if typeOfTime is day
+   * Call IncomeToday function if typeOfTime is today
+   * Set graph data to result of each function
+   */
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/vehicles/checkedout`,
+    {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+  );
+  let incomeList = response.data;
+  switch (typeOfTime) {
+    case "month":
+      setGraphData(
+        IncomeMonthly({
+          incomeList,
+          month: new Date().getMonth() + 1,
+          year: new Date().getFullYear(),
+        })
+      );
+      break;
+    case "year":
+      setGraphData(
+        IncomeYearly({ incomeList, year: new Date().getFullYear() })
+      );
+      break;
+    case "day":
+      setGraphData(IncomeDaily({ incomeList }));
+      break;
+    case "today":
+      let today = {
+        day: new Date().getUTCDate(),
+        month: new Date().getUTCMonth() + 1,
+        year: new Date().getUTCFullYear(),
+      };
+      setGraphData(IncomeToday({ incomeList, today }));
+      break;
+  }
+};
+
+export { IncomeMonthly, IncomeYearly, IncomeDaily, IncomeToday, getGraphData };

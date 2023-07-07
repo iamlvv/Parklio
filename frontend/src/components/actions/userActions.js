@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { SwalObject } from "../styles";
 
 const GetUserDetails = async ({
   userInfo,
@@ -22,9 +23,7 @@ const GetUserDetails = async ({
   } catch (error) {
     console.log(error);
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
+      ...SwalObject.error,
     });
   }
 };
@@ -54,7 +53,7 @@ const UpdateUserProfile = async ({
 }) => {
   try {
     const response = await axios.post(
-      `http://localhost:5000/api/users/profile/${userInfo.id}`,
+      `${process.env.REACT_APP_API_URL}/users/profile/${userInfo.id}`,
       {
         fullname: fullName,
         email: email,
@@ -68,16 +67,13 @@ const UpdateUserProfile = async ({
       }
     );
     Swal.fire({
-      icon: "success",
-      title: "Success!",
-      text: "Your profile has been updated.",
+      ...SwalObject.success,
+      text: `Profile has been updated.`,
     });
   } catch (error) {
     console.log(error);
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
+      ...SwalObject.error,
     });
   }
 };

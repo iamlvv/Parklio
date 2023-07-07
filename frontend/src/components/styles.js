@@ -58,3 +58,17 @@ export const styles = {
     borderRadius: "5px",
   },
 };
+
+export const SwalObject = {
+  success: {
+    title: "Success",
+    icon: "success",
+    iconColor: "#a16207",
+    confirmButtonColor: "#a16207",
+  },
+  error: {
+    title: "Error",
+    icon: "error",
+    text: "Something went wrong. Please try again.",
+  },
+};

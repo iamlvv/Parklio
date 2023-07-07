@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { styles } from "../../../components/styles";
 function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
   const [typeOfStatistics, setTypeOfStatistics] = useState("vehicle");
   const [typeOfTime, setTypeOfTime] = useState("day");
@@ -7,6 +6,15 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
     "mb-10 rounded-2xl p-4 font-bold bg-black text-white transition border ease-in-out";
   const inactiveStyle =
     "mb-10 rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out";
+
+  const adjustTypeOfStatistics = (type) => {
+    handleTypeOfStatistics(type);
+    setTypeOfStatistics(type);
+  };
+  const adjustTypeOfTime = (type) => {
+    handleTypeOfTime(type);
+    setTypeOfTime(type);
+  };
   return (
     <div>
       <div className="grid grid-cols-3 gap-9 mx-20 my-10">
@@ -15,8 +23,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             typeOfStatistics === "vehicle" ? activeStyle : inactiveStyle
           }
           onClick={() => {
-            handleTypeOfStatistics("vehicle");
-            setTypeOfStatistics("vehicle");
+            adjustTypeOfStatistics("vehicle");
           }}
         >
           Vehicles
@@ -26,8 +33,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             typeOfStatistics === "service" ? activeStyle : inactiveStyle
           }
           onClick={() => {
-            handleTypeOfStatistics("service");
-            setTypeOfStatistics("service");
+            adjustTypeOfStatistics("service");
           }}
         >
           Services
@@ -37,8 +43,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             typeOfStatistics === "income" ? activeStyle : inactiveStyle
           }
           onClick={() => {
-            handleTypeOfStatistics("income");
-            setTypeOfStatistics("income");
+            adjustTypeOfStatistics("income");
           }}
         >
           Income
@@ -52,8 +57,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             <button
               className={typeOfTime === "day" ? activeStyle : inactiveStyle}
               onClick={() => {
-                handleTypeOfTime("day");
-                setTypeOfTime("day");
+                adjustTypeOfTime("day");
               }}
             >
               Day
@@ -61,8 +65,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             <button
               className={typeOfTime === "month" ? activeStyle : inactiveStyle}
               onClick={() => {
-                handleTypeOfTime("month");
-                setTypeOfTime("month");
+                adjustTypeOfTime("month");
               }}
             >
               Month
@@ -70,8 +73,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             <button
               className={typeOfTime === "year" ? activeStyle : inactiveStyle}
               onClick={() => {
-                handleTypeOfTime("year");
-                setTypeOfTime("year");
+                adjustTypeOfTime("year");
               }}
             >
               Year
@@ -79,8 +81,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
             <button
               className={typeOfTime === "today" ? activeStyle : inactiveStyle}
               onClick={() => {
-                handleTypeOfTime("today");
-                setTypeOfTime("today");
+                adjustTypeOfTime("today");
               }}
             >
               Today

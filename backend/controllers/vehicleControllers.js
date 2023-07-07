@@ -197,8 +197,23 @@ const getAllDistinctVehicles = asyncHandler(async (req, res) => {
         vehicleType: { $first: "$vehicleType" },
         vehicleOwner: { $first: "$vehicleOwner" },
         inputTime: { $sum: 1 },
-        outputTime: { $sum: 1 },
         totalCost: { $sum: "$totalCost" },
+      },
+    },
+  ]);
+  res.json(distinctVehicles);
+});
+
+// @desc    Return all distinct vehicles to calculate number of input time
+// @route   GET /api/vehicles/distinctvehiclesinputtime
+// @access  Private/Admin
+
+const getAllDistinctVehiclesInputTime = asyncHandler(async (req, res) => {
+  const distinctVehicles = await Vehicle.aggregate([
+    {
+      $group: {
+        _id: "$plateNumber",
+        inputTime: { $sum: 1 },
       },
     },
   ]);
