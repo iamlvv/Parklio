@@ -1,13 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationBar from "../../components/NavigationBar";
 import { styles } from "../../components/styles";
 import Header from "../../components/Header";
+import { getAllFees, updateFees } from "../../components/actions/feeActions";
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
   const [seventseatCarFee, setSeventseatCarFee] = useState(0);
   const [truckFee, setTruckFee] = useState(0);
   const [carWashFee, setCarWashFee] = useState(0);
   const [oilChangingFee, setOilChangingFee] = useState(0);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  useEffect(() => {
+    // fetch data from api
+    // set data to state
+    getAllFees({
+      setFourseatCarFee,
+      setSeventseatCarFee,
+      setTruckFee,
+      setCarWashFee,
+      setOilChangingFee,
+      userInfo,
+    });
+  }, []);
+
+  const handleChangeFee = (e) => {
+    e.preventDefault();
+    const inputData = {
+      fourSeatCar: {
+        price: fourseatCarFee,
+      },
+      sevenSeatCar: {
+        price: seventseatCarFee,
+      },
+      truck: {
+        price: truckFee,
+      },
+      carWash: {
+        price: carWashFee,
+      },
+      oilChange: {
+        price: oilChangingFee,
+      },
+    };
+    updateFees({ inputData, userInfo });
+  };
   return (
     <div>
       <Header />
@@ -15,7 +52,7 @@ function ManagementPage() {
         <NavigationBar />
       </div>
       <div style={styles.content}>
-        <form className="mt-10">
+        <form className="mt-10" onSubmit={handleChangeFee}>
           <div className="grid grid-cols-2">
             <div>
               <h2 className="font-bold text-2xl mb-5">Parking Price</h2>
@@ -28,6 +65,7 @@ function ManagementPage() {
                     className="p-4 rounded-xl drop-shadow-md border"
                     value={fourseatCarFee || ""}
                     onChange={(e) => setFourseatCarFee(e.target.value)}
+                    required
                   />
                 </div>
                 <div>
@@ -38,6 +76,7 @@ function ManagementPage() {
                     className="p-4 rounded-xl drop-shadow-md border"
                     value={seventseatCarFee || ""}
                     onChange={(e) => setSeventseatCarFee(e.target.value)}
+                    required
                   />
                 </div>
                 <div>
@@ -48,6 +87,7 @@ function ManagementPage() {
                     className="p-4 rounded-xl drop-shadow-md border"
                     value={truckFee || ""}
                     onChange={(e) => setTruckFee(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -64,6 +104,7 @@ function ManagementPage() {
                       className="p-4 rounded-xl drop-shadow-md border"
                       value={carWashFee || ""}
                       onChange={(e) => setCarWashFee(e.target.value)}
+                      required
                     />
                   </div>
                 </div>
@@ -76,6 +117,7 @@ function ManagementPage() {
                       className="p-4 rounded-xl drop-shadow-md border"
                       value={oilChangingFee || ""}
                       onChange={(e) => setOilChangingFee(e.target.value)}
+                      required
                     />
                   </div>
                 </div>
@@ -84,7 +126,7 @@ function ManagementPage() {
           </div>
           <div>
             <input
-              type="button"
+              type="submit"
               className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out cursor-pointer"
               value="Save changes"
               disabled={

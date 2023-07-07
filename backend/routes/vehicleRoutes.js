@@ -14,7 +14,7 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/").get(getAllVehicles);
+router.route("/").get(protect, getAllVehicles);
 router.route("/checkin").post(protect, addVehicle);
 // router
 //   .route("/:id")

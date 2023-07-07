@@ -7,7 +7,9 @@ const {
   createFee,
 } = require("../controllers/feeControllers");
 
-router.route("/").get(getAllFees).post(createFee);
-router.route("/updatefee").patch(updateFee);
+const { protect } = require("../middleware/authMiddleware");
+
+router.route("/").get(protect, getAllFees).post(protect, createFee);
+router.route("/updatefee").post(protect, updateFee);
 
 module.exports = router;

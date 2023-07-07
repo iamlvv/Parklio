@@ -1,22 +1,43 @@
 import axios from "axios";
 
 const getAllFees = async ({
-  setCarWashCost,
-  setOilChangingCost,
   setFourseatCarFee,
-  setSevenseatCarFee,
+  setSeventseatCarFee,
   setTruckFee,
+  setCarWashFee,
+  setOilChangingFee,
+  userInfo,
 }) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/fees`);
-    setCarWashCost(response.data[0].carWash.price);
-    setOilChangingCost(response.data[0].oilChange.price);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/fees`, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    setCarWashFee(response.data[0].carWash.price);
+    setOilChangingFee(response.data[0].oilChange.price);
     setFourseatCarFee(response.data[0].fourSeatCar.price);
-    setSevenseatCarFee(response.data[0].sevenSeatCar.price);
+    setSeventseatCarFee(response.data[0].sevenSeatCar.price);
     setTruckFee(response.data[0].truck.price);
   } catch (error) {
     console.log(error);
   }
 };
 
-export { getAllFees };
+const updateFees = async ({ inputData, userInfo }) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/fees/updatefee`,
+      inputData,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { getAllFees, updateFees };

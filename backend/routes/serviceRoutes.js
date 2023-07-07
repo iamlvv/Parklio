@@ -6,6 +6,8 @@ const {
   addService,
 } = require("../controllers/serviceControllers");
 
-router.route("/").get(getAllServices);
-router.route("/addservice").post(addService);
+const { protect } = require("../middleware/authMiddleware");
+
+router.route("/").get(protect, getAllServices);
+router.route("/addservice").post(protect, addService);
 module.exports = router;

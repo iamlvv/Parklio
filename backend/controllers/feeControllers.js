@@ -16,11 +16,11 @@ const getAllFees = asyncHandler(async (req, res) => {
 const updateFee = asyncHandler(async (req, res) => {
   const { fourSeatCar, sevenSeatCar, truck, carWash, oilChange } = req.body;
   const fee = await Fee.findOne({});
-  fee.fourSeatCar.price = fourSeatCar;
-  fee.sevenSeatCar.price = sevenSeatCar;
-  fee.truck.price = truck;
-  fee.carWash.price = carWash;
-  fee.oilChange.price = oilChange;
+  fee.fourSeatCar.price = fourSeatCar.price || fee.fourSeatCar.price;
+  fee.sevenSeatCar.price = sevenSeatCar.price || fee.sevenSeatCar.price;
+  fee.truck.price = truck.price || fee.truck.price;
+  fee.carWash.price = carWash.price || fee.carWash.price;
+  fee.oilChange.price = oilChange.price || fee.oilChange.price;
   const updatedFee = await fee.save();
   res.json({
     message: "success",
