@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import { ACTIVE_NAVIGATION_ITEM_STATISTICS, INACTIVE_NAVIGATION_ITEM_STATISTICS } from "../../../constants/navigationConstants";
 function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
   const [typeOfStatistics, setTypeOfStatistics] = useState("vehicle");
   const [typeOfTime, setTypeOfTime] = useState("day");
-  const activeStyle =
-    "mb-10 rounded-2xl p-4 font-bold bg-black text-white transition border ease-in-out";
-  const inactiveStyle =
-    "mb-10 rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out";
 
   const adjustTypeOfStatistics = (type) => {
     handleTypeOfStatistics(type);
@@ -20,7 +17,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
       <div className="grid grid-cols-3 gap-9 mx-20 my-10">
         <button
           className={
-            typeOfStatistics === "vehicle" ? activeStyle : inactiveStyle
+            typeOfStatistics === "vehicle" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS
           }
           onClick={() => {
             adjustTypeOfStatistics("vehicle");
@@ -30,7 +27,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
         </button>
         <button
           className={
-            typeOfStatistics === "service" ? activeStyle : inactiveStyle
+            typeOfStatistics === "service" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS
           }
           onClick={() => {
             adjustTypeOfStatistics("service");
@@ -40,7 +37,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
         </button>
         <button
           className={
-            typeOfStatistics === "income" ? activeStyle : inactiveStyle
+            typeOfStatistics === "income" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS
           }
           onClick={() => {
             adjustTypeOfStatistics("income");
@@ -55,7 +52,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
           <div></div>
           <div className="grid grid-cols-4 gap-9">
             <button
-              className={typeOfTime === "day" ? activeStyle : inactiveStyle}
+              className={typeOfTime === "day" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS}
               onClick={() => {
                 adjustTypeOfTime("day");
               }}
@@ -63,7 +60,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
               Day
             </button>
             <button
-              className={typeOfTime === "month" ? activeStyle : inactiveStyle}
+              className={typeOfTime === "month" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS}
               onClick={() => {
                 adjustTypeOfTime("month");
               }}
@@ -71,7 +68,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
               Month
             </button>
             <button
-              className={typeOfTime === "year" ? activeStyle : inactiveStyle}
+              className={typeOfTime === "year" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS}
               onClick={() => {
                 adjustTypeOfTime("year");
               }}
@@ -79,7 +76,7 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
               Year
             </button>
             <button
-              className={typeOfTime === "today" ? activeStyle : inactiveStyle}
+              className={typeOfTime === "today" ? ACTIVE_NAVIGATION_ITEM_STATISTICS : INACTIVE_NAVIGATION_ITEM_STATISTICS}
               onClick={() => {
                 adjustTypeOfTime("today");
               }}

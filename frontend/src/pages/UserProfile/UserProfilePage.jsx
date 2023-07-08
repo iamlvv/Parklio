@@ -7,6 +7,8 @@ import {
 } from "../../components/actions/userActions";
 import Swal from "sweetalert2";
 import Header from "../../components/Header";
+import { INPUT_FIELD } from "../../constants/inputConstants";
+import { ACTIVE_SUBMIT_FORM_BUTTON } from "../../constants/homeConstants";
 
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
@@ -60,7 +62,7 @@ function UserProfilePage() {
               <input
                 type="text"
                 placeholder="Name"
-                className="p-4 rounded-xl drop-shadow-md border"
+                className={INPUT_FIELD}
                 value={fullName || ""}
                 onChange={(e) => setFullName(e.target.value)}
               />
@@ -69,7 +71,7 @@ function UserProfilePage() {
               <input
                 type="text"
                 placeholder="Email"
-                className="p-4 rounded-xl drop-shadow-md border"
+                className={INPUT_FIELD}
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -78,7 +80,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="Current Password"
-                className="p-4 rounded-xl drop-shadow-md border"
+                className={INPUT_FIELD}
                 value={currentPassword || ""}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               />
@@ -87,7 +89,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="New Password"
-                className="p-4 rounded-xl drop-shadow-md border"
+                className={INPUT_FIELD}
                 value={newPassword || ""}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
@@ -96,7 +98,7 @@ function UserProfilePage() {
               <input
                 type="password"
                 placeholder="Confirm New Password"
-                className="p-4 rounded-xl drop-shadow-md border"
+                className={INPUT_FIELD}
                 value={confirmNewPassword || ""}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
@@ -104,7 +106,7 @@ function UserProfilePage() {
             <div>
               <button
                 type="submit"
-                className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black border transition ease-in-out"
+                className={ACTIVE_SUBMIT_FORM_BUTTON}
               >
                 Save
               </button>

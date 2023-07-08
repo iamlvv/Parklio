@@ -6,7 +6,6 @@ import CheckOutForm from "./components/CheckOutForm";
 import { useNavigate } from "react-router-dom";
 import { getUserName } from "../../components/actions/userActions";
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 
 function HomePage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));

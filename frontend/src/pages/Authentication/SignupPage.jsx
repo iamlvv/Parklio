@@ -11,7 +11,6 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [authority, setAuthority] = useState("officer");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
@@ -20,7 +19,7 @@ function SignupPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    SignUp({ fullName, email, password, authority, navigate });
+    SignUp({ fullName, email, password, authority: "officer", navigate });
   };
   return (
     <div className="">

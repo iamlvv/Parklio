@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { GetAllVehicles } from "../../../../components/actions/vehicleActions";
 import { VehicleItems } from "../ItemsPerPage";
 import { styles } from "../../../../components/styles";
-import { Paginate } from "../../StatisticsPage";
 import VehicleList from "./VehicleList";
+import Paginate from "../Pagination";
+import { CHRONOLOGICAL_ORDER, INVERSE_CHRONOLOGICAL_ORDER } from "../../../../constants/navigationConstants";
 
 function VehicleStatistics({ userInfo, itemsPerPage }) {
   const [vehicleList, setVehicleList] = useState([]);
   const [timeOrder, setTimeOrder] = useState("newtoold");
-  const activeTimeOrder = "border rounded-2xl p-2 bg-black text-white";
-  const inactiveTimeOrder =
-    "border rounded-2xl p-2 hover:bg-black hover:text-white transition ease-in-out";
-
   const headers = [
     "Plate Number",
     "Owner's name",
@@ -67,7 +64,7 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
         <div className="flex flex-row gap-x-9 mr-20">
           <button
             className={
-              timeOrder === "newtoold" ? activeTimeOrder : inactiveTimeOrder
+              timeOrder === "newtoold" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderNewestToOldest}
           >
@@ -75,7 +72,7 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
           </button>
           <button
             className={
-              timeOrder === "oldtonew" ? activeTimeOrder : inactiveTimeOrder
+              timeOrder === "oldtonew" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderOldestToNewest}
           >

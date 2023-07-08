@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getAllServices } from "../../../../components/actions/serviceActions";
 import { ServiceItems } from "../ItemsPerPage";
 import { styles } from "../../../../components/styles";
-import { Paginate } from "../../StatisticsPage";
+import Paginate from "../Pagination";
+import { CHRONOLOGICAL_ORDER, INVERSE_CHRONOLOGICAL_ORDER } from "../../../../constants/navigationConstants";
 
 function ServiceStatistics({ userInfo, itemsPerPage }) {
   const [serviceList, setServiceList] = useState([]);
   const [timeOrder, setTimeOrder] = useState("newtoold");
-  const activeTimeOrder = "border rounded-2xl p-2 bg-black text-white";
-  const inactiveTimeOrder =
-    "border rounded-2xl p-2 hover:bg-black hover:text-white transition ease-in-out";
   const tableHeaders = [
     "Plate Number",
     "Owner's name",
@@ -64,7 +62,7 @@ function ServiceStatistics({ userInfo, itemsPerPage }) {
         <div className="flex flex-row gap-x-9 mr-20">
           <button
             className={
-              timeOrder === "newtoold" ? activeTimeOrder : inactiveTimeOrder
+              timeOrder === "newtoold" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderNewestToOldest}
           >
@@ -72,7 +70,7 @@ function ServiceStatistics({ userInfo, itemsPerPage }) {
           </button>
           <button
             className={
-              timeOrder === "oldtonew" ? activeTimeOrder : inactiveTimeOrder
+              timeOrder === "oldtonew" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderOldestToNewest}
           >

@@ -3,9 +3,10 @@ import { styles } from "../../../components/styles";
 import { getAllFees } from "../../../components/actions/feeActions";
 import { registerService } from "../../../components/actions/serviceActions";
 import { RegisterVehicle } from "../../../components/actions/vehicleActions";
+import { ACTIVE_SUBMIT_FORM_BUTTON, INACTIVE_SUBMIT_FORM_BUTTON, PLATE_NUMBER_PATTERN } from "../../../constants/homeConstants";
+import { INPUT_FIELD } from "../../../constants/inputConstants";
 
 function CheckInForm({ userInfo }) {
-  const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
   const [errorPlate, setErrorPlate] = useState("");
   const [plate, setPlate] = useState("");
   const [owner, setOwner] = useState("");
@@ -17,10 +18,6 @@ function CheckInForm({ userInfo }) {
   const [oilType, setOilType] = useState("pennzoil");
   const [carWashCost, setCarWashCost] = useState(0);
   const [oilChangingCost, setOilChangingCost] = useState(0);
-  const activeRegister =
-    "rounded-2xl p-4 font-bold hover:bg-black hover:text-white transition bg-white text-black ease-in-out drop-shadow-lg";
-  const inactiveRegister =
-    "rounded-2xl p-4 font-bold bg-gray-300 text-gray-500 cursor-not-allowed";
   const [registerButton, setRegisterButton] = useState(
     plate === "" || owner === "" || parkingType === "" || vehicleType === ""
       ? false
@@ -28,7 +25,7 @@ function CheckInForm({ userInfo }) {
   );
 
   const isValidPlate = (plate) => {
-    return patternPlate.test(plate);
+    return PLATE_NUMBER_PATTERN.test(plate);
   };
   const handleChangePlate = (e) => {
     if (!isValidPlate(e.target.value)) {
@@ -99,7 +96,7 @@ function CheckInForm({ userInfo }) {
                   placeholder="Plate Number"
                   value={plate || ""}
                   onChange={handleChangePlate}
-                  className="p-4 rounded-xl drop-shadow-md border"
+                  className={INPUT_FIELD}
                   maxLength={8}
                   required
                 />
@@ -111,7 +108,7 @@ function CheckInForm({ userInfo }) {
                   placeholder="Vehice Owner"
                   value={owner || ""}
                   onChange={(e) => setOwner(e.target.value)}
-                  className="p-4 rounded-xl drop-shadow-md border"
+                  className={INPUT_FIELD}
                   required
                 />
               </div>
@@ -213,7 +210,7 @@ function CheckInForm({ userInfo }) {
           <button
             type="submit"
             className={
-              registerButton && !errorPlate ? activeRegister : inactiveRegister
+              registerButton && !errorPlate ? ACTIVE_SUBMIT_FORM_BUTTON : INACTIVE_SUBMIT_FORM_BUTTON
             }
             disabled={
               plate === "" ||

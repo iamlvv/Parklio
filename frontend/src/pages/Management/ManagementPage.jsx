@@ -3,6 +3,8 @@ import NavigationBar from "../../components/NavigationBar";
 import { styles } from "../../components/styles";
 import Header from "../../components/Header";
 import { getAllFees, updateFees } from "../../components/actions/feeActions";
+import { INPUT_FIELD } from "../../constants/inputConstants";
+import { ACTIVE_SUBMIT_FORM_BUTTON } from "../../constants/homeConstants";
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
   const [seventseatCarFee, setSeventseatCarFee] = useState(0);
@@ -62,7 +64,7 @@ function ManagementPage() {
                   <input
                     type="number"
                     name="4seatcarfee"
-                    className="p-4 rounded-xl drop-shadow-md border"
+                    className={INPUT_FIELD}
                     value={fourseatCarFee || ""}
                     onChange={(e) => setFourseatCarFee(e.target.value)}
                     required
@@ -73,7 +75,7 @@ function ManagementPage() {
                   <input
                     type="number"
                     name="7seatcarfee"
-                    className="p-4 rounded-xl drop-shadow-md border"
+                    className={INPUT_FIELD}
                     value={seventseatCarFee || ""}
                     onChange={(e) => setSeventseatCarFee(e.target.value)}
                     required
@@ -84,7 +86,7 @@ function ManagementPage() {
                   <input
                     type="number"
                     name="truckfee"
-                    className="p-4 rounded-xl drop-shadow-md border"
+                    className={INPUT_FIELD}
                     value={truckFee || ""}
                     onChange={(e) => setTruckFee(e.target.value)}
                     required
@@ -101,7 +103,7 @@ function ManagementPage() {
                     <input
                       type="number"
                       name="carwashfee"
-                      className="p-4 rounded-xl drop-shadow-md border"
+                      className={INPUT_FIELD}
                       value={carWashFee || ""}
                       onChange={(e) => setCarWashFee(e.target.value)}
                       required
@@ -114,7 +116,7 @@ function ManagementPage() {
                     <input
                       type="number"
                       name="oilchangingfee"
-                      className="p-4 rounded-xl drop-shadow-md border"
+                      className={INPUT_FIELD}
                       value={oilChangingFee || ""}
                       onChange={(e) => setOilChangingFee(e.target.value)}
                       required
@@ -127,7 +129,7 @@ function ManagementPage() {
           <div>
             <input
               type="submit"
-              className="rounded-2xl p-4 font-bold hover:bg-black hover:text-white bg-white text-black transition border ease-in-out cursor-pointer"
+              className={ACTIVE_SUBMIT_FORM_BUTTON}
               value="Save changes"
               disabled={
                 fourseatCarFee === 0 &&

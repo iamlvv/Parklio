@@ -9,17 +9,13 @@ import fourseatCar from "../../../../assets/img/car.png";
 import sevenseatCar from "../../../../assets/img/car7.png";
 import truck from "../../../../assets/img/truck.png";
 import InfoEachVehicle from "./InfoEachVehicle";
+import { ACTIVE_ITEM_VEHICLE_LIST, INACTIVE_ITEM_VEHICLE_LIST } from "../../../../constants/vehicleConstants";
 
 function VehicleList({ userInfo }) {
   const [vehicleList, setVehicleList] = useState([]);
   const [vehicleInfo, setVehicleInfo] = useState({});
   const [activeItem, setActiveItem] = useState("");
   const [vehicleOriginalList, setVehicleOriginalList] = useState([]);
-
-  const active =
-    "bg-gray-100 transition ease-in-out rounded-md py-5 pl-2 flex flex-row gap-x-5 cursor-pointer items-center";
-  const inactive =
-    "hover:bg-gray-100 transition ease-in-out rounded-md py-5 pl-2 cursor-pointer flex flex-row gap-x-5 items-center";
 
   useEffect(() => {
     GetAllDistinctVehicles({ userInfo, setVehicleList });
@@ -40,8 +36,8 @@ function VehicleList({ userInfo }) {
                 key={vehicle._id}
                 className={
                   activeItem && vehicleInfo._id === vehicle._id
-                    ? active
-                    : inactive
+                    ? ACTIVE_ITEM_VEHICLE_LIST
+                    : INACTIVE_ITEM_VEHICLE_LIST
                 }
                 onClick={() => {
                   setVehicleInfo(vehicle);
@@ -63,8 +59,8 @@ function VehicleList({ userInfo }) {
                     {vehicle.vehicleType === "4seatcar"
                       ? "4-seat car"
                       : vehicle.vehicleType === "7seatcar"
-                      ? "7-seat car"
-                      : "truck"}
+                        ? "7-seat car"
+                        : "truck"}
                   </div>
                 </div>
               </div>

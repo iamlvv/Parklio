@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CheckOutVehicle } from "../../../components/actions/vehicleActions";
+import { ACTIVE_SUBMIT_FORM_BUTTON, INACTIVE_SUBMIT_FORM_BUTTON, PLATE_NUMBER_PATTERN } from "../../../constants/homeConstants";
+import { INPUT_FIELD } from "../../../constants/inputConstants";
 
 function CheckOutForm() {
   const [errorPlate, setErrorPlate] = useState("");
@@ -19,16 +21,11 @@ function CheckOutForm() {
     plateNumber === "" || parkingKey === "" ? false : true
   );
 
-  const patternPlate = /[1-9][0-9][A-Z][0-9][0-9][0-9][0-9][0-9]?/;
-  const activeRegister =
-    "rounded-2xl p-4 font-bold hover:bg-black hover:text-white transition bg-white text-black ease-in-out drop-shadow-lg";
-  const inactiveRegister =
-    "rounded-2xl p-4 font-bold bg-gray-300 text-gray-500 cursor-not-allowed";
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   //Check if plate number is valid
   const isValidPlate = (plate) => {
-    return patternPlate.test(plate);
+    return PLATE_NUMBER_PATTERN.test(plate);
   };
   const handleChangePlate = (e) => {
     if (!isValidPlate(e.target.value)) {
@@ -79,7 +76,7 @@ function CheckOutForm() {
                       <input
                         type="text"
                         placeholder="Plate Number"
-                        className="p-4 rounded-xl drop-shadow-lg border"
+                        className={INPUT_FIELD}
                         value={plateNumber || ""}
                         onChange={handleChangePlate}
                       />
@@ -88,7 +85,7 @@ function CheckOutForm() {
                       <input
                         type="text"
                         placeholder="Parking Key"
-                        className="p-4 rounded-xl drop-shadow-lg border"
+                        className={INPUT_FIELD}
                         value={parkingKey || ""}
                         onChange={(e) => setParkingKey(e.target.value)}
                       />
@@ -102,8 +99,8 @@ function CheckOutForm() {
                   type="submit"
                   className={
                     checkoutButton && !errorPlate
-                      ? activeRegister
-                      : inactiveRegister
+                      ? ACTIVE_SUBMIT_FORM_BUTTON
+                      : INACTIVE_SUBMIT_FORM_BUTTON
                   }
                   disabled={
                     plateNumber === "" || parkingKey === "" || errorPlate
