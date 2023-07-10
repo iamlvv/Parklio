@@ -3,11 +3,11 @@ const router = express.Router();
 
 const {
   getAllServices,
-  addService,
+  addNewService,
 } = require("../controllers/serviceControllers");
 
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getAllServices);
-router.route("/addservice").post(protect, addService);
+router.route("/registration").post(protect, addNewService);
 module.exports = router;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { GET_ALL_FEES_API_URL, UPDATE_FEES_API_URL } from "../../constants/APIConstants";
 
 const getAllFees = async ({
   setFourseatCarFee,
@@ -9,7 +10,8 @@ const getAllFees = async ({
   userInfo,
 }) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/fees`, {
+    const response = await axios.get(
+      GET_ALL_FEES_API_URL, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -27,7 +29,7 @@ const getAllFees = async ({
 const updateFees = async ({ inputData, userInfo }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/fees/updatefee`,
+      UPDATE_FEES_API_URL,
       inputData,
       {
         headers: {

@@ -14,7 +14,7 @@ const getAllServices = asyncHandler(async (req, res) => {
 //@desc     Add a service
 //@route    POST /api/services
 //@access   Private
-const addService = asyncHandler(async (req, res) => {
+const addNewService = asyncHandler(async (req, res) => {
   const {
     plateNumber,
     vehicleOwner,
@@ -32,8 +32,8 @@ const addService = asyncHandler(async (req, res) => {
     serviceType: carWashCost
       ? "carWash"
       : oilChangingCost
-      ? "oilChanging"
-      : "none",
+        ? "oilChanging"
+        : "none",
     oilType: oilType ? oilType : "none",
     cost: carWashCost ? carWashCost : oilChangingCost ? oilChangingCost : 0,
   });
@@ -42,4 +42,4 @@ const addService = asyncHandler(async (req, res) => {
     message: "success",
   });
 });
-module.exports = { getAllServices, addService };
+module.exports = { getAllServices, addNewService };

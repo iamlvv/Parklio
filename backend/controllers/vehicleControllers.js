@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Vehicle = require("../models/vehicleModel");
 const Fee = require("../models/feeModel");
-const Service = require("../models/serviceModel");
 // @desc    Fetch all vehicles
 // @route   GET /api/vehicles
 // @access  Public
@@ -28,7 +27,7 @@ const getVehicleById = asyncHandler(async (req, res) => {
 // @route   POST /api/vehicles
 // @access  Private
 
-const addVehicle = asyncHandler(async (req, res) => {
+const addNewVehicle = asyncHandler(async (req, res) => {
   const {
     plateNumber,
     vehicleType,
@@ -59,8 +58,8 @@ const addVehicle = asyncHandler(async (req, res) => {
       vehicleType === "4seatcar"
         ? fees[0].fourSeatCar.price
         : vehicleType === "7seatcar"
-        ? fees[0].sevenSeatCar.price
-        : fees[0].truck.price,
+          ? fees[0].sevenSeatCar.price
+          : fees[0].truck.price,
     inputTime: inputTime,
     outputTime,
     parkingType: parkingType,
@@ -69,27 +68,27 @@ const addVehicle = asyncHandler(async (req, res) => {
       carWashing:
         carWashCost !== 0
           ? {
-              registerDate: inputTime,
-              cost: carWashCost,
-            }
+            registerDate: inputTime,
+            cost: carWashCost,
+          }
           : {
-              registerDate: "",
-              cost: 0,
-            },
+            registerDate: "",
+            cost: 0,
+          },
       oilChanging:
         oilChangingCost !== 0
           ? {
-              registerDate: inputTime,
-              oilType: oilType,
-              oilPrice: oilChangingCost,
-              cost: oilChangingCost,
-            }
+            registerDate: inputTime,
+            oilType: oilType,
+            oilPrice: oilChangingCost,
+            cost: oilChangingCost,
+          }
           : {
-              registerDate: "",
-              oilType: "",
-              oilPrice: 0,
-              cost: 0,
-            },
+            registerDate: "",
+            oilType: "",
+            oilPrice: 0,
+            cost: 0,
+          },
       latestCost: carWashCost + oilChangingCost,
     },
     totalCost: serviceCost,
@@ -208,18 +207,6 @@ const getAllDistinctVehicles = asyncHandler(async (req, res) => {
 // @route   GET /api/vehicles/distinctvehiclesinputtime
 // @access  Private/Admin
 
-const getAllDistinctVehiclesInputTime = asyncHandler(async (req, res) => {
-  const distinctVehicles = await Vehicle.aggregate([
-    {
-      $group: {
-        _id: "$plateNumber",
-        inputTime: { $sum: 1 },
-      },
-    },
-  ]);
-  res.json(distinctVehicles);
-});
-
 // @desc    Return checked out vehicles
 // @route   GET /api/vehicles/checkedout
 // @access  Private/Admin
@@ -232,7 +219,7 @@ const getCheckedOutVehicles = asyncHandler(async (req, res) => {
 module.exports = {
   getAllVehicles,
   getVehicleById,
-  addVehicle,
+  addNewVehicle,
   checkoutVehicle,
   deleteVehicle,
   verifyVehicle,

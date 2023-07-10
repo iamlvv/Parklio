@@ -138,6 +138,8 @@ const getGraphData = async ({ typeOfTime, setGraphData, userInfo }) => {
       };
       setGraphData(IncomeToday({ incomeList, today }));
       break;
+    default:
+      break;
   }
 };
 

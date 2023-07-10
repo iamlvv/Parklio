@@ -1,6 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SwalObject } from "../styles";
+import { GET_USER_DETAILS_API_URL, UPDATE_USER_PROFILE_API_URL } from "../../constants/APIConstants";
 
 const GetUserDetails = async ({
   userInfo,
@@ -10,7 +11,7 @@ const GetUserDetails = async ({
 }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/users/profile/${userInfo.id}`,
+      GET_USER_DETAILS_API_URL + `${userInfo.id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -31,7 +32,7 @@ const GetUserDetails = async ({
 const getUserName = async ({ userInfo, setName }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/users/profile/${userInfo.id}`,
+      GET_USER_DETAILS_API_URL + `${userInfo.id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -53,7 +54,7 @@ const UpdateUserProfile = async ({
 }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/users/profile/${userInfo.id}`,
+      UPDATE_USER_PROFILE_API_URL + `${userInfo.id}`,
       {
         fullname: fullName,
         email: email,

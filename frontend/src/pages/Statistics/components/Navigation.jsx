@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ACTIVE_NAVIGATION_ITEM_STATISTICS, INACTIVE_NAVIGATION_ITEM_STATISTICS } from "../../../constants/navigationConstants";
+
 function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
   const [typeOfStatistics, setTypeOfStatistics] = useState("vehicle");
   const [typeOfTime, setTypeOfTime] = useState("day");

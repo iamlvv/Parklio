@@ -1,7 +1,6 @@
 import { CountOutputTime } from "../../../../components/actions/vehicleActions";
 
 function InfoEachVehicle({ vehicle, vehicleId, vehicleOriginalList }) {
-  console.log(vehicleOriginalList);
   return (
     <div className="border p-5 rounded-md shadow-md">
       <h1 className="font-bold text-2xl">Vehicle Information</h1>
@@ -21,8 +20,8 @@ function InfoEachVehicle({ vehicle, vehicleId, vehicleOriginalList }) {
             {vehicle.vehicleType === "4seatcar"
               ? "4 seat car"
               : vehicle.vehicleType === "7seatcar"
-              ? "7 seat car"
-              : "truck"}
+                ? "7 seat car"
+                : "truck"}
           </h2>
           <h2>{vehicle.inputTime}</h2>
           <h2>{CountOutputTime({ vehicleOriginalList, vehicleId })}</h2>

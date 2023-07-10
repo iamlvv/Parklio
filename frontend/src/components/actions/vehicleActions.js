@@ -1,6 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SwalObject } from "../styles";
+import { VEHICLE_CHECKOUT_API_URL, GET_ALL_DISTINCT_VEHICLES_API_URL, GET_ALL_VEHICLES_API_URL, VEHICLE_REGISTRATION_API_URL } from "../../constants/APIConstants";
 const RegisterVehicle = async ({
   userInfo,
   plateNumber,
@@ -16,7 +17,7 @@ const RegisterVehicle = async ({
 }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/vehicles/checkin`,
+      VEHICLE_REGISTRATION_API_URL,
       {
         plateNumber: plateNumber,
         vehicleOwner: vehicleOwner,
@@ -66,7 +67,7 @@ const CheckOutVehicle = async ({
 }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/vehicles/checkout`,
+      VEHICLE_CHECKOUT_API_URL,
       {
         plateNumber: plateNumber,
         parkingKey: parkingKey,
@@ -101,7 +102,7 @@ const CheckOutVehicle = async ({
 const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/vehicles`,
+      GET_ALL_VEHICLES_API_URL,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -117,7 +118,7 @@ const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
 const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/vehicles/distinctvehicles`,
+      GET_ALL_DISTINCT_VEHICLES_API_URL,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

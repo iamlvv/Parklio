@@ -1,11 +1,12 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import { SwalObject } from "../../../components/styles";
+import { USER_AUTHENTICATION_API_URL, USER_REGISTRATION_API_URL } from "../../../constants/APIConstants";
 
 const Login = async ({ email, password, navigate }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/users/login`,
+      USER_AUTHENTICATION_API_URL,
       {
         email,
         password,
@@ -24,7 +25,7 @@ const Login = async ({ email, password, navigate }) => {
 const SignUp = async ({ fullName, email, password, authority, navigate }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/users/signup`,
+      USER_REGISTRATION_API_URL,
       {
         email,
         password,

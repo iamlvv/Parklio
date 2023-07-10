@@ -10,8 +10,8 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/login").post(authUser);
-router.route("/signup").post(registerUser);
+router.route("/authentication").post(authUser);
+router.route("/registration").post(registerUser);
 router
   .route("/profile/:id")
   .get(protect, getUserProfile)

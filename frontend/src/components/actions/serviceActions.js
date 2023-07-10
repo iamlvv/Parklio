@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SERVICE_REGISTRATION_API_URL, GET_ALL_SERVICES_API_URL } from "../../constants/APIConstants";
 const registerService = async ({
   userInfo,
   plateNumber,
@@ -12,7 +13,7 @@ const registerService = async ({
 }) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/services/addService`,
+      SERVICE_REGISTRATION_API_URL,
       {
         plateNumber: plateNumber,
         vehicleOwner: vehicleOwner,
@@ -37,7 +38,7 @@ const registerService = async ({
 const getAllServices = async ({ userInfo, setServiceList }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/services/`,
+      GET_ALL_SERVICES_API_URL,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

@@ -10,6 +10,6 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getAllFees).post(protect, createFee);
-router.route("/updatefee").post(protect, updateFee);
+router.route("/updation").post(protect, updateFee);
 
 module.exports = router;
