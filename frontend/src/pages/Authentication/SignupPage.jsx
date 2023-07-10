@@ -4,6 +4,9 @@ import { styles } from "../../components/styles";
 import { SignUp } from "./components/authActions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { INPUT_FIELD } from "../../constants/formConstants";
+import Swal from "sweetalert2";
+import { PASSWORD_NOT_MATCH } from "../../constants/errorConstants";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -19,6 +22,10 @@ function SignupPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      Swal.fire(PASSWORD_NOT_MATCH);
+      return;
+    }
     SignUp({ fullName, email, password, authority: "officer", navigate });
   };
   return (
@@ -33,7 +40,7 @@ function SignupPage() {
                 type="text"
                 placeholder="Full Name"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={fullName || ""}
                 onChange={(e) => setFullName(e.target.value)}
               />
@@ -43,7 +50,7 @@ function SignupPage() {
                 type="text"
                 placeholder="Email"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -53,7 +60,7 @@ function SignupPage() {
                 type="password"
                 placeholder="Password"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={password || ""}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -63,7 +70,7 @@ function SignupPage() {
                 type="password"
                 placeholder="Confirm Password"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={confirmPassword || ""}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

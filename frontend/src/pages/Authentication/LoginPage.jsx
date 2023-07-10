@@ -4,6 +4,10 @@ import { styles } from "../../components/styles";
 import { Login } from "./components/authActions";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import {
+  INPUT_FIELD,
+  INPUT_FIELD_LOGIN_AND_SIGNUP,
+} from "../../constants/formConstants";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -30,7 +34,7 @@ function LoginPage() {
                 type="text"
                 placeholder="Email"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -40,7 +44,7 @@ function LoginPage() {
                 type="password"
                 placeholder="Password"
                 required
-                className="font-bold p-2 text-black rounded-xl border"
+                className={INPUT_FIELD}
                 value={password || ""}
                 onChange={(e) => setPassword(e.target.value)}
               />

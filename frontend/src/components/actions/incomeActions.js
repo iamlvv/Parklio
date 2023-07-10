@@ -7,7 +7,7 @@ const getDaysInMonth = (month, year) =>
     .map((v, i) => new Date(year, month - 1, i + 1))
     .filter((v) => v.getMonth() === month - 1);
 
-const IncomeDaily = ({ incomeList }) => {
+const calculateIncomeDaily = ({ incomeList }) => {
   /* Initialize hours in a day
    * Each hour has 2 properties: name and income
    * For each hour, calculate income by calling calculateIncomeDaily function
@@ -27,7 +27,7 @@ const IncomeDaily = ({ incomeList }) => {
   return result;
 };
 
-const IncomeToday = ({ incomeList, today }) => {
+const calculateIncomeToday = ({ incomeList, today }) => {
   /* Initialize 24 hours in a day
    * Each hour has 2 properties: name and income
    * For each hour, calculate income by calling IncomeDaily function
@@ -52,7 +52,7 @@ const IncomeToday = ({ incomeList, today }) => {
   }
   return result;
 };
-const IncomeMonthly = ({ incomeList, month, year }) => {
+const calculateIncomeMonthly = ({ incomeList, month, year }) => {
   /* Initialize days in a month
    * Each day has 2 properties: name and income
    * For each day, calculate income by calling calculateIncomeDaily function
@@ -73,7 +73,7 @@ const IncomeMonthly = ({ incomeList, month, year }) => {
   return result;
 };
 
-const IncomeYearly = ({ incomeList }) => {
+const calculateIncomeYearly = ({ incomeList }) => {
   /* Initialize 12 months in a year
    * Each month has 2 properties: name and income
    * For each month, calculate income by calling IncomeMonthly function
@@ -115,7 +115,7 @@ const getGraphData = async ({ typeOfTime, setGraphData, userInfo }) => {
   switch (typeOfTime) {
     case "month":
       setGraphData(
-        IncomeMonthly({
+        calculateIncomeMonthly({
           incomeList,
           month: new Date().getMonth() + 1,
           year: new Date().getFullYear(),
@@ -124,11 +124,11 @@ const getGraphData = async ({ typeOfTime, setGraphData, userInfo }) => {
       break;
     case "year":
       setGraphData(
-        IncomeYearly({ incomeList, year: new Date().getFullYear() })
+        calculateIncomeYearly({ incomeList, year: new Date().getFullYear() })
       );
       break;
     case "day":
-      setGraphData(IncomeDaily({ incomeList }));
+      setGraphData(calculateIncomeDaily({ incomeList }));
       break;
     case "today":
       let today = {
@@ -136,11 +136,17 @@ const getGraphData = async ({ typeOfTime, setGraphData, userInfo }) => {
         month: new Date().getUTCMonth() + 1,
         year: new Date().getUTCFullYear(),
       };
-      setGraphData(IncomeToday({ incomeList, today }));
+      setGraphData(calculateIncomeToday({ incomeList, today }));
       break;
     default:
       break;
   }
 };
 
-export { IncomeMonthly, IncomeYearly, IncomeDaily, IncomeToday, getGraphData };
+export {
+  calculateIncomeMonthly,
+  calculateIncomeYearly,
+  calculateIncomeDaily,
+  calculateIncomeToday,
+  getGraphData,
+};

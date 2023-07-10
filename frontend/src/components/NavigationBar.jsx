@@ -5,7 +5,11 @@ import statisticsLogo from "../assets/img/statistics-logo.png";
 import managementLogo from "../assets/img/management-logo.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { styles } from "./styles";
-import { ACTIVE_NAVIGATION_BAR_ITEM, INACTIVE_NAVIGATION_BAR_ITEM, NAVIGATION_BAR_ITEM } from "../constants/navigationConstants";
+import {
+  ACTIVE_NAVIGATION_BAR_ITEM,
+  INACTIVE_NAVIGATION_BAR_ITEM,
+  NAVIGATION_BAR_ITEM,
+} from "../constants/navigationConstants";
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -24,7 +28,9 @@ function NavigationBar() {
   const authorizedManagement = (
     <NavLink
       to={authority === "admin" ? "/management" : ""}
-      className={({ isActive }) => (isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM)}
+      className={({ isActive }) =>
+        isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM
+      }
     >
       <div className={NAVIGATION_BAR_ITEM}>
         <img src={managementLogo} alt="Management" width={30} height={30} />
@@ -33,14 +39,16 @@ function NavigationBar() {
     </NavLink>
   );
   return (
-    <div className="z-40 fixed">
+    <div>
       <div
         className="flex flex-col font-bold float-left rounded-sm"
         style={styles.navigationWidth}
       >
         <NavLink
           to="/homepage"
-          className={({ isActive }) => (isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM)}
+          className={({ isActive }) =>
+            isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM
+          }
         >
           <div className={NAVIGATION_BAR_ITEM}>
             <img src={homeLogo} alt="Home" width={30} height={30} />
@@ -49,7 +57,9 @@ function NavigationBar() {
         </NavLink>
         <NavLink
           to="/statistics"
-          className={({ isActive }) => (isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM)}
+          className={({ isActive }) =>
+            isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM
+          }
         >
           <div className={NAVIGATION_BAR_ITEM}>
             <img src={statisticsLogo} alt="Statistics" width={30} height={30} />
@@ -58,7 +68,9 @@ function NavigationBar() {
         </NavLink>
         <NavLink
           to="/userprofile"
-          className={({ isActive }) => (isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM)}
+          className={({ isActive }) =>
+            isActive ? ACTIVE_NAVIGATION_BAR_ITEM : INACTIVE_NAVIGATION_BAR_ITEM
+          }
         >
           <div className={NAVIGATION_BAR_ITEM}>
             <img src={userLogo} alt="User Profile" width={30} height={30} />

@@ -22,8 +22,8 @@ function StatisticsPage() {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="z-10 relative">
+      <div className="">
         <Header />
       </div>
       <NavigationBar />

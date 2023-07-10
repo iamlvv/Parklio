@@ -1,7 +1,15 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SwalObject } from "../styles";
-import { GET_USER_DETAILS_API_URL, UPDATE_USER_PROFILE_API_URL } from "../../constants/APIConstants";
+import {
+  GET_USER_DETAILS_API_URL,
+  UPDATE_USER_PROFILE_API_URL,
+} from "../../constants/APIConstants";
+import {
+  INVALID_PASSWORD,
+  SOMETHING_WENT_WRONG,
+  USER_NOT_FOUND,
+} from "../../constants/errorConstants";
 
 const GetUserDetails = async ({
   userInfo,
@@ -22,10 +30,9 @@ const GetUserDetails = async ({
     setEmail(response.data.email);
     setAuthority(response.data.authority);
   } catch (error) {
-    console.log(error);
-    Swal.fire({
-      ...SwalObject.error,
-    });
+    if (error.response.status === 404) {
+      Swal.fire(USER_NOT_FOUND);
+    } else Swal.fire(SOMETHING_WENT_WRONG);
   }
 };
 
@@ -41,7 +48,9 @@ const getUserName = async ({ userInfo, setName }) => {
     );
     setName(response.data.fullname);
   } catch (error) {
-    console.log(error);
+    if (error.response.status === 404) {
+      Swal.fire(USER_NOT_FOUND);
+    } else Swal.fire(SOMETHING_WENT_WRONG);
   }
 };
 
@@ -72,10 +81,14 @@ const UpdateUserProfile = async ({
       text: `Profile has been updated.`,
     });
   } catch (error) {
-    console.log(error);
-    Swal.fire({
-      ...SwalObject.error,
-    });
+    if (error.response.status === 401) {
+      Swal.fire(INVALID_PASSWORD);
+    } else if (error.response.status === 404) {
+      Swal.fire({
+        ...SwalObject.error,
+        text: `User not found.`,
+      });
+    } else Swal.fire(SOMETHING_WENT_WRONG);
   }
 };
 

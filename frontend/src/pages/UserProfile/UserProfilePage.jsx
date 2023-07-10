@@ -7,8 +7,10 @@ import {
 } from "../../components/actions/userActions";
 import Swal from "sweetalert2";
 import Header from "../../components/Header";
-import { INPUT_FIELD } from "../../constants/inputConstants";
-import { ACTIVE_SUBMIT_FORM_BUTTON } from "../../constants/homeConstants";
+import {
+  ACTIVE_SUBMIT_FORM_BUTTON,
+  INPUT_FIELD,
+} from "../../constants/formConstants";
 
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
@@ -104,10 +106,7 @@ function UserProfilePage() {
               />
             </div>
             <div>
-              <button
-                type="submit"
-                className={ACTIVE_SUBMIT_FORM_BUTTON}
-              >
+              <button type="submit" className={ACTIVE_SUBMIT_FORM_BUTTON}>
                 Save
               </button>
             </div>

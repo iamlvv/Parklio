@@ -3,8 +3,11 @@ import NavigationBar from "../../components/NavigationBar";
 import { styles } from "../../components/styles";
 import Header from "../../components/Header";
 import { getAllFees, updateFees } from "../../components/actions/feeActions";
-import { INPUT_FIELD } from "../../constants/inputConstants";
-import { ACTIVE_SUBMIT_FORM_BUTTON } from "../../constants/homeConstants";
+import {
+  ACTIVE_SUBMIT_FORM_BUTTON,
+  INPUT_FIELD,
+} from "../../constants/formConstants";
+
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
   const [seventseatCarFee, setSeventseatCarFee] = useState(0);

@@ -22,27 +22,29 @@ function Header() {
     navigate("/");
   };
   return (
-    <div
-      className="flex justify-between items-center px-10 bg-gray-50 shadow-sm"
-      style={styles.header}
-    >
-      <div>
-        <img src={logo} alt="logo" width={100} height={50} />
-      </div>
-      <div>
-        {logout ? (
-          <div className="cursor-pointer hover:bg-red-500 transition ease-in-out rounded-md p-1">
-            <img
-              src={logoutLogo}
-              alt="logout"
-              width={30}
-              height={30}
-              onClick={handleLogout}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
+    <div className="z-40">
+      <div
+        className="flex justify-between items-center px-10 bg-gray-50 shadow-sm"
+        style={styles.header}
+      >
+        <div>
+          <img src={logo} alt="logo" width={100} height={50} />
+        </div>
+        <div>
+          {logout ? (
+            <div className="cursor-pointer hover:bg-red-500 transition ease-in-out rounded-md p-1">
+              <img
+                src={logoutLogo}
+                alt="logout"
+                width={30}
+                height={30}
+                onClick={handleLogout}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

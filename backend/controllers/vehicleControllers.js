@@ -18,7 +18,7 @@ const getVehicleById = asyncHandler(async (req, res) => {
   if (vehicle) {
     res.json(vehicle);
   } else {
-    res.status(404);
+    res.status(404).json({ message: "Vehicle not found" });
     throw new Error("Vehicle not found");
   }
 });
@@ -46,7 +46,7 @@ const addNewVehicle = asyncHandler(async (req, res) => {
     vehicleNotCheckedOut &&
     vehicleNotCheckedOut.parkingKey !== "checked out"
   ) {
-    res.status(400);
+    res.status(400).json({ message: "Vehicle already checked in" });
     throw new Error("Vehicle already checked in");
   }
   const fees = await Fee.find({});
@@ -58,8 +58,8 @@ const addNewVehicle = asyncHandler(async (req, res) => {
       vehicleType === "4seatcar"
         ? fees[0].fourSeatCar.price
         : vehicleType === "7seatcar"
-          ? fees[0].sevenSeatCar.price
-          : fees[0].truck.price,
+        ? fees[0].sevenSeatCar.price
+        : fees[0].truck.price,
     inputTime: inputTime,
     outputTime,
     parkingType: parkingType,
@@ -68,27 +68,27 @@ const addNewVehicle = asyncHandler(async (req, res) => {
       carWashing:
         carWashCost !== 0
           ? {
-            registerDate: inputTime,
-            cost: carWashCost,
-          }
+              registerDate: inputTime,
+              cost: carWashCost,
+            }
           : {
-            registerDate: "",
-            cost: 0,
-          },
+              registerDate: "",
+              cost: 0,
+            },
       oilChanging:
         oilChangingCost !== 0
           ? {
-            registerDate: inputTime,
-            oilType: oilType,
-            oilPrice: oilChangingCost,
-            cost: oilChangingCost,
-          }
+              registerDate: inputTime,
+              oilType: oilType,
+              oilPrice: oilChangingCost,
+              cost: oilChangingCost,
+            }
           : {
-            registerDate: "",
-            oilType: "",
-            oilPrice: 0,
-            cost: 0,
-          },
+              registerDate: "",
+              oilType: "",
+              oilPrice: 0,
+              cost: 0,
+            },
       latestCost: carWashCost + oilChangingCost,
     },
     totalCost: serviceCost,
@@ -121,7 +121,7 @@ const verifyVehicle = asyncHandler(async (req, res) => {
       totalCost: VehicleExists.totalCost,
     });
   } else {
-    res.status(404);
+    res.status(404).json({ message: "Invalid parking key" });
     throw new Error("Invalid parking key");
   }
 });
@@ -164,8 +164,8 @@ const checkoutVehicle = asyncHandler(async (req, res) => {
       totalCost: updatedVehicle.totalCost,
     });
   } else {
-    res.status(404);
-    throw new Error("Invalid parking key");
+    res.status(404).json({ message: "Invalid parking key or plate number" });
+    throw new Error("Invalid parking key or plate number");
   }
 });
 

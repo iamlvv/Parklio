@@ -45,8 +45,6 @@ export const styles = {
     top: "0",
     width: "100%",
     height: "75px",
-  },
-  headerOnly: {
     zIndex: "40",
   },
   distinctVehicleList: {
