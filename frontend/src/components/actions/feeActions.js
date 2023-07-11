@@ -6,13 +6,11 @@ import {
 
 const getAllFees = async ({
   setFourseatCarFee,
-  setSeventseatCarFee,
+  setSevenseatCarFee,
   setTruckFee,
   setCarWashFee,
   setOilChangingFee,
   userInfo,
-  setOilChangingCost,
-  setCarWashCost,
 }) => {
   try {
     const response = await axios.get(GET_ALL_FEES_API_URL, {
@@ -20,12 +18,12 @@ const getAllFees = async ({
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    setCarWashCost(response.data[0].carWash.price);
-    setOilChangingCost(response.data[0].oilChange.price);
+    // setCarWashCost(response.data[0].carWash.price);
+    // setOilChangingCost(response.data[0].oilChange.price);
     setCarWashFee(response.data[0].carWash.price);
     setOilChangingFee(response.data[0].oilChange.price);
     setFourseatCarFee(response.data[0].fourSeatCar.price);
-    setSeventseatCarFee(response.data[0].sevenSeatCar.price);
+    setSevenseatCarFee(response.data[0].sevenSeatCar.price);
     setTruckFee(response.data[0].truck.price);
   } catch (error) {
     console.log(error);

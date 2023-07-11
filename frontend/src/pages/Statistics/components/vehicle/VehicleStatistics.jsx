@@ -4,7 +4,11 @@ import { VehicleItems } from "../ItemsPerPage";
 import { styles } from "../../../../components/styles";
 import VehicleList from "./VehicleList";
 import Paginate from "../Pagination";
-import { CHRONOLOGICAL_ORDER, INVERSE_CHRONOLOGICAL_ORDER } from "../../../../constants/navigationConstants";
+import {
+  CHRONOLOGICAL_ORDER,
+  INVERSE_CHRONOLOGICAL_ORDER,
+} from "../../../../constants/navigationConstants";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 function VehicleStatistics({ userInfo, itemsPerPage }) {
   const [vehicleList, setVehicleList] = useState([]);
@@ -55,16 +59,32 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
     <div>
       <div className="flex flex-row justify-between items-center">
         <div>
-          <h1 className="font-bold text-2xl">Check in/ Check out status</h1>
-          <p>
-            The table below helps us track which vehicle checks in/ check out of
-            our system
-          </p>
+          <h1 className="font-bold text-2xl">Check in/ Check out tracking</h1>
+          <div
+            className="p-2 shadow-md bg-gray-50 rounded-md my-5"
+            style={styles.infoBanner}
+          >
+            <ul>
+              <li>
+                {" "}
+                <AiOutlineQuestionCircle className="inline-block mr-2" />
+                The table below helps you keep track all vehicles has been
+                registered, check out and total cost that vehicle owners have to
+                pay.
+              </li>
+              <li>
+                You can click on the filter on the right to change the order
+                chronologically.
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="flex flex-row gap-x-9 mr-20">
           <button
             className={
-              timeOrder === "newtoold" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
+              timeOrder === "newtoold"
+                ? CHRONOLOGICAL_ORDER
+                : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderNewestToOldest}
           >
@@ -72,7 +92,9 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
           </button>
           <button
             className={
-              timeOrder === "oldtonew" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
+              timeOrder === "oldtonew"
+                ? CHRONOLOGICAL_ORDER
+                : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderOldestToNewest}
           >
@@ -97,10 +119,23 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
         </tbody>
       </table>
       <h1 className="font-bold text-2xl">Specific vehicles</h1>
-      <p>
-        The list below is about all vehicles have used our car park. You can
-        click on each vehicle to see more information about it.
-      </p>
+      <div
+        className="p-2 shadow-md bg-gray-50 rounded-md my-5"
+        style={styles.infoBanner}
+      >
+        <ul>
+          <li>
+            {" "}
+            <AiOutlineQuestionCircle className="inline-block mr-2" />
+            The list below shows all vehicles that have been registered in the
+            parking lot.
+          </li>
+          <li>
+            You can search for a specific vehicle by entering the plate number
+            in the search box.
+          </li>
+        </ul>
+      </div>
       <VehicleList userInfo={userInfo} />
     </div>
   );

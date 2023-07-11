@@ -3,7 +3,11 @@ import { getAllServices } from "../../../../components/actions/serviceActions";
 import { ServiceItems } from "../ItemsPerPage";
 import { styles } from "../../../../components/styles";
 import Paginate from "../Pagination";
-import { CHRONOLOGICAL_ORDER, INVERSE_CHRONOLOGICAL_ORDER } from "../../../../constants/navigationConstants";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import {
+  CHRONOLOGICAL_ORDER,
+  INVERSE_CHRONOLOGICAL_ORDER,
+} from "../../../../constants/navigationConstants";
 
 function ServiceStatistics({ userInfo, itemsPerPage }) {
   const [serviceList, setServiceList] = useState([]);
@@ -48,21 +52,34 @@ function ServiceStatistics({ userInfo, itemsPerPage }) {
   };
 
   return (
-    <div>
+    <div className="mb-10">
       <div className="flex flex-row justify-between items-center">
         <div>
-          <h1 className="font-bold text-2xl invisible">
-            Check in/ Check out status
-          </h1>
-          <p>
-            The table below helps us track which service has been used by our
-            customers.
-          </p>
+          <h1 className="font-bold text-2xl">Services tracking</h1>
+          <div
+            className="p-2 shadow-md bg-gray-50 rounded-md my-5"
+            style={styles.infoBanner}
+          >
+            <ul>
+              <li>
+                {" "}
+                <AiOutlineQuestionCircle className="inline-block mr-2" />
+                The table below helps you keep track all services has been
+                registered by vehicle owners.
+              </li>
+              <li>
+                You can click on the filter on the right to change the order
+                chronologically.
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="flex flex-row gap-x-9 mr-20">
           <button
             className={
-              timeOrder === "newtoold" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
+              timeOrder === "newtoold"
+                ? CHRONOLOGICAL_ORDER
+                : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderNewestToOldest}
           >
@@ -70,7 +87,9 @@ function ServiceStatistics({ userInfo, itemsPerPage }) {
           </button>
           <button
             className={
-              timeOrder === "oldtonew" ? CHRONOLOGICAL_ORDER : INVERSE_CHRONOLOGICAL_ORDER
+              timeOrder === "oldtonew"
+                ? CHRONOLOGICAL_ORDER
+                : INVERSE_CHRONOLOGICAL_ORDER
             }
             onClick={handleOrderOldestToNewest}
           >

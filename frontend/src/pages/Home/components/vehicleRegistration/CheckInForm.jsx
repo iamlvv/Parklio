@@ -40,7 +40,11 @@ function CheckInForm({ userInfo }) {
   };
   // Get the latest fees for car wash and oil changing
   useEffect(() => {
-    getAllFees({ setCarWashCost, setOilChangingCost, userInfo });
+    getAllFees({
+      setCarWashFee: setCarWashCost,
+      setOilChangingFee: setOilChangingCost,
+      userInfo,
+    });
   }, []);
 
   // Check if all required fields are filled, if not, disable the register button, otherwise, enable it

@@ -10,7 +10,7 @@ import {
 
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
-  const [seventseatCarFee, setSeventseatCarFee] = useState(0);
+  const [sevenseatCarFee, setSevenseatCarFee] = useState(0);
   const [truckFee, setTruckFee] = useState(0);
   const [carWashFee, setCarWashFee] = useState(0);
   const [oilChangingFee, setOilChangingFee] = useState(0);
@@ -21,7 +21,7 @@ function ManagementPage() {
     // set data to state
     getAllFees({
       setFourseatCarFee,
-      setSeventseatCarFee,
+      setSevenseatCarFee,
       setTruckFee,
       setCarWashFee,
       setOilChangingFee,
@@ -36,7 +36,7 @@ function ManagementPage() {
         price: fourseatCarFee,
       },
       sevenSeatCar: {
-        price: seventseatCarFee,
+        price: sevenseatCarFee,
       },
       truck: {
         price: truckFee,
@@ -79,8 +79,8 @@ function ManagementPage() {
                     type="number"
                     name="7seatcarfee"
                     className={INPUT_FIELD}
-                    value={seventseatCarFee || ""}
-                    onChange={(e) => setSeventseatCarFee(e.target.value)}
+                    value={sevenseatCarFee || ""}
+                    onChange={(e) => setSevenseatCarFee(e.target.value)}
                     required
                   />
                 </div>
@@ -130,18 +130,9 @@ function ManagementPage() {
             </div>
           </div>
           <div>
-            <input
-              type="submit"
-              className={ACTIVE_SUBMIT_FORM_BUTTON}
-              value="Save changes"
-              disabled={
-                fourseatCarFee === 0 &&
-                seventseatCarFee === 0 &&
-                truckFee === 0 &&
-                carWashFee === 0 &&
-                oilChangingFee === 0
-              }
-            />
+            <button className={ACTIVE_SUBMIT_FORM_BUTTON} type="submit">
+              Save changes
+            </button>
           </div>
         </form>
       </div>

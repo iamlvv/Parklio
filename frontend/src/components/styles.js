@@ -55,6 +55,9 @@ export const styles = {
     padding: "10px",
     borderRadius: "5px",
   },
+  infoBanner: {
+    maxWidth: "500px",
+  },
 };
 
 export const SwalObject = {
