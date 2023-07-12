@@ -15,7 +15,7 @@ function VehicleCheckout({
   checkoutButton,
 }) {
   return (
-    <div className="">
+    <div>
       <form onSubmit={handleCheckOut}>
         <div>
           <div className="my-10">

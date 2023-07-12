@@ -49,8 +49,10 @@ const RegisterVehicle = async ({
     Swal.fire({
       ...SwalObject.success,
       text: `Vehicle has been registered. Parking key: ${response.data.parkingKey}`,
+      didClose: () => window.location.reload(),
     });
   } catch (error) {
+    console.log(error);
     if (error.response.status === 400) Swal.fire(VEHICLE_ALREADY_CHECKED_IN);
     else Swal.fire(SOMETHING_WENT_WRONG);
   }
@@ -102,6 +104,7 @@ const CheckOutVehicle = async ({
     Swal.fire({
       ...SwalObject.success,
       text: `Vehicle has been checked out.`,
+      didClose: () => window.location.reload(),
     });
   } catch (error) {
     if (error.response.status === 404)

@@ -1,8 +1,11 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+
 import {
   GET_ALL_FEES_API_URL,
   UPDATE_FEES_API_URL,
 } from "../../constants/APIConstants";
+import { SwalObject } from "../styles";
 
 const getAllFees = async ({
   setFourseatCarFee,
@@ -38,6 +41,10 @@ const updateFees = async ({ inputData, userInfo }) => {
       },
     });
     console.log(response);
+    Swal.fire({
+      ...SwalObject.success,
+      title: "Update fees successfully!",
+    });
   } catch (error) {
     console.log(error);
   }
