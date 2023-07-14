@@ -1,5 +1,6 @@
 // ClassName for input fields in general
-export const INPUT_FIELD = "p-4 rounded-xl drop-shadow-md border";
+export const INPUT_FIELD =
+  "p-4 rounded-xl drop-shadow-md border focus:drop-shadow-lg focus:outline-none focus:border-yellow-700 transition";
 
 // ClassName for buttons in homepage
 export const ACTIVE_SUBMIT_FORM_BUTTON =

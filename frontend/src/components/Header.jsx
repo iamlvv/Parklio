@@ -32,7 +32,7 @@ function Header() {
         </div>
         <div>
           {logout ? (
-            <div className="cursor-pointer hover:bg-red-500 transition ease-in-out rounded-md p-1">
+            <div className="cursor-pointer hover:bg-yellow-700 transition ease-in-out rounded-md p-1">
               <img
                 src={logoutLogo}
                 alt="logout"

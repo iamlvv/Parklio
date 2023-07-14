@@ -8,6 +8,8 @@ const {
   verifyVehicle,
   getCheckedOutVehicles,
   getAllDistinctVehicles,
+  getTotalInputTime,
+  getTotalOutputTime,
 } = require("../controllers/vehicleControllers");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -22,4 +24,6 @@ router.route("/checkout").post(protect, checkoutVehicle);
 router.route("/verification").post(protect, verifyVehicle);
 router.route("/checkedout").get(protect, getCheckedOutVehicles);
 router.route("/distinctvehicles").get(protect, getAllDistinctVehicles);
+router.route("/totalinputtime").get(protect, getTotalInputTime);
+router.route("/totaloutputtime").get(protect, getTotalOutputTime);
 module.exports = router;

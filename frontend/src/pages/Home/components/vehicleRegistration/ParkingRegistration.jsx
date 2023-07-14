@@ -14,8 +14,8 @@ function ParkingRegistration({
   return (
     <div>
       <h2 className="font-bold text-2xl">Parking Registration</h2>
-      <div className="flex flex-row justify-center gap-x-40 mt-10 items-center">
-        <div className="flex flex-col gap-y-10">
+      <div className="grid grid-cols-3 justify-center mt-10 items-center">
+        <div className="col-span-1">
           <div className="mb-5">
             <input
               type="text"
@@ -26,7 +26,9 @@ function ParkingRegistration({
               maxLength={8}
               required
             />
-            {errorPlate && <h2 style={{ color: "red" }}>{errorPlate}</h2>}
+            {errorPlate && plate !== "" && (
+              <h2 style={{ color: "red", maxWidth: "222px" }}>{errorPlate}</h2>
+            )}
           </div>
           <div className="mb-5">
             <input
@@ -39,7 +41,7 @@ function ParkingRegistration({
             />
           </div>
         </div>
-        <div className="flex flex-col gap-y-10">
+        <div className="col-span-2">
           <div className="flex flex-row gap-x-9 mb-5 p-4 rounded-xl shadow-md border">
             <h2>Type of parking:</h2>
             <div

@@ -6,6 +6,8 @@ import {
   GET_ALL_DISTINCT_VEHICLES_API_URL,
   GET_ALL_VEHICLES_API_URL,
   VEHICLE_REGISTRATION_API_URL,
+  GET_TOTAL_INPUT_TIME_API_URL,
+  GET_TOTAL_OUTPUT_TIME_API_URL,
 } from "../../constants/APIConstants";
 import {
   INVALID_PARKING_KEY_OR_PLATE_NUMBER,
@@ -104,7 +106,6 @@ const CheckOutVehicle = async ({
     Swal.fire({
       ...SwalObject.success,
       text: `Vehicle has been checked out.`,
-      didClose: () => window.location.reload(),
     });
   } catch (error) {
     if (error.response.status === 404)
@@ -138,6 +139,44 @@ const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
   }
 };
 
+const getTotalInputTime = async ({ userInfo, setTotalInputTime }) => {
+  try {
+    const response = await axios.get(GET_TOTAL_INPUT_TIME_API_URL, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    setTotalInputTime(response.data[0].inputTime);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getTotalOutputTime = async ({ userInfo, setTotalOutputTime }) => {
+  try {
+    const response = await axios.get(GET_TOTAL_OUTPUT_TIME_API_URL, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    setTotalOutputTime(response.data[0].outputTime);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getTotalParkingIncome = async ({ userInfo, setTotalParkingIncome }) => {
+  try {
+    const response = await axios.get(GET_TOTAL_OUTPUT_TIME_API_URL, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    setTotalParkingIncome(response.data[0].totalParkingIncome);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const CountOutputTime = ({ vehicleOriginalList, vehicleId }) => {
   if (vehicleId) {
     vehicleOriginalList = vehicleOriginalList.filter((vehicle) => {
@@ -158,4 +197,7 @@ export {
   GetAllVehicles,
   GetAllDistinctVehicles,
   CountOutputTime,
+  getTotalInputTime,
+  getTotalOutputTime,
+  getTotalParkingIncome,
 };

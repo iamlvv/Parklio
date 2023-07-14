@@ -34,7 +34,9 @@ function CheckInForm({ userInfo }) {
   };
   const handleChangePlate = (e) => {
     if (!isValidPlate(e.target.value)) {
-      setErrorPlate("Invalid plate number");
+      setErrorPlate(
+        "Invalid plate number. The correct format is 29A12345/ 29A1234"
+      );
     } else setErrorPlate(null);
     setPlate(e.target.value);
   };
@@ -91,6 +93,7 @@ function CheckInForm({ userInfo }) {
         serviceCost: oilChangingCost,
       });
     }
+    setRegisterButton(false);
   };
   return (
     <div className="mt-10">

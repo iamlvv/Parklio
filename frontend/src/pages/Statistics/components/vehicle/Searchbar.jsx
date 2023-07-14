@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetAllDistinctVehicles } from "../../../../components/actions/vehicleActions";
 import { GrClose } from "react-icons/gr";
+import { INPUT_FIELD } from "../../../../constants/formConstants";
 function Searchbar({ setVehicleList, userInfo }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
@@ -33,7 +34,7 @@ function Searchbar({ setVehicleList, userInfo }) {
       <input
         type="text"
         placeholder="Search plate number"
-        className="border p-2 drop-shadow-md rounded-md"
+        className={INPUT_FIELD}
         value={wordEntered || ""}
         onChange={handleFilter}
       />

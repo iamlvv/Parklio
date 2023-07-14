@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { CheckOutVehicle } from "../../../../components/actions/vehicleActions";
+import { PLATE_NUMBER_PATTERN } from "../../../../constants/patternConstants";
+import VehicleCheckout from "./VehicleCheckout";
+import CheckedOutVehicleInfo from "./CheckedOutVehicleInfo";
 import {
   ACTIVE_SUBMIT_FORM_BUTTON,
   INACTIVE_SUBMIT_FORM_BUTTON,
-  PLATE_NUMBER_PATTERN,
-} from "../../../../constants/patternConstants";
-import { INPUT_FIELD } from "../../../../constants/formConstants";
-import VehicleCheckout from "./VehicleCheckout";
-import CheckedOutVehicleInfo from "./CheckedOutVehicleInfo";
+} from "../../../../constants/formConstants";
 function CheckOutForm() {
   const [errorPlate, setErrorPlate] = useState("");
   const [parkingKey, setParkingKey] = useState("");
@@ -34,7 +33,9 @@ function CheckOutForm() {
   };
   const handleChangePlate = (e) => {
     if (!isValidPlate(e.target.value)) {
-      setErrorPlate("Invalid plate number");
+      setErrorPlate(
+        "Invalid plate number. The correct format is 29A12345/ 29A1234"
+      );
     } else setErrorPlate(null);
     setPlateNumber(e.target.value);
   };
@@ -64,7 +65,7 @@ function CheckOutForm() {
       parkingKey,
     });
   };
-
+  console.log("parkingKey", parkingKey);
   return (
     <div className="">
       <div>
@@ -72,15 +73,33 @@ function CheckOutForm() {
           Check out Vehicle
         </h1>
         <div className="grid grid-cols-2">
-          <VehicleCheckout
-            handleCheckOut={handleCheckOut}
-            plateNumber={plateNumber}
-            handleChangePlate={handleChangePlate}
-            parkingKey={parkingKey}
-            setParkingKey={setParkingKey}
-            errorPlate={errorPlate}
-            checkoutButton={checkoutButton}
-          />
+          <form onSubmit={handleCheckOut}>
+            <VehicleCheckout
+              plateNumber={plateNumber}
+              handleChangePlate={handleChangePlate}
+              parkingKey={parkingKey}
+              setParkingKey={setParkingKey}
+              errorPlate={errorPlate}
+            />
+            <div>
+              <button
+                type="submit"
+                className={
+                  checkoutButton && !errorPlate && parkingKey !== undefined
+                    ? ACTIVE_SUBMIT_FORM_BUTTON
+                    : INACTIVE_SUBMIT_FORM_BUTTON
+                }
+                disabled={
+                  plateNumber === "" ||
+                  parkingKey === "" ||
+                  errorPlate ||
+                  parkingKey === undefined
+                }
+              >
+                Check out
+              </button>
+            </div>
+          </form>
           <div>
             {vehicleVerified && (
               <CheckedOutVehicleInfo

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { GetAllVehicles } from "../../../../components/actions/vehicleActions";
+import {
+  GetAllVehicles,
+  getTotalInputTime,
+  getTotalOutputTime,
+  getTotalParkingIncome,
+} from "../../../../components/actions/vehicleActions";
 import { VehicleItems } from "../ItemsPerPage";
 import { styles } from "../../../../components/styles";
 import VehicleList from "./VehicleList";
@@ -13,6 +18,9 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 function VehicleStatistics({ userInfo, itemsPerPage }) {
   const [vehicleList, setVehicleList] = useState([]);
   const [timeOrder, setTimeOrder] = useState("newtoold");
+  const [totalInputTime, setTotalInputTime] = useState(0);
+  const [totalOutputTime, setTotalOutputTime] = useState(0);
+  const [totalParkingIncome, setTotalParkingIncome] = useState(0);
   const headers = [
     "Plate Number",
     "Owner's name",
@@ -29,8 +37,11 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
 
   useEffect(() => {
     GetAllVehicles({ userInfo, setVehicleList });
+    getTotalInputTime({ userInfo, setTotalInputTime });
+    getTotalOutputTime({ userInfo, setTotalOutputTime });
+    getTotalParkingIncome({ userInfo, setTotalParkingIncome });
   }, []);
-
+  console.log(totalInputTime, totalOutputTime, totalParkingIncome);
   //Create pagination
   var keyCount = Object.keys(vehicleList).length;
   const [itemOffset, setItemOffset] = useState(0);
@@ -60,49 +71,61 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
       <div className="flex flex-row justify-between items-center">
         <div>
           <h1 className="font-bold text-2xl">Check in/ Check out tracking</h1>
-          <div
-            className="p-2 shadow-md bg-gray-50 rounded-md my-5"
-            style={styles.infoBanner}
-          >
-            <ul>
-              <li>
-                {" "}
-                <AiOutlineQuestionCircle className="inline-block mr-2" />
-                The table below helps you keep track all vehicles has been
-                registered, check out and total cost that vehicle owners have to
-                pay.
-              </li>
-              <li>
-                You can click on the filter on the right to change the order
-                chronologically.
-              </li>
-            </ul>
+          <div className="flex flex-row items-center gap-x-9">
+            <div
+              className="p-2 shadow-md bg-gray-50 rounded-md my-5"
+              style={styles.infoBanner}
+            >
+              <ul>
+                <li>
+                  {" "}
+                  <AiOutlineQuestionCircle className="inline-block mr-2" />
+                  The table below helps you keep track all vehicles has been
+                  registered, check out and total cost that vehicle owners have
+                  to pay.
+                </li>
+                <li>
+                  You can click on the filter on the right to change the order
+                  chronologically.
+                </li>
+              </ul>
+            </div>
+            <div className="p-2 shadow-md bg-gray-50 rounded-md my-5">
+              <h1 className="font-bold text-2xl">Total vehicles up to now</h1>
+              <h2>Total Input: {totalInputTime}</h2>
+              <h2>Total Output: {totalOutputTime}</h2>
+              <h3>Total Parking Income: ${totalParkingIncome}</h3>
+            </div>
           </div>
         </div>
-        <div className="flex flex-row gap-x-9 mr-20">
-          <button
-            className={
-              timeOrder === "newtoold"
-                ? CHRONOLOGICAL_ORDER
-                : INVERSE_CHRONOLOGICAL_ORDER
-            }
-            onClick={handleOrderNewestToOldest}
-          >
-            Newest to oldest
-          </button>
-          <button
-            className={
-              timeOrder === "oldtonew"
-                ? CHRONOLOGICAL_ORDER
-                : INVERSE_CHRONOLOGICAL_ORDER
-            }
-            onClick={handleOrderOldestToNewest}
-          >
-            Oldest to newest
-          </button>
+      </div>
+      <div className="flex flex-row justify-between">
+        <div></div>
+        <div>
+          <div className="flex flex-row gap-x-9 mr-20">
+            <button
+              className={
+                timeOrder === "newtoold"
+                  ? CHRONOLOGICAL_ORDER
+                  : INVERSE_CHRONOLOGICAL_ORDER
+              }
+              onClick={handleOrderNewestToOldest}
+            >
+              Newest to oldest
+            </button>
+            <button
+              className={
+                timeOrder === "oldtonew"
+                  ? CHRONOLOGICAL_ORDER
+                  : INVERSE_CHRONOLOGICAL_ORDER
+              }
+              onClick={handleOrderOldestToNewest}
+            >
+              Oldest to newest
+            </button>
+          </div>
         </div>
       </div>
-
       <Paginate pageCount={pageCount} handlePageClick={handlePageClick} />
       <table className="mx-auto mb-10">
         <thead>

@@ -203,9 +203,43 @@ const getAllDistinctVehicles = asyncHandler(async (req, res) => {
   res.json(distinctVehicles);
 });
 
-// @desc    Return all distinct vehicles to calculate number of input time
-// @route   GET /api/vehicles/distinctvehiclesinputtime
+// @desc    Return the quantity of input time of the whole system up to now
+// @route   GET /api/vehicles/totalinputtime
 // @access  Private/Admin
+
+const getTotalInputTime = asyncHandler(async (req, res) => {
+  const totalInputTime = await Vehicle.aggregate([
+    {
+      $group: {
+        _id: null,
+        inputTime: { $sum: 1 },
+      },
+    },
+  ]);
+  res.json(totalInputTime);
+});
+
+// @desc    Return the quantity of output time of the whole system up to now
+// @route   GET /api/vehicles/totaloutputtime
+// @access  Private/Admin
+
+const getTotalOutputTime = asyncHandler(async (req, res) => {
+  const totalOutputTime = await Vehicle.aggregate([
+    {
+      $match: {
+        parkingKey: "checked out",
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        outputTime: { $sum: 1 },
+        totalParkingIncome: { $sum: "$parkingPrice" },
+      },
+    },
+  ]);
+  res.json(totalOutputTime);
+});
 
 // @desc    Return checked out vehicles
 // @route   GET /api/vehicles/checkedout
@@ -225,4 +259,6 @@ module.exports = {
   verifyVehicle,
   getCheckedOutVehicles,
   getAllDistinctVehicles,
+  getTotalInputTime,
+  getTotalOutputTime,
 };
