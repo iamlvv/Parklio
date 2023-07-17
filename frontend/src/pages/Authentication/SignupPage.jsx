@@ -7,12 +7,14 @@ import Footer from "../../components/Footer";
 import { INPUT_FIELD } from "../../constants/formConstants";
 import Swal from "sweetalert2";
 import { PASSWORD_NOT_MATCH } from "../../constants/errorConstants";
+import { EMAIL_PATTERN } from "../../constants/patternConstants";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
@@ -22,6 +24,18 @@ function SignupPage() {
     if (userInfo) navigate("/homepage");
   }, []);
 
+  // Check if email is valid
+  const isValidEmail = (email) => {
+    return EMAIL_PATTERN.test(email);
+  };
+  const handleChangeEmail = (e) => {
+    if (!isValidEmail(e.target.value)) {
+      setErrorEmail("Invalid email");
+    } else setErrorEmail(null);
+    setEmail(e.target.value);
+  };
+
+  // Handle signup
   const handleSignup = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -33,7 +47,7 @@ function SignupPage() {
   return (
     <div className="">
       <Header />
-      <div className="flex mt-20">
+      <div className="flex mt-14">
         <div style={styles.body} className="m-auto text-center">
           <h1 className="uppercase font-bold text-5xl">welcome to parklio</h1>
           <form className="mt-10" onSubmit={handleSignup}>
@@ -54,9 +68,10 @@ function SignupPage() {
                 required
                 className={INPUT_FIELD}
                 value={email || ""}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChangeEmail}
               />
             </div>
+            {errorEmail && <span className="text-red-500">{errorEmail}</span>}
             <div className="mt-5">
               <input
                 type="password"

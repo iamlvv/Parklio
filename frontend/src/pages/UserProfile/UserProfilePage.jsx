@@ -11,6 +11,7 @@ import {
   ACTIVE_SUBMIT_FORM_BUTTON,
   INPUT_FIELD,
 } from "../../constants/formConstants";
+import { EMAIL_PATTERN } from "../../constants/patternConstants";
 
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
@@ -19,6 +20,8 @@ function UserProfilePage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [authority, setAuthority] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
@@ -29,6 +32,18 @@ function UserProfilePage() {
     }
   }, []);
 
+  // Check if email is valid
+  const isValidEmail = (email) => {
+    return EMAIL_PATTERN.test(email);
+  };
+  const handleChangeEmail = (e) => {
+    if (!isValidEmail(e.target.value)) {
+      setErrorEmail("Invalid email");
+    } else setErrorEmail(null);
+    setEmail(e.target.value);
+  };
+
+  // Handle change profile
   const handleChangeProfile = (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
@@ -48,6 +63,7 @@ function UserProfilePage() {
     };
     UpdateUserProfile(inputData);
   };
+
   return (
     <div>
       <Header />
@@ -75,9 +91,10 @@ function UserProfilePage() {
                 placeholder="Email"
                 className={INPUT_FIELD}
                 value={email || ""}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChangeEmail}
               />
             </div>
+            {errorEmail && <span className="text-red-500">{errorEmail}</span>}
             <div>
               <input
                 type="password"

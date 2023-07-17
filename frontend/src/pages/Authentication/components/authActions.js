@@ -31,7 +31,6 @@ const SignUp = async ({ fullName, email, password, authority, navigate }) => {
       fullname: fullName,
       authority,
     });
-    console.log(response.data);
     localStorage.setItem("userInfo", JSON.stringify(response.data));
     navigate("/homepage");
   } catch (error) {

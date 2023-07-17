@@ -5,9 +5,11 @@ import { Login } from "./components/authActions";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { INPUT_FIELD } from "../../constants/formConstants";
+import { EMAIL_PATTERN } from "../../constants/patternConstants";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [errorEmail, setErrorEmail] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +20,18 @@ function LoginPage() {
     if (userInfo) navigate("/homepage");
   }, []);
 
+  // Check if email is valid
+  const isValidEmail = (email) => {
+    return EMAIL_PATTERN.test(email);
+  };
+  const handleChangeEmail = (e) => {
+    if (!isValidEmail(e.target.value)) {
+      setErrorEmail("Invalid email");
+    } else setErrorEmail(null);
+    setEmail(e.target.value);
+  };
+
+  // Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
     Login({ email, password, navigate });
@@ -37,8 +51,11 @@ function LoginPage() {
                 required
                 className={INPUT_FIELD}
                 value={email || ""}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChangeEmail}
               />
+            </div>
+            <div>
+              {errorEmail && <h2 className="text-red-500">{errorEmail}</h2>}
             </div>
             <div className="mt-10">
               <input
