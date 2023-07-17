@@ -7,6 +7,7 @@ import {
   ACTIVE_SUBMIT_FORM_BUTTON,
   INPUT_FIELD,
 } from "../../constants/formConstants";
+import { useNavigate } from "react-router-dom";
 
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
@@ -14,18 +15,23 @@ function ManagementPage() {
   const [truckFee, setTruckFee] = useState(0);
   const [carWashFee, setCarWashFee] = useState(0);
   const [oilChangingFee, setOilChangingFee] = useState(0);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const navigate = useNavigate();
   useEffect(() => {
     // Get all fees
-    getAllFees({
-      setFourseatCarFee,
-      setSevenseatCarFee,
-      setTruckFee,
-      setCarWashFee,
-      setOilChangingFee,
-      userInfo,
-    });
+    if (!userInfo) {
+      navigate("/");
+    } else {
+      getAllFees({
+        setFourseatCarFee,
+        setSevenseatCarFee,
+        setTruckFee,
+        setCarWashFee,
+        setOilChangingFee,
+        userInfo,
+      });
+    }
   }, []);
 
   const handleChangeFee = (e) => {
