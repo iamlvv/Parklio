@@ -22,6 +22,9 @@ This project is a simple car parking management system. The main features are:
 - Allow user (including admin and officer) to change their details, like password, email, name, etc.
 - Allow only admin to adjust the prices of the services.
 
+# Design
+This is the link Figma: <https://www.figma.com/file/LsBB8nbKYOg4yRbdZUUwHz/Managing-car-parking-system-Parklio?type=design&node-id=0%3A1&mode=design&t=KmqAYhTW2yXqGyga-1>
+
 # How to run
 I have deployed both frontend and backend on other platforms, frontend on Vercel and backend on Render. You can access the app via this link: <https://parklio-iamlvv.vercel.app/>
 
