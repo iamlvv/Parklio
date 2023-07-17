@@ -6,11 +6,15 @@ function Searchbar({ setVehicleList, userInfo }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   const [initialdata, setInitialData] = useState([]);
+
   useEffect(() => {
+    // Get all distinct vehicles
     GetAllDistinctVehicles({ userInfo, setVehicleList: setInitialData });
     setVehicleList(initialdata);
   }, []);
-  const handleFilter = (e) => {
+
+  const handleSearch = (e) => {
+    // Filtering result, search by plate number
     const searchword = e.target.value;
     setWordEntered(searchword);
     const newFilter = initialdata.filter((value) => {
@@ -24,11 +28,14 @@ function Searchbar({ setVehicleList, userInfo }) {
       setVehicleList(initialdata);
     }
   };
+
   //End of filtering result
   const clearInput = () => {
     setFilteredData([]);
     setWordEntered("");
+    setVehicleList(initialdata);
   };
+
   return (
     <div className="text-center my-5 flex flex-row justify-center gap-x-5 items-center">
       <input
@@ -36,13 +43,14 @@ function Searchbar({ setVehicleList, userInfo }) {
         placeholder="Search plate number"
         className={INPUT_FIELD}
         value={wordEntered || ""}
-        onChange={handleFilter}
+        onChange={handleSearch}
       />
       {wordEntered !== "" && (
         <div
           className="cursor-pointer p-2 bg-yellow-700 rounded-md text-white"
           onClick={clearInput}
         >
+          {/* Clear the input field */}
           <GrClose className="font-bold text-white" />
         </div>
       )}

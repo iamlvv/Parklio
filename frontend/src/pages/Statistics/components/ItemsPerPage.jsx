@@ -1,6 +1,7 @@
 import { styles } from "../../../components/styles";
 
 const VehicleItems = ({ currentItems }) => {
+  // Illustrate the items in the table in Vehicle Statistics
   return (
     currentItems &&
     currentItems.map((vehicle) => (
@@ -38,6 +39,7 @@ const VehicleItems = ({ currentItems }) => {
 };
 
 const ServiceItems = ({ currentItems }) => {
+  // Illustrate the items in the table in Service Statistics
   return (
     currentItems &&
     currentItems.map((service) => (

@@ -11,6 +11,7 @@ import {
   USER_NOT_FOUND,
 } from "../../constants/errorConstants";
 
+// Get user details
 const GetUserDetails = async ({
   userInfo,
   setFullName,
@@ -36,6 +37,7 @@ const GetUserDetails = async ({
   }
 };
 
+// get only user's name
 const getUserName = async ({ userInfo, setName }) => {
   try {
     const response = await axios.get(
@@ -54,6 +56,7 @@ const getUserName = async ({ userInfo, setName }) => {
   }
 };
 
+// Update user profile
 const UpdateUserProfile = async ({
   userInfo,
   fullName,

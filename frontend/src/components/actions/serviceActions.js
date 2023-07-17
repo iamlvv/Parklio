@@ -4,6 +4,8 @@ import {
   GET_ALL_SERVICES_API_URL,
   GET_TOTAL_SERVICES_API_URL,
 } from "../../constants/APIConstants";
+
+// Register a service
 const registerService = async ({
   userInfo,
   plateNumber,
@@ -39,6 +41,7 @@ const registerService = async ({
   }
 };
 
+// Get all services
 const getAllServices = async ({ userInfo, setServiceList }) => {
   try {
     const response = await axios.get(GET_ALL_SERVICES_API_URL, {
@@ -52,6 +55,7 @@ const getAllServices = async ({ userInfo, setServiceList }) => {
   }
 };
 
+// Get total service, which is the total number of services, and the total cost of services
 const getTotalService = async ({ userInfo, setTotalService }) => {
   try {
     const response = await axios.get(GET_TOTAL_SERVICES_API_URL, {

@@ -41,7 +41,7 @@ const addNewVehicle = asyncHandler(async (req, res) => {
     oilChangingCost,
   } = req.body;
   console.log(req.body);
-  const vehicleNotCheckedOut = await Vehicle.findOne({ plateNumber });
+  const vehicleNotCheckedOut = await Vehicle.findOne({ plateNumber }); // Check if the vehicle is already checked in
   if (
     vehicleNotCheckedOut &&
     vehicleNotCheckedOut.parkingKey !== "checked out"
@@ -49,7 +49,7 @@ const addNewVehicle = asyncHandler(async (req, res) => {
     res.status(400).json({ message: "Vehicle already checked in" });
     throw new Error("Vehicle already checked in");
   }
-  const fees = await Fee.find({});
+  const fees = await Fee.find({}); // Get the latest fees
   const vehicle = new Vehicle({
     plateNumber: plateNumber,
     vehicleType: vehicleType,
@@ -98,32 +98,6 @@ const addNewVehicle = asyncHandler(async (req, res) => {
   res.status(201).json({
     parkingKey: createdVehicle.parkingKey,
   });
-});
-
-// @desc    Verify a vehicle
-// @route   POST /api/vehicles/verifyvehicle
-// @access  Private
-
-const verifyVehicle = asyncHandler(async (req, res) => {
-  const { plateNumber, parkingKey } = req.body;
-  const VehicleExists = await Vehicle.findOne({ plateNumber, parkingKey });
-  console.log(plateNumber);
-  if (VehicleExists) {
-    res.json({
-      plateNumber: VehicleExists.plateNumber,
-      vehicleType: VehicleExists.vehicleType,
-      vehicleOwner: VehicleExists.vehicleOwner,
-      parkingPrice: VehicleExists.parkingPrice,
-      inputTime: VehicleExists.inputTime,
-      parkingType: VehicleExists.parkingType,
-      remainingTime: VehicleExists.remainingTime,
-      additionalService: VehicleExists.additionalService,
-      totalCost: VehicleExists.totalCost,
-    });
-  } else {
-    res.status(404).json({ message: "Invalid parking key" });
-    throw new Error("Invalid parking key");
-  }
 });
 
 // @desc    Checkout a vehicle
@@ -256,7 +230,6 @@ module.exports = {
   addNewVehicle,
   checkoutVehicle,
   deleteVehicle,
-  verifyVehicle,
   getCheckedOutVehicles,
   getAllDistinctVehicles,
   getTotalInputTime,

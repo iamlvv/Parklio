@@ -17,6 +17,7 @@ function StatisticsPage() {
 
   useEffect(() => {
     if (!userInfo) {
+      // If user is not logged in, navigate to login page
       navigate("/");
     }
   }, []);

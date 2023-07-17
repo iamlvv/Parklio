@@ -69,7 +69,7 @@ function ServiceIncluded({
           </select>
         </div>
       </div>
-      <h1 className="my-10 font-bold">Service cost: {serviceCost || 0}</h1>
+      <h1 className="my-10 font-bold">Service cost: ${serviceCost || 0}</h1>
     </div>
   );
 }

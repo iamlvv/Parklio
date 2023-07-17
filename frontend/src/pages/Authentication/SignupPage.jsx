@@ -9,14 +9,16 @@ import Swal from "sweetalert2";
 import { PASSWORD_NOT_MATCH } from "../../constants/errorConstants";
 
 function SignupPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const navigate = useNavigate();
+
   useEffect(() => {
+    // If user is logged in, navigate to homepage
     if (userInfo) navigate("/homepage");
   }, []);
 

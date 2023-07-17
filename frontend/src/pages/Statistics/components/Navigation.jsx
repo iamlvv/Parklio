@@ -74,9 +74,9 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
                   {typeOfTime === "day"
                     ? "daily"
                     : typeOfTime === "month"
-                    ? "monthly"
+                    ? "this month"
                     : typeOfTime === "year"
-                    ? "yearly"
+                    ? "this year"
                     : "today"}
                   . We can know that at which time of the{" "}
                   {typeOfTime === "day"

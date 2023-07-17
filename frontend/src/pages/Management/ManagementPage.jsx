@@ -17,8 +17,7 @@ function ManagementPage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
-    // fetch data from api
-    // set data to state
+    // Get all fees
     getAllFees({
       setFourseatCarFee,
       setSevenseatCarFee,

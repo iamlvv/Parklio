@@ -25,17 +25,21 @@ function ServiceStatistics({ userInfo, itemsPerPage }) {
     "Oil Type",
     "Cost",
   ];
+
+  // Get all services and total services
   useEffect(() => {
     getAllServices({ userInfo, setServiceList });
     getTotalService({ userInfo, setTotalService });
   }, []);
 
   const handleOrderNewestToOldest = () => {
+    // This function is called when the user clicks on the "Newest to oldest" button
     if (timeOrder === "newtoold") return;
     setTimeOrder("newtoold");
     setServiceList(serviceList.slice().reverse());
   };
   const handleOrderOldestToNewest = () => {
+    // This function is called when the user clicks on the "Oldest to newest" button
     if (timeOrder === "oldtonew") return;
     setTimeOrder("oldtonew");
     setServiceList(serviceList.slice().reverse());

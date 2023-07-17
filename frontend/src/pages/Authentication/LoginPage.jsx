@@ -4,10 +4,7 @@ import { styles } from "../../components/styles";
 import { Login } from "./components/authActions";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import {
-  INPUT_FIELD,
-  INPUT_FIELD_LOGIN_AND_SIGNUP,
-} from "../../constants/formConstants";
+import { INPUT_FIELD } from "../../constants/formConstants";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -15,13 +12,17 @@ function LoginPage() {
   const [password, setPassword] = useState("");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   useEffect(() => {
+    // If user is logged in, navigate to homepage
     if (userInfo) navigate("/homepage");
   }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     Login({ email, password, navigate });
   };
+
   return (
     <div className="">
       <Header />

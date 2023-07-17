@@ -14,6 +14,8 @@ import {
   SOMETHING_WENT_WRONG,
   VEHICLE_ALREADY_CHECKED_IN,
 } from "../../constants/errorConstants";
+
+// Register a vehicle
 const RegisterVehicle = async ({
   userInfo,
   plateNumber,
@@ -60,6 +62,7 @@ const RegisterVehicle = async ({
   }
 };
 
+// Check out a vehicle
 const CheckOutVehicle = async ({
   userInfo,
   parkingKey,
@@ -113,6 +116,7 @@ const CheckOutVehicle = async ({
   }
 };
 
+// Get all vehicles
 const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
   try {
     const response = await axios.get(GET_ALL_VEHICLES_API_URL, {
@@ -126,6 +130,7 @@ const GetAllVehicles = async ({ userInfo, setVehicleList }) => {
   }
 };
 
+// Get all distinct vehicles
 const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
   try {
     const response = await axios.get(GET_ALL_DISTINCT_VEHICLES_API_URL, {
@@ -139,6 +144,7 @@ const GetAllDistinctVehicles = async ({ userInfo, setVehicleList }) => {
   }
 };
 
+// Get total input time of the system
 const getTotalInputTime = async ({ userInfo, setTotalInputTime }) => {
   try {
     const response = await axios.get(GET_TOTAL_INPUT_TIME_API_URL, {
@@ -152,6 +158,7 @@ const getTotalInputTime = async ({ userInfo, setTotalInputTime }) => {
   }
 };
 
+// Get total output time of the system
 const getTotalOutputTime = async ({ userInfo, setTotalOutputTime }) => {
   try {
     const response = await axios.get(GET_TOTAL_OUTPUT_TIME_API_URL, {
@@ -165,6 +172,7 @@ const getTotalOutputTime = async ({ userInfo, setTotalOutputTime }) => {
   }
 };
 
+// Get total parking income of the system
 const getTotalParkingIncome = async ({ userInfo, setTotalParkingIncome }) => {
   try {
     const response = await axios.get(GET_TOTAL_OUTPUT_TIME_API_URL, {
@@ -177,6 +185,8 @@ const getTotalParkingIncome = async ({ userInfo, setTotalParkingIncome }) => {
     console.log(error);
   }
 };
+
+// Count the number of output time of a specific vehicle
 const CountOutputTime = ({ vehicleOriginalList, vehicleId }) => {
   if (vehicleId) {
     vehicleOriginalList = vehicleOriginalList.filter((vehicle) => {

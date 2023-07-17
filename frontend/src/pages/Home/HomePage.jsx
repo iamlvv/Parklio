@@ -11,7 +11,9 @@ function HomePage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [name, setName] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
+    // Get user name, if not logged in, navigate to login page
     if (!userInfo) {
       navigate("/");
     } else {

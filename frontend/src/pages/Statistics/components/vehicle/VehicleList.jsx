@@ -9,7 +9,10 @@ import fourseatCar from "../../../../assets/img/car.png";
 import sevenseatCar from "../../../../assets/img/car7.png";
 import truck from "../../../../assets/img/truck.png";
 import InfoEachVehicle from "./InfoEachVehicle";
-import { ACTIVE_ITEM_VEHICLE_LIST, INACTIVE_ITEM_VEHICLE_LIST } from "../../../../constants/vehicleConstants";
+import {
+  ACTIVE_ITEM_VEHICLE_LIST,
+  INACTIVE_ITEM_VEHICLE_LIST,
+} from "../../../../constants/vehicleConstants";
 
 function VehicleList({ userInfo }) {
   const [vehicleList, setVehicleList] = useState([]);
@@ -18,6 +21,7 @@ function VehicleList({ userInfo }) {
   const [vehicleOriginalList, setVehicleOriginalList] = useState([]);
 
   useEffect(() => {
+    // Get all distinct vehicles
     GetAllDistinctVehicles({ userInfo, setVehicleList });
     GetAllVehicles({ userInfo, setVehicleList: setVehicleOriginalList });
   }, []);
@@ -59,8 +63,8 @@ function VehicleList({ userInfo }) {
                     {vehicle.vehicleType === "4seatcar"
                       ? "4-seat car"
                       : vehicle.vehicleType === "7seatcar"
-                        ? "7-seat car"
-                        : "truck"}
+                      ? "7-seat car"
+                      : "truck"}
                   </div>
                 </div>
               </div>

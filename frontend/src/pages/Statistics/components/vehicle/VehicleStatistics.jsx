@@ -21,6 +21,7 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
   const [totalInputTime, setTotalInputTime] = useState(0);
   const [totalOutputTime, setTotalOutputTime] = useState(0);
   const [totalParkingIncome, setTotalParkingIncome] = useState(0);
+
   const headers = [
     "Plate Number",
     "Owner's name",
@@ -36,12 +37,13 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
   ];
 
   useEffect(() => {
+    // Get all vehicles, total input time, total output time, total parking income
     GetAllVehicles({ userInfo, setVehicleList });
     getTotalInputTime({ userInfo, setTotalInputTime });
     getTotalOutputTime({ userInfo, setTotalOutputTime });
     getTotalParkingIncome({ userInfo, setTotalParkingIncome });
   }, []);
-  console.log(totalInputTime, totalOutputTime, totalParkingIncome);
+
   //Create pagination
   var keyCount = Object.keys(vehicleList).length;
   const [itemOffset, setItemOffset] = useState(0);
@@ -55,6 +57,8 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
     const newOffset = (e.selected * itemsPerPage) % keyCount;
     setItemOffset(newOffset);
   };
+
+  // Handle sort order chronologically
   const handleOrderNewestToOldest = () => {
     if (timeOrder === "newtoold") return;
     setTimeOrder("newtoold");

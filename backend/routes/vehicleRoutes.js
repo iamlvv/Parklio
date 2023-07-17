@@ -5,7 +5,6 @@ const {
   getAllVehicles,
   addNewVehicle,
   checkoutVehicle,
-  verifyVehicle,
   getCheckedOutVehicles,
   getAllDistinctVehicles,
   getTotalInputTime,
@@ -21,7 +20,6 @@ router.route("/registration").post(protect, addNewVehicle);
 //   .get(protect, getVehicleById)
 //   .delete(protect, deleteVehicle);
 router.route("/checkout").post(protect, checkoutVehicle);
-router.route("/verification").post(protect, verifyVehicle);
 router.route("/checkedout").get(protect, getCheckedOutVehicles);
 router.route("/distinctvehicles").get(protect, getAllDistinctVehicles);
 router.route("/totalinputtime").get(protect, getTotalInputTime);

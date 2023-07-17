@@ -7,6 +7,7 @@ import {
 } from "../../constants/APIConstants";
 import { SwalObject } from "../styles";
 
+// Get all fees
 const getAllFees = async ({
   setFourseatCarFee,
   setSevenseatCarFee,
@@ -21,8 +22,6 @@ const getAllFees = async ({
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    // setCarWashCost(response.data[0].carWash.price);
-    // setOilChangingCost(response.data[0].oilChange.price);
     setCarWashFee(response.data[0].carWash.price);
     setOilChangingFee(response.data[0].oilChange.price);
     setFourseatCarFee(response.data[0].fourSeatCar.price);
@@ -33,6 +32,7 @@ const getAllFees = async ({
   }
 };
 
+// Update fees
 const updateFees = async ({ inputData, userInfo }) => {
   try {
     const response = await axios.post(UPDATE_FEES_API_URL, inputData, {
