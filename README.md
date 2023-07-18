@@ -61,4 +61,4 @@ This app has 4 main pages (excluding the login page and the register page):
 
 # Sum up
 
-Based on what I have learnt about SOLID and OOP, I tried to apply them to this project. However, I am not sure if I did it correctly or not (I may fail the OOP part, but I have made an effort to keep the code clean and follow SOLID rules as possible as I could). I will be very grateful if you can give me some feedbacks about this. Thank you very much for your time and consideration.
+Based on what I have learnt about SOLID and OOP, I tried to apply them to this project. However, I am not sure if I did it correctly or not (I may fail the OOP part, but I have made an effort to keep the code clean and follow SOLID rules as much as possible). I will be very grateful if you can give me some feedbacks about this. Thank you very much for your time and consideration.
