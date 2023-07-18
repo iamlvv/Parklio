@@ -1,8 +1,9 @@
 # Parklio
-A Car Parking Management System named Parklio
+A Car Parking Management System named Parklio.
 
 # Description
 This is a small project, which is about implementing a simple car parking managing system. The system consists of a server and a client application. The server is responsible for managing the parking spots and the clients are responsible for the communication with the server and the user interface. I use MERN Stack for this project.
+- User: Officer and Admin.
 
 # Technology
 
@@ -14,11 +15,11 @@ This is a small project, which is about implementing a simple car parking managi
 This project is a simple car parking management system. The main features are:
 
 - Registering a new user (officer by default). Admin account is created manually.
-- Login
-- Adding a new vehicle to the system
+- Login.
+- Adding a new vehicle to the system.
 - Allow vehicler's owner to register additional services (e.g. car wash, oil change, etc.)
 - Allow officer to check out a vehicle
-- Allow officer and admin to check the history of a vehicle, check the check in/ check out status of the whole system, have a glance at the statistics, income daily/monthly/yearly of the system.
+- Allow officer and admin to check the information of a vehicle, the check in/ check out status, have a glance at the statistics, income daily/monthly/yearly of the whole system.
 - Allow user (including admin and officer) to change their details, like password, email, name, etc.
 - Allow only admin to adjust the prices of the services.
 
@@ -26,13 +27,7 @@ This project is a simple car parking management system. The main features are:
 This is the link Figma: <https://www.figma.com/file/LsBB8nbKYOg4yRbdZUUwHz/Managing-car-parking-system-Parklio?type=design&node-id=0%3A1&mode=design&t=KmqAYhTW2yXqGyga-1>
 
 # How to run
-I have deployed both frontend and backend on other platforms, frontend on Vercel and backend on Render. You can access the app via this link: <https://parklio-iamlvv.vercel.app/>
-
-- Test Account (This account is for Admin - full access, but Officer cannot access the feature management):
-
-      - Email: hi@gmail.com
-      - Password: 1234
-- Or you can register a new account, but it will be an Officer account, so you cannot access the feature management.
+I have deployed both frontend and backend on other platforms, frontend on Vercel and backend on Render. You can access the app via this link: <https://parklio-iamlvv.vercel.app/>. You can register a new account, but it will be an Officer account, so you cannot access the feature management.
 
 However, if you want to run the app **locally**, you can follow these steps:
 
@@ -60,10 +55,10 @@ This app has 4 main pages (excluding the login page and the register page):
 
 - When you register a new vehicle successfully, the system will response a parking key in a popup notification. Please keep it carefully, because you will need it to check out the vehicle. You can copy it and paste it somewhere else. In case you do not remember the plate number, you can go to the page Statistics, it will show you all the vehicles that are currently in the system, go find the vehicle which is marked as "Haven't checked out yet", and you will see the plate number of that vehicle. Because this is just a simple project, it does not have features like using camera to scan the plate number, so you have to do it manually, both check in and check out.
 - The backend server is deployed on Render using free version, **so it might take a while to start the server if it is inactive for a long time**. According to Render, it will be inactive after 15 mins not using it. Please be patient, or you can contact me for any problems. The last time I checked, it took about **10 - 30 seconds** to start the server. After that, it will run smoothly.
-- The app is not fully responsive yet, so it is better to use it on a laptop or a desktop, especially using the screen provided by the company.
-- The app is not fully tested yet, so there might be some bugs. If you find any, please let me know.
+- The app is not fully responsive yet, so it is better to use it on a laptop or a desktop, I recommend using the screen provided by the company.
+- The app is not fully tested yet (though I have tried to test all cases I thought of), so there might be some bugs. If you find any, please let me know.
 - Because of the size of the project, the app is not fully secured yet, for example, I only use 1 type of token instead of two (refresh and access token), so please do not use your real password or any sensitive information. I will try to improve the security of the app in the future.
 
 # Sum up
 
-Based on what I have learnt about SOLID and OOP, I tried to apply it to this project. However, I am not sure if I did it correctly or not (I may fail the OOP part, but I have tried to keep the code clean and follow SOLID rules). I will be very grateful if you can give me some feedbacks about this. Thank you very much for your time and consideration.
+Based on what I have learnt about SOLID and OOP, I tried to apply them to this project. However, I am not sure if I did it correctly or not (I may fail the OOP part, but I have made an effort to keep the code clean and follow SOLID rules as possible as I could). I will be very grateful if you can give me some feedbacks about this. Thank you very much for your time and consideration.
