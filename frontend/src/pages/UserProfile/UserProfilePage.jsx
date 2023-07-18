@@ -12,6 +12,7 @@ import {
   INPUT_FIELD,
 } from "../../constants/formConstants";
 import { EMAIL_PATTERN } from "../../constants/patternConstants";
+import { INVALID_EMAIL } from "../../constants/errorConstants";
 
 function UserProfilePage() {
   const [fullName, setFullName] = useState("");
@@ -25,6 +26,7 @@ function UserProfilePage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
+    // Get user details, if not logged in, redirect to login page
     if (!userInfo) {
       window.location.href = "/";
     } else {
@@ -51,6 +53,10 @@ function UserProfilePage() {
         ...SwalObject.error,
         text: "New password and confirm new password are not the same!",
       });
+      return;
+    }
+    if (!isValidEmail(email)) {
+      Swal.fire(INVALID_EMAIL);
       return;
     }
     const inputData = {
@@ -83,6 +89,7 @@ function UserProfilePage() {
                 className={INPUT_FIELD}
                 value={fullName || ""}
                 onChange={(e) => setFullName(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -92,6 +99,7 @@ function UserProfilePage() {
                 className={INPUT_FIELD}
                 value={email || ""}
                 onChange={handleChangeEmail}
+                required
               />
             </div>
             {errorEmail && <span className="text-red-500">{errorEmail}</span>}

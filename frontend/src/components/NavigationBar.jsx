@@ -12,11 +12,13 @@ import {
 } from "../constants/navigationConstants";
 
 function NavigationBar() {
-  const navigate = useNavigate();
   const [authority, setAuthority] = useState("");
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user is logged in, if not, redirect to login page, if yes, check if user is admin, if yes, show management button
     if (!userInfo) {
       navigate("/");
     } else {
@@ -38,6 +40,7 @@ function NavigationBar() {
       </div>
     </NavLink>
   );
+
   return (
     <div>
       <div

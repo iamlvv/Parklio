@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel.js");
 
 const protect = asyncHandler(async (req, res, next) => {
+  // Protect routes, only logged in users can access -> require authentication
   let token;
 
   if (

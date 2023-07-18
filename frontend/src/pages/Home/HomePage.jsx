@@ -20,6 +20,7 @@ function HomePage() {
       getUserName({ userInfo, setName });
     }
   }, []);
+
   return (
     <div>
       <Header />

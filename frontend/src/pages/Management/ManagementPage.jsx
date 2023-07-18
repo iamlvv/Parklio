@@ -8,6 +8,9 @@ import {
   INPUT_FIELD,
 } from "../../constants/formConstants";
 import { useNavigate } from "react-router-dom";
+import { FEE_PATTERN } from "../../constants/patternConstants";
+import Swal from "sweetalert2";
+import { FEE_IS_NOT_NUMBER_TYPE } from "../../constants/errorConstants";
 
 function ManagementPage() {
   const [fourseatCarFee, setFourseatCarFee] = useState(0);
@@ -18,6 +21,7 @@ function ManagementPage() {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
+
   useEffect(() => {
     // Get all fees
     if (!userInfo) {
@@ -34,6 +38,12 @@ function ManagementPage() {
     }
   }, []);
 
+  // Check if fee is valid
+  const isValidFee = (fee) => {
+    return FEE_PATTERN.test(fee);
+  };
+
+  // Handle change fees
   const handleChangeFee = (e) => {
     e.preventDefault();
     const inputData = {
@@ -53,8 +63,19 @@ function ManagementPage() {
         price: oilChangingFee,
       },
     };
+    if (
+      !isValidFee(fourseatCarFee) ||
+      !isValidFee(sevenseatCarFee) ||
+      !isValidFee(truckFee) ||
+      !isValidFee(carWashFee) ||
+      !isValidFee(oilChangingFee)
+    ) {
+      Swal.fire(FEE_IS_NOT_NUMBER_TYPE);
+      return;
+    }
     updateFees({ inputData, userInfo });
   };
+
   return (
     <div>
       <Header />

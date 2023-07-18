@@ -4,9 +4,16 @@ import { styles } from "../../components/styles";
 import { SignUp } from "./components/authActions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { INPUT_FIELD } from "../../constants/formConstants";
+import {
+  ACTIVE_NAVIGATION_BUTTON,
+  ACTIVE_SUBMIT_FORM_BUTTON,
+  INPUT_FIELD,
+} from "../../constants/formConstants";
 import Swal from "sweetalert2";
-import { PASSWORD_NOT_MATCH } from "../../constants/errorConstants";
+import {
+  INVALID_EMAIL,
+  PASSWORD_NOT_MATCH,
+} from "../../constants/errorConstants";
 import { EMAIL_PATTERN } from "../../constants/patternConstants";
 
 function SignupPage() {
@@ -42,8 +49,13 @@ function SignupPage() {
       Swal.fire(PASSWORD_NOT_MATCH);
       return;
     }
+    if (!isValidEmail(email)) {
+      Swal.fire(INVALID_EMAIL);
+      return;
+    }
     SignUp({ fullName, email, password, authority: "officer", navigate });
   };
+
   return (
     <div className="">
       <Header />
@@ -93,10 +105,7 @@ function SignupPage() {
               />
             </div>
             <div className="mt-5">
-              <button
-                type="submit"
-                className="font-bold text-2xl p-2 rounded-xl border border-black hover:bg-black hover:text-white transition ease-in-out"
-              >
+              <button type="submit" className={ACTIVE_SUBMIT_FORM_BUTTON}>
                 SIGN UP
               </button>
             </div>
@@ -104,7 +113,7 @@ function SignupPage() {
           <div className="mt-5">
             <h2>Already had your account?</h2>
             <button
-              className="font-bold rounded-xl p-1 hover:text-white hover:bg-black transition ease-in-out text-gray-500"
+              className={ACTIVE_NAVIGATION_BUTTON}
               onClick={() => navigate("/")}
             >
               Log in

@@ -21,14 +21,14 @@ const registerService = async ({
     const response = await axios.post(
       SERVICE_REGISTRATION_API_URL,
       {
-        plateNumber: plateNumber,
-        vehicleOwner: vehicleOwner,
-        vehicleType: vehicleType,
-        inputTime: inputTime,
-        serviceCost: serviceCost,
-        carWashCost: carWashCost,
-        oilChangingCost: oilChangingCost,
-        oilType: oilType,
+        plateNumber,
+        vehicleOwner,
+        vehicleType,
+        inputTime,
+        serviceCost,
+        carWashCost,
+        oilChangingCost,
+        oilType,
       },
       {
         headers: {

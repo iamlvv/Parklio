@@ -98,7 +98,7 @@ function VehicleStatistics({ userInfo, itemsPerPage }) {
               <h1 className="font-bold text-2xl">Total vehicles up to now</h1>
               <h2>Total Input: {totalInputTime}</h2>
               <h2>Total Output: {totalOutputTime}</h2>
-              <h3>Total Parking Income: ${totalParkingIncome}</h3>
+              <h3>Total Parking only Income: ${totalParkingIncome}</h3>
             </div>
           </div>
         </div>

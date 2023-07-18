@@ -24,6 +24,14 @@ export const PASSWORD_NOT_MATCH = {
   ...SwalObject.error,
   text: `Password and confirm password not match.`,
 };
+export const INVALID_EMAIL = {
+  ...SwalObject.error,
+  text: `Invalid email.`,
+};
+export const INVALID_FULL_NAME = {
+  ...SwalObject.error,
+  text: `Invalid full name.`,
+};
 
 // vehicle error
 export const VEHICLE_ALREADY_CHECKED_IN = {
@@ -37,4 +45,10 @@ export const VEHICLE_NOT_FOUND = {
 export const INVALID_PARKING_KEY_OR_PLATE_NUMBER = {
   ...SwalObject.error,
   text: `Invalid parking key or plate number.`,
+};
+
+// fee error
+export const FEE_IS_NOT_NUMBER_TYPE = {
+  ...SwalObject.error,
+  text: `Fee is not number type.`,
 };

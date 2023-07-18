@@ -61,7 +61,9 @@ function Navigation({ handleTypeOfStatistics, handleTypeOfTime }) {
       {typeOfStatistics === "income" ? (
         <div className="flex flex-row justify-between mr-20 items-center">
           <div className="mb-5">
-            <h1 className="font-bold text-2xl">Income Graph</h1>
+            <h1 className="font-bold text-2xl">
+              Income Graph {"(both parking and additional services)"}
+            </h1>
             <div
               className="p-2 shadow-md bg-gray-50 rounded-md my-5"
               style={styles.infoBanner}

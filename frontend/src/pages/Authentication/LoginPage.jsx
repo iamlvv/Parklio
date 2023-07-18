@@ -4,16 +4,22 @@ import { styles } from "../../components/styles";
 import { Login } from "./components/authActions";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { INPUT_FIELD } from "../../constants/formConstants";
+import {
+  ACTIVE_NAVIGATION_BUTTON,
+  ACTIVE_SUBMIT_FORM_BUTTON,
+  INPUT_FIELD,
+} from "../../constants/formConstants";
 import { EMAIL_PATTERN } from "../../constants/patternConstants";
+import Swal from "sweetalert2";
+import { INVALID_EMAIL } from "../../constants/errorConstants";
 
 function LoginPage() {
-  const navigate = useNavigate();
   const [errorEmail, setErrorEmail] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const navigate = useNavigate();
 
   useEffect(() => {
     // If user is logged in, navigate to homepage
@@ -34,6 +40,10 @@ function LoginPage() {
   // Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!isValidEmail(email)) {
+      Swal.fire(INVALID_EMAIL);
+      return;
+    }
     Login({ email, password, navigate });
   };
 
@@ -68,10 +78,7 @@ function LoginPage() {
               />
             </div>
             <div className="mt-10">
-              <button
-                type="submit"
-                className="font-bold text-2xl p-2 rounded-xl border border-black hover:bg-black hover:text-white transition ease-in-out"
-              >
+              <button type="submit" className={ACTIVE_SUBMIT_FORM_BUTTON}>
                 Login
               </button>
             </div>
@@ -79,7 +86,7 @@ function LoginPage() {
           <div className="mt-5">
             <h2>Newbie to our system?</h2>
             <button
-              className="font-bold rounded-xl p-1 hover:text-white hover:bg-black transition ease-in-out text-gray-500"
+              className={ACTIVE_NAVIGATION_BUTTON}
               onClick={() => navigate("/signup")}
             >
               Sign up

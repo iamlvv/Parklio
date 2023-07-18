@@ -1,11 +1,11 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-
 import {
   GET_ALL_FEES_API_URL,
   UPDATE_FEES_API_URL,
 } from "../../constants/APIConstants";
 import { SwalObject } from "../styles";
+import { FEE_IS_NOT_NUMBER_TYPE } from "../../constants/errorConstants";
 
 // Get all fees
 const getAllFees = async ({
@@ -49,4 +49,5 @@ const updateFees = async ({ inputData, userInfo }) => {
     console.log(error);
   }
 };
+
 export { getAllFees, updateFees };

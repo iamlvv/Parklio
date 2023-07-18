@@ -5,9 +5,10 @@ import { styles } from "./styles";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const navigate = useNavigate();
   const [logout, setLogout] = useState(false);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const navigate = useNavigate();
 
   // Check if the user is logged in, if yes, show the logout button
   useEffect(() => {
@@ -21,6 +22,7 @@ function Header() {
     localStorage.removeItem("userInfo");
     navigate("/");
   };
+
   return (
     <div className="z-40">
       <div

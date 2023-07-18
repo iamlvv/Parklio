@@ -33,16 +33,16 @@ const RegisterVehicle = async ({
     const response = await axios.post(
       VEHICLE_REGISTRATION_API_URL,
       {
-        plateNumber: plateNumber,
-        vehicleOwner: vehicleOwner,
-        vehicleType: vehicleType,
-        inputTime: inputTime,
-        parkingType: parkingType,
-        serviceCost: serviceCost,
-        oilChanging: oilChanging,
-        carWashCost: carWashCost,
-        oilChangingCost: oilChangingCost,
-        oilType: oilType,
+        plateNumber,
+        vehicleOwner,
+        vehicleType,
+        inputTime,
+        parkingType,
+        serviceCost,
+        oilChanging,
+        carWashCost,
+        oilChangingCost,
+        oilType,
       },
       {
         headers: {
@@ -84,8 +84,8 @@ const CheckOutVehicle = async ({
     const response = await axios.post(
       VEHICLE_CHECKOUT_API_URL,
       {
-        plateNumber: plateNumber,
-        parkingKey: parkingKey,
+        plateNumber,
+        parkingKey,
       },
       {
         headers: {

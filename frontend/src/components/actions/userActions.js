@@ -69,9 +69,9 @@ const UpdateUserProfile = async ({
       UPDATE_USER_PROFILE_API_URL + `${userInfo.id}`,
       {
         fullname: fullName,
-        email: email,
+        email,
         oldPassword: currentPassword,
-        newPassword: newPassword,
+        newPassword,
       },
       {
         headers: {

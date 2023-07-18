@@ -6,6 +6,7 @@ export const UPDATE_FEES_API_URL = `${process.env.REACT_APP_API_URL}/fees/updati
 export const GET_ALL_SERVICES_API_URL = `${process.env.REACT_APP_API_URL}/services/`;
 export const SERVICE_REGISTRATION_API_URL = `${process.env.REACT_APP_API_URL}/services/registration`;
 export const GET_TOTAL_SERVICES_API_URL = `${process.env.REACT_APP_API_URL}/services/totalservice`;
+
 // User API
 export const USER_AUTHENTICATION_API_URL = `${process.env.REACT_APP_API_URL}/users/authentication`;
 export const USER_REGISTRATION_API_URL = `${process.env.REACT_APP_API_URL}/users/registration`;
